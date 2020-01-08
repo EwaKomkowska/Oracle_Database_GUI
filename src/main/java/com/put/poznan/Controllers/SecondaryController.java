@@ -1,4 +1,4 @@
-package com.put.poznan;
+package com.put.poznan.Controllers;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

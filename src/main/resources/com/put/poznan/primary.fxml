@@ -1,16 +1,250 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.PrimaryController">
-   <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View" onAction="#switchToSecondary"/>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+
+<SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="597.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab id="przedszkolankaTab" text="Przedszkolanka">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="526.0">
+                     <children>
+                        <Pane layoutX="-3.0" layoutY="-1.0" prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                <buttons>
+                                  <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
+                                </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="przedszkolankaListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="sekretarkaTab" text="Sekretarka">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="sekretarkaListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="dzieckoTab" text="Dziecko">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="dzieckoAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="dzieckoListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="grupaPrzedszkolnaTab" text="Grupa Przedszkolna">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="grupa_przedszkolnaListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="zajeciaDodatkoweTab" text="Zajęcia Dodatkowe">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="zajecia_dodatkoweListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="posilekTab" text="Posiłek">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="posilekRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="posilekAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="posilekListVIew" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="pomocDydaktycznaTab" text="Pomoc dydaktyczna">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="pomoc_dydaktycznaListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="oplataTab" closable="false" text="Opłata">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="oplataRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="oplataAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="oplataListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="festynTab" text="Festyn">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="festynRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="festynAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="festynListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="zebranieTab" text="Zebranie z Rodzicami">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="603.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="zebranie_rodziceListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="hospitacjaTab" text="Hospitacja">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" text="Add" />
+                                    <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <ListView fx:id="hospitacjaListView" layoutX="43.0" layoutY="5.0" prefHeight="238.0" prefWidth="515.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;">
+        <buttons>
+          <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
+               <font>
+                  <Font name="Droid Sans" size="15.0" />
+               </font>
+            </Button>
+        </buttons>
+      </ButtonBar>
+   </items>
+</SplitPane>

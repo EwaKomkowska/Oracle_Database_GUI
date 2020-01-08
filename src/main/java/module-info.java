@@ -4,5 +4,5 @@ module com.put.poznan {
     requires java.sql;
 
     opens com.put.poznan to javafx.fxml;
-    exports com.put.poznan;
+    exports com.put.poznan.Controllers;
 }
