@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.PrimaryController">
    <items>
       <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="597.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -23,8 +23,8 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                 <buttons>
-                                  <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" text="Remove" />
-                                    <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" text="Add" />
+                                  <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove"/>
+                                    <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
                                     <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
                                 </buttons>
                               </ButtonBar>
@@ -43,7 +43,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeSekretarka" text="Remove" />
                                     <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -63,7 +63,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
                                     <Button fx:id="dzieckoAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -83,7 +83,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeGrupa" text="Remove" />
                                     <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -103,7 +103,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZajecia" text="Remove" />
                                     <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -123,7 +123,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="posilekRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="posilekRemoveButton" mnemonicParsing="false" onMouseClicked="#removePosilek" text="Remove" />
                                     <Button fx:id="posilekAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -143,7 +143,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePomoc" text="Remove" />
                                     <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -163,7 +163,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="oplataRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="oplataRemoveButton" mnemonicParsing="false" onMouseClicked="#removeOplata" text="Remove" />
                                     <Button fx:id="oplataAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -183,7 +183,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="festynRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="festynRemoveButton" mnemonicParsing="false" onMouseClicked="#removeFestyn" text="Remove" />
                                     <Button fx:id="festynAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -203,7 +203,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZebranie" text="Remove" />
                                     <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>
@@ -223,7 +223,7 @@
                            <children>
                               <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
                                  <buttons>
-                                    <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" text="Remove" />
+                                    <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeHospitacja" text="Remove" />
                                     <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" text="Add" />
                                     <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
                                  </buttons>

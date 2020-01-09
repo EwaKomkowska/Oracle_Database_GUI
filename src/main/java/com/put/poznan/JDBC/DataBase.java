@@ -21,7 +21,7 @@ public class DataBase {
             e.printStackTrace();
         }
         try {
-            this.connection = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:PAWEL",login, password);
+            this.connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:PAWEL",login, password); //"jdbc:oracle:thin:@localhost:1523:XE", login, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,4 +35,11 @@ public class DataBase {
         }
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }
