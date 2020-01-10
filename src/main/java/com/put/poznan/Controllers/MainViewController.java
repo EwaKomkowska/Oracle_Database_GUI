@@ -2,9 +2,7 @@ package com.put.poznan.Controllers;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.PropertyResourceBundle;
 
 import com.put.poznan.JDBC.DataBase;
 import javafx.collections.FXCollections;
@@ -27,23 +25,23 @@ public class MainViewController {
     @FXML
     private Button przedszkolankaRemoveButton;
     @FXML
-    private TableView<Przedszkolanka> przedszkolankaTableView;
+    private TableView<PrzedszkolankaController> przedszkolankaTableView;
     @FXML
-    private TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
+    private TableColumn<PrzedszkolankaController, Integer> id = new TableColumn<>("id");
     @FXML
-    private TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
+    private TableColumn<PrzedszkolankaController, String> imie = new TableColumn<>("imie");
     @FXML
-    private TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
+    private TableColumn<PrzedszkolankaController, String> nazwisko = new TableColumn<>("nazwisko");
     @FXML
-    private TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
+    private TableColumn<PrzedszkolankaController, String> kwalifikacje = new TableColumn<>("kwalifikacje");
     @FXML
-    private TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
+    private TableColumn<PrzedszkolankaController, Double> placa = new TableColumn<>("płaca");
     @FXML
-    private TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
+    private TableColumn<PrzedszkolankaController, Integer> idGrupy = new TableColumn<>("id grupy");
     @FXML
-    private TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
+    private TableColumn<PrzedszkolankaController, Integer> idHospitacji= new TableColumn<>("id hospitacji");
 
-    private ObservableList<Przedszkolanka> przedszkolanki;
+    private ObservableList<PrzedszkolankaController> przedszkolanki;
 
     @FXML
     private TableView dzieckoTableView;
@@ -70,18 +68,18 @@ public class MainViewController {
     public void initialize() {
 
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        id.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("id"));
-        imie.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
-        nazwisko.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
-        kwalifikacje.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
-        placa.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Double>("placa"));
-        idGrupy.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idGrupy"));
-        idHospitacji.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idHospitacji"));
+        id.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("id"));
+        imie.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("imie"));
+        nazwisko.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("nazwisko"));
+        kwalifikacje.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("kwalifikacje"));
+        placa.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Double>("placa"));
+        idGrupy.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("idGrupy"));
+        idHospitacji.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("idHospitacji"));
 
 
 
         przedszkolanki = FXCollections.observableArrayList();
-        Przedszkolanka p = new Przedszkolanka();
+        PrzedszkolankaController p = new PrzedszkolankaController();
         p.setImie("Ania");
         System.out.println(p.getImie());
         przedszkolanki.add(p);
@@ -262,7 +260,7 @@ public class MainViewController {
         //tu będzie wiecej zabawy, bo to chyba trzeba zrobić z pobieraniem danych w nowym oknie
         FXMLLoader loader = App.getFXMLLoader("przedszkolanka");
         Parent root = loader.load();
-        Przedszkolanka c = loader.getController();
+        PrzedszkolankaController c = loader.getController();
         c.setDataBase(this.dataBase);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);

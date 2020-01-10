@@ -1,6 +1,7 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
+import com.put.poznan.Przedszkolanka;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,16 +16,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class Przedszkolanka {
-    private int id; //IntegerProperty id = new SimpleIntegerProperty();
-    private String imie; //StringProperty imie = new SimpleStringProperty();
-    private String nazwisko; //StringProperty nazwisko = new SimpleStringProperty();
-    private String kwalifikacje; //StringProperty kwalifikacje = new SimpleStringProperty();
-    private int placa; //IntegerProperty placa = new SimpleIntegerProperty();
-    private int idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
-    private int idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
+public class PrzedszkolankaController {
 
     private DataBase dataBase;
+    private Przedszkolanka przedszkolanka;
 
     @FXML
     private TextField imieField;
@@ -46,67 +41,17 @@ public class Przedszkolanka {
     public void initialize() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getImie() {
-        return imie;
-    }
-
-    public void setImie(String imie) {
-        this.imie = imie;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-    }
-
-    public String getKwalifikacje() {
-        return kwalifikacje;
-    }
-
-    public void setKwalifikacje(String kwalifikacje) {
-        this.kwalifikacje = kwalifikacje;
-    }
-
-    public int getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(int placa) {
-        this.placa = placa;
-    }
-
-    public int getIdGrupy() {
-        return idGrupy;
-    }
-
-    public void setIdGrupy(int idGrupy) {
-        this.idGrupy = idGrupy;
-    }
-
-    public int getIdHospitacji() {
-        return idHospitacji;
-    }
-
-    public void setIdHospitacji(int idHospitacji) {
-        this.idHospitacji = idHospitacji;
-    }
 
     public void add () {
+        int id = 0;
+        String imie;
+        String nazwisko;
+        String kwalifikacje;
+        float placa = 0;
         //TODO: tutaj zrobić zczytywanie z okienka, więc bez parametrów
         try {
             //this.id = new SimpleIntegerProperty(Integer.parseInt(idField.getText()));
-            this.id = Integer.parseInt(idField.getText());
+            id = Integer.parseInt(idField.getText());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -117,20 +62,20 @@ public class Przedszkolanka {
         this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
         this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
         */
-        this.imie = imieField.getText();
-        this.nazwisko = nazwiskoField.getText();
-        this.kwalifikacje =  kwalifikacjeField.getText();
+        imie = imieField.getText();
+        nazwisko = nazwiskoField.getText();
+        kwalifikacje =  kwalifikacjeField.getText();
         try {
 
             //this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
-            this.placa = Integer.parseInt(placaField.getText());
+            placa = Float.parseFloat(placaField.getText());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną płacę - sprawdź, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
-
+        Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);
     }
 
     public DataBase getDataBase() {
