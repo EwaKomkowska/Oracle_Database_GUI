@@ -1,12 +1,11 @@
 package com.put.poznan.Controllers;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.util.Optional;
 
 
-import com.put.poznan.DataBaseObject.Przedszkolanka;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 public class PrimaryController {
@@ -220,9 +219,9 @@ public class PrimaryController {
 
 
     @FXML
-    private void addPrzedszkolanka() {
+    private void addPrzedszkolanka() throws IOException {
         //tu będzie wiecej zabawy, bo to chyba trzeba zrobić z pobieraniem danych w nowym oknie
-        return;
+        App.loadFXML("przedszkolanka");
     }
 
 
