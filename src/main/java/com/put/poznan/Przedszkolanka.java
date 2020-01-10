@@ -10,6 +10,8 @@ public class Przedszkolanka {
     private int idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
     private int idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
 
+    public Przedszkolanka(){}
+
     public Przedszkolanka(int id, String imie,String nazwisko, String kwalifikacje, float placa){
         this.id = id;
         this.imie = imie;

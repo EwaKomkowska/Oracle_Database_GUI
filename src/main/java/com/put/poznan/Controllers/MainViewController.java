@@ -2,9 +2,11 @@ package com.put.poznan.Controllers;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
+import com.put.poznan.Przedszkolanka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,23 +27,23 @@ public class MainViewController {
     @FXML
     private Button przedszkolankaRemoveButton;
     @FXML
-    private TableView<PrzedszkolankaController> przedszkolankaTableView;
+    private TableView<Przedszkolanka> przedszkolankaTableView;
     @FXML
-    private TableColumn<PrzedszkolankaController, Integer> id = new TableColumn<>("id");
+    private TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
     @FXML
-    private TableColumn<PrzedszkolankaController, String> imie = new TableColumn<>("imie");
+    private TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
     @FXML
-    private TableColumn<PrzedszkolankaController, String> nazwisko = new TableColumn<>("nazwisko");
+    private TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
     @FXML
-    private TableColumn<PrzedszkolankaController, String> kwalifikacje = new TableColumn<>("kwalifikacje");
+    private TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
     @FXML
-    private TableColumn<PrzedszkolankaController, Double> placa = new TableColumn<>("płaca");
+    private TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
     @FXML
-    private TableColumn<PrzedszkolankaController, Integer> idGrupy = new TableColumn<>("id grupy");
+    private TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
     @FXML
-    private TableColumn<PrzedszkolankaController, Integer> idHospitacji= new TableColumn<>("id hospitacji");
+    private TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
 
-    private ObservableList<PrzedszkolankaController> przedszkolanki;
+    private ObservableList<Przedszkolanka> przedszkolanki;
 
     @FXML
     private TableView dzieckoTableView;
@@ -68,18 +70,18 @@ public class MainViewController {
     public void initialize() {
 
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        id.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("id"));
-        imie.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("imie"));
-        nazwisko.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("nazwisko"));
-        kwalifikacje.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, String>("kwalifikacje"));
-        placa.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Double>("placa"));
-        idGrupy.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("idGrupy"));
-        idHospitacji.setCellValueFactory(new PropertyValueFactory<PrzedszkolankaController, Integer>("idHospitacji"));
+        id.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("id"));
+        imie.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
+        nazwisko.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
+        kwalifikacje.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
+        placa.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Double>("placa"));
+        idGrupy.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idGrupy"));
+        idHospitacji.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idHospitacji"));
 
 
 
-        przedszkolanki = FXCollections.observableArrayList();
-        PrzedszkolankaController p = new PrzedszkolankaController();
+        przedszkolanki = FXCollections.observableList(new ArrayList<>());
+        Przedszkolanka p = new Przedszkolanka();
         p.setImie("Ania");
         System.out.println(p.getImie());
         przedszkolanki.add(p);
