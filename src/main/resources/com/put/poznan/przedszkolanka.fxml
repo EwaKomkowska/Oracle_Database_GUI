@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.put.poznan.Controllers.Przedszkolanka" prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label fx:id="addLabel" alignment="CENTER" layoutX="135.0" layoutY="14.0" prefHeight="57.0" prefWidth="300.0" text="Please write new data for Przedszkolanka" textAlignment="CENTER">
+            <font>
+                <Font name="Noto Sans Regular" size="15.0" />
+            </font>
+        </Label>
+        <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
+            <children>
+                <TextField fx:id="imieField" layoutX="8.0" layoutY="7.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="imie"/>
+                <TextField fx:id="nazwiskoField" layoutX="8.0" layoutY="87.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="nazwisko"/>
+                <TextField fx:id="kwalifikacjeField" layoutX="8.0" layoutY="167.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="kwalifikacje"/>
+                <TextField fx:id="idField" layoutX="8.0" layoutY="247.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="id">
+                    <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="placaField" layoutX="278.0" layoutY="7.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="placa"/>
+                <ComboBox fx:id="id_grupyBox" layoutX="278.0" layoutY="87.0" prefHeight="66.0" prefWidth="250.0" accessibleText="id grupy"/>
+                <ComboBox fx:id="id_hospitacjiBox" layoutX="278.0" layoutY="167.0" prefHeight="66.0" prefWidth="250.0" accessibleText="id hospitacji"/>
+            </children>
+        </Pane>
+        <Button fx:id="addButton" layoutX="312.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#add" prefHeight="23.0" prefWidth="106.0" text="Add" />
+        <Button fx:id="cancelButton" layoutX="432.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#cancel" prefHeight="23.0" prefWidth="106.0" text="Cancel" />
+    </children>
+
+</AnchorPane>
+
