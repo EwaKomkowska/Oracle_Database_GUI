@@ -2,16 +2,19 @@ package com.put.poznan.Controllers;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.PropertyResourceBundle;
 
 import com.put.poznan.JDBC.DataBase;
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MainViewController {
 
@@ -24,7 +27,7 @@ public class MainViewController {
     @FXML
     private Button przedszkolankaRemoveButton;
     @FXML
-    private TableView przedszkolankaTableView;
+    private TableView <Przedszkolanka> przedszkolankaTableView;
     @FXML
     private TableView dzieckoTableView;
     @FXML
@@ -46,19 +49,28 @@ public class MainViewController {
     @FXML
     private TableView zebranie_rodziceTableView;
 
-
     @FXML
     public void initialize() {
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        TableColumn id = new TableColumn("id");
-        TableColumn imie = new TableColumn("imie");
-        TableColumn nazwisko = new TableColumn("nazwisko");
-        TableColumn kwalifikacje = new TableColumn("kwalifikacje");
-        TableColumn placa = new TableColumn("płaca");
-        TableColumn idGrupy = new TableColumn("id grupy");
-        TableColumn idHospitacji= new TableColumn("id hospitacji");
+        TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
+        imie.setCellValueFactory(new PropertyValueFactory<>("imie"));
+        TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
+        TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
+        TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
+        TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
+        TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
 
-        przedszkolankaTableView.getColumns().setAll(id, imie, nazwisko, kwalifikacje, placa, idGrupy, idHospitacji);
+        ObservableList<Przedszkolanka> products = FXCollections.observableArrayList();
+        Przedszkolanka p = new Przedszkolanka();
+        p.setImie("Ania");
+        System.out.println(p.getImie());
+        products.add(p);
+        System.out.println(products.toString());
+
+        przedszkolankaTableView.setItems(products);
+        przedszkolankaTableView.getColumns().addAll(id, imie, nazwisko, kwalifikacje, placa, idGrupy, idHospitacji);
 
 
         dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
@@ -230,7 +242,12 @@ public class MainViewController {
     @FXML
     private void addPrzedszkolanka() throws IOException {
         //tu będzie wiecej zabawy, bo to chyba trzeba zrobić z pobieraniem danych w nowym oknie
-        App.getStage().setScene(new Scene(App.loadFXML("przedszkolanka")) );
+        FXMLLoader loader = App.getFXMLLoader("przedszkolanka");
+        Parent root = loader.load();
+        Przedszkolanka c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
     }
 
 

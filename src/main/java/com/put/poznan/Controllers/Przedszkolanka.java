@@ -1,11 +1,13 @@
 package com.put.poznan.Controllers;
 
+import com.put.poznan.JDBC.DataBase;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxListCell;
 
 import java.io.IOException;
 
@@ -17,6 +19,8 @@ public class Przedszkolanka {
     private int placa;
     private int idGrupy;
     private int idHospitacji;
+
+    private DataBase dataBase;
 
     @FXML
     private TextField imieField;
@@ -36,9 +40,23 @@ public class Przedszkolanka {
 
     @FXML
     public void initialize() {
-
     }
 
+    public String getImie() {
+        return imie;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
 
     public void add () {
         //tutaj zrobić zczytywanie z okienka, więc bez parametrów
@@ -58,15 +76,28 @@ public class Przedszkolanka {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
+            alert.setContentText("Podałeś błędną płacę - sprawdź, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
 
     }
 
+    public DataBase getDataBase() {
+        return dataBase;
+    }
+
+    public void setDataBase(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
+
     @FXML
     public void cancel() throws IOException {
-        App.getStage().setScene(new Scene(App.loadFXML("primary")) );
+        FXMLLoader loader = App.getFXMLLoader("primary");
+        Parent root = loader.load();
+        MainViewController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
     }
 
     @FXML

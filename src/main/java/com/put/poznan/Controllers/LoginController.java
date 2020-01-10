@@ -53,7 +53,7 @@ public class LoginController {
         if(this.onceLog){
             this.login = "";
             this.loginTextField.setText("");
-            this.onceLog = false;
+            this.oncePass = false;
         }
     }
 
@@ -128,6 +128,8 @@ public class LoginController {
         //try to connect if fail pop a window that says try again wrong shit and reset
     }
 
+    public void LoginController(){
 
+    }
 
 }
