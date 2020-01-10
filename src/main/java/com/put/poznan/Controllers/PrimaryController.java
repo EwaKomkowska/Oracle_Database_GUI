@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 public class PrimaryController {
@@ -221,7 +222,7 @@ public class PrimaryController {
     @FXML
     private void addPrzedszkolanka() throws IOException {
         //tu będzie wiecej zabawy, bo to chyba trzeba zrobić z pobieraniem danych w nowym oknie
-        App.loadFXML("przedszkolanka");
+        App.getStage().setScene(new Scene(App.loadFXML("przedszkolanka")) );
     }
 
 
