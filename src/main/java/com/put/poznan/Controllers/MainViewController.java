@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.Przedszkolanka;
+import com.put.poznan.SchemaObjects.Przedszkolanka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

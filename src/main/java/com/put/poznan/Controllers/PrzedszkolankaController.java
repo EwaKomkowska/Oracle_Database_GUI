@@ -1,11 +1,7 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.Przedszkolanka;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import com.put.poznan.SchemaObjects.Przedszkolanka;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

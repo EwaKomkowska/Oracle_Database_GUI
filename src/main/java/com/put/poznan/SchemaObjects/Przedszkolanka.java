@@ -1,18 +1,34 @@
-package com.put.poznan;
+package com.put.poznan.SchemaObjects;
+
+
 
 public class Przedszkolanka {
 
-    private int id; //IntegerProperty id = new SimpleIntegerProperty();
+    private int id; // IntegerProperty id = new SimpleIntegerProperty();
     private String imie; //StringProperty imie = new SimpleStringProperty();
     private String nazwisko; //StringProperty nazwisko = new SimpleStringProperty();
     private String kwalifikacje; //StringProperty kwalifikacje = new SimpleStringProperty();
     private float placa; //IntegerProperty placa = new SimpleIntegerProperty();
     private int idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
     private int idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
+/*
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private StringProperty imie = new SimpleStringProperty();
+    private StringProperty nazwisko = new SimpleStringProperty();
+    private StringProperty kwalifikacje = new SimpleStringProperty();
+    private float IntegerProperty placa = new SimpleIntegerProperty();
+    private int IntegerProperty idGrupy = new SimpleIntegerProperty();
+    private int IntegerProperty idHospitacji = new SimpleIntegerProperty();
+*/
+    public Przedszkolanka(){
+        this.id = 0;
+        this.imie = "imie";
+        this.nazwisko = "nazwisko";
+        this.kwalifikacje = "kwalifikacje";
+        this.placa = 0;
+    }
 
-    public Przedszkolanka(){}
-
-    public Przedszkolanka(int id, String imie,String nazwisko, String kwalifikacje, float placa){
+    public Przedszkolanka(int id, String imie, String nazwisko, String kwalifikacje, float placa){
         this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
