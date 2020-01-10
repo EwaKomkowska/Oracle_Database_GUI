@@ -1,15 +1,13 @@
 package com.put.poznan.Controllers;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.util.Optional;
 
 
+import com.put.poznan.DataBaseObject.Przedszkolanka;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 
 public class PrimaryController {
 
@@ -17,13 +15,126 @@ public class PrimaryController {
     Button przedszkolankaAddButton;
     @FXML
     Button przedszkolankaRemoveButton;
+    @FXML
+    TableView przedszkolankaTableView;
+    @FXML
+    TableView dzieckoTableView;
+    @FXML
+    TableView grupa_przedszkolnaTableView;
+    @FXML
+    TableView festynTableView;
+    @FXML
+    TableView hospitacjaTableView;
+    @FXML
+    TableView oplataTableView;
+    @FXML
+    TableView pomoc_dydaktycznaTableView;
+    @FXML
+    TableView posilekTableView;
+    @FXML
+    TableView sekretarkaTableView;
+    @FXML
+    TableView zajecia_dodatkoweTableView;
+    @FXML
+    TableView zebranie_rodziceTableView;
+
+
+    @FXML
+    public void initialize() {
+        przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
+        TableColumn id = new TableColumn("id");
+        TableColumn imie = new TableColumn("imie");
+        TableColumn nazwisko = new TableColumn("nazwisko");
+        TableColumn kwalifikacje = new TableColumn("kwalifikacje");
+        TableColumn placa = new TableColumn("płaca");
+        TableColumn idGrupy = new TableColumn("id grupy");
+        TableColumn idHospitacji= new TableColumn("id hospitacji");
+
+        przedszkolankaTableView.getColumns().setAll(id, imie, nazwisko, kwalifikacje, placa, idGrupy, idHospitacji);
+
+
+        dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
+        TableColumn dataUrodzenia = new TableColumn("data urodzenia");
+        dataUrodzenia.setPrefWidth(100.0);
+        TableColumn idPosilku = new TableColumn("id posiłku");
+
+        dzieckoTableView.getColumns().setAll(id, imie, nazwisko, dataUrodzenia, idGrupy, idPosilku);
+
+
+        grupa_przedszkolnaTableView.setEditable(false);
+        TableColumn miejsce = new TableColumn("sala");
+        TableColumn nazwa = new TableColumn("nazwa");
+        TableColumn wiek = new TableColumn("wiek");
+        TableColumn osobaOdpowiedzialna = new TableColumn("id przedszkolanki");
+
+        grupa_przedszkolnaTableView.getColumns().setAll(id, miejsce, nazwa, wiek, osobaOdpowiedzialna);
+
+
+        festynTableView.setEditable(false);
+        osobaOdpowiedzialna.setPrefWidth(150.0);
+        TableColumn data = new TableColumn("data");
+        TableColumn haslo = new TableColumn("hasło");
+
+        festynTableView.getColumns().setAll(id, idGrupy, osobaOdpowiedzialna, data, haslo);
+
+
+        hospitacjaTableView.setEditable(false);
+        TableColumn osobaNadzorujaca = new TableColumn("id nadzorującego");
+        osobaNadzorujaca.setPrefWidth(150.0);
+
+        hospitacjaTableView.getColumns().setAll(id, data, osobaOdpowiedzialna, osobaNadzorujaca);
+
+
+        oplataTableView.setEditable(false);
+        TableColumn wielkosc = new TableColumn("wysokosc");
+        TableColumn przedmiot = new TableColumn("przedmiot");
+        TableColumn czestosc = new TableColumn("częstość");
+
+        //polaczenia chyba nie powinny być widoczne, wiec to starczy???
+        oplataTableView.getColumns().setAll(id, wielkosc, przedmiot, czestosc);
+
+        pomoc_dydaktycznaTableView.setEditable(false);
+        TableColumn oplata = new TableColumn("oplaty");
+
+        pomoc_dydaktycznaTableView.getColumns().setAll(id, przedmiot, oplata, idGrupy, osobaOdpowiedzialna);
+
+
+        posilekTableView.setEditable(false);
+        TableColumn godzina = new TableColumn("godzina rozdawania");
+        godzina.setPrefWidth(120.0);
+        TableColumn dieta = new TableColumn("dieta");
+
+        posilekTableView.getColumns().setAll(id, nazwa, godzina, dieta);
+
+
+        sekretarkaTableView.setEditable(false);
+        TableColumn pocz = new TableColumn("poczatek pracy");
+        pocz.setPrefWidth(100.0);
+        TableColumn koniec = new TableColumn("koniec pracy");
+
+        sekretarkaTableView.getColumns().setAll(id, imie, nazwisko, kwalifikacje, placa, pocz, koniec);
+
+
+        zajecia_dodatkoweTableView.setEditable(false);
+        TableColumn czas = new TableColumn("czas tygodniowo");
+        czas.setPrefWidth(100.0);
+
+        zajecia_dodatkoweTableView.getColumns().setAll(id, nazwa, data, oplata, czas, idGrupy);
+
+
+        zebranie_rodziceTableView.setEditable(false);
+        TableColumn czyobow = new TableColumn("obowiązkowe");
+        czyobow.setPrefWidth(100.0);
+
+        zebranie_rodziceTableView.getColumns().setAll(id, data, idGrupy, miejsce, osobaOdpowiedzialna, czyobow);
+    }
 
     @FXML
     private void removePrzedszkolanka() {
-        int id = 5;
+        int idPrzed = 5;
         String statement = "DELETE FROM PRZEDSZKOLANKA WHERE IDPRAC = ?";
 
-        remove(statement, id);
+        remove(statement, idPrzed);
     }
 
     @FXML
@@ -135,8 +246,11 @@ public class PrimaryController {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setContentText("You can't remove this object. \nMaybe it's not exist?\nPlease, try again!\n Choose one of object that you can see on the list.");
                     alert.showAndWait();
-                } else
-                    System.out.println("Usunieto " + deletedRows + " obiektów");
+                } else {
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Usunięto poprawnie " + deletedRows + " obiektów!");
+                    alert.showAndWait();
+                }
             } /*else {
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Zrezygnowałeś z usuwania!");
