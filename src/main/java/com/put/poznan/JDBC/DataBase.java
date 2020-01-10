@@ -26,7 +26,7 @@ public class DataBase {
     public Boolean startConnection(String login, String password){
         Boolean conState = false;
         try {
-            this.connection = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:PAWEL",login, password);
+            this.connection = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:PAWEL",login, password); //XE
             conState = true;
         } catch (SQLException e) {
             //System.out.println(e.getErrorCode());
