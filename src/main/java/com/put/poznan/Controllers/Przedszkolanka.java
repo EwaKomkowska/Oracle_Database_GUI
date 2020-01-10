@@ -16,13 +16,13 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class Przedszkolanka {
-    private IntegerProperty id = new SimpleIntegerProperty();
-    private StringProperty imie = new SimpleStringProperty();
-    private StringProperty nazwisko = new SimpleStringProperty();
-    private StringProperty kwalifikacje = new SimpleStringProperty();
-    private IntegerProperty placa = new SimpleIntegerProperty();
-    private IntegerProperty idGrupy = new SimpleIntegerProperty();
-    private IntegerProperty idHospitacji = new SimpleIntegerProperty();
+    private int id; //IntegerProperty id = new SimpleIntegerProperty();
+    private String imie; //StringProperty imie = new SimpleStringProperty();
+    private String nazwisko; //StringProperty nazwisko = new SimpleStringProperty();
+    private String kwalifikacje; //StringProperty kwalifikacje = new SimpleStringProperty();
+    private int placa; //IntegerProperty placa = new SimpleIntegerProperty();
+    private int idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
+    private int idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
 
     private DataBase dataBase;
 
@@ -46,106 +46,84 @@ public class Przedszkolanka {
     public void initialize() {
     }
 
-
     public int getId() {
-        return id.get();
-    }
-
-    public IntegerProperty idProperty() {
         return id;
     }
 
     public void setId(int id) {
-        this.id.set(id);
+        this.id = id;
     }
 
     public String getImie() {
-        return imie.get();
-    }
-
-    public StringProperty imieProperty() {
         return imie;
     }
 
     public void setImie(String imie) {
-        this.imie.set(imie);
+        this.imie = imie;
     }
 
     public String getNazwisko() {
-        return nazwisko.get();
-    }
-
-    public StringProperty nazwiskoProperty() {
         return nazwisko;
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko.set(nazwisko);
+        this.nazwisko = nazwisko;
     }
 
     public String getKwalifikacje() {
-        return kwalifikacje.get();
-    }
-
-    public StringProperty kwalifikacjeProperty() {
         return kwalifikacje;
     }
 
     public void setKwalifikacje(String kwalifikacje) {
-        this.kwalifikacje.set(kwalifikacje);
+        this.kwalifikacje = kwalifikacje;
     }
 
     public int getPlaca() {
-        return placa.get();
-    }
-
-    public IntegerProperty placaProperty() {
         return placa;
     }
 
     public void setPlaca(int placa) {
-        this.placa.set(placa);
+        this.placa = placa;
     }
 
     public int getIdGrupy() {
-        return idGrupy.get();
-    }
-
-    public IntegerProperty idGrupyProperty() {
         return idGrupy;
     }
 
     public void setIdGrupy(int idGrupy) {
-        this.idGrupy.set(idGrupy);
+        this.idGrupy = idGrupy;
     }
 
     public int getIdHospitacji() {
-        return idHospitacji.get();
-    }
-
-    public IntegerProperty idHospitacjiProperty() {
         return idHospitacji;
     }
 
     public void setIdHospitacji(int idHospitacji) {
-        this.idHospitacji.set(idHospitacji);
+        this.idHospitacji = idHospitacji;
     }
 
     public void add () {
         //TODO: tutaj zrobić zczytywanie z okienka, więc bez parametrów
         try {
-            this.id = new SimpleIntegerProperty(Integer.parseInt(idField.getText()));
+            //this.id = new SimpleIntegerProperty(Integer.parseInt(idField.getText()));
+            this.id = Integer.parseInt(idField.getText());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
-        this.imie = new SimpleStringProperty(imieField.getText());
+        /*this.imie = new SimpleStringProperty(imieField.getText());
         this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
         this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
+        */
+        this.imie = imieField.getText();
+        this.nazwisko = nazwiskoField.getText();
+        this.kwalifikacje =  kwalifikacjeField.getText();
         try {
-            this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
+
+            //this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
+            this.placa = Integer.parseInt(placaField.getText());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

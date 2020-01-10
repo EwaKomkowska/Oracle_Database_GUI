@@ -43,6 +43,8 @@ public class MainViewController {
     @FXML
     private TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
 
+    private ObservableList<Przedszkolanka> przedszkolanki;
+
     @FXML
     private TableView dzieckoTableView;
     @FXML
@@ -66,19 +68,27 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
-        przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        imie.setCellValueFactory(new PropertyValueFactory<>("imie"));
 
-        ObservableList<Przedszkolanka> products = FXCollections.observableArrayList();
+        przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
+        id.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("id"));
+        imie.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
+        nazwisko.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
+        kwalifikacje.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
+        placa.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Double>("placa"));
+        idGrupy.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idGrupy"));
+        idHospitacji.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idHospitacji"));
+
+
+
+        przedszkolanki = FXCollections.observableArrayList();
         Przedszkolanka p = new Przedszkolanka();
         p.setImie("Ania");
         System.out.println(p.getImie());
-        products.add(p);
-        System.out.println(products.toString());
+        przedszkolanki.add(p);
+        System.out.println(przedszkolanki.toString());
 
-        przedszkolankaTableView.setItems(products);
         przedszkolankaTableView.getColumns().addAll(id, imie, nazwisko, kwalifikacje, placa, idGrupy, idHospitacji);
+        przedszkolankaTableView.setItems(przedszkolanki);
 
 
         dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
