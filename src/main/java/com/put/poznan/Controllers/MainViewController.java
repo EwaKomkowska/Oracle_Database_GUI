@@ -27,7 +27,22 @@ public class MainViewController {
     @FXML
     private Button przedszkolankaRemoveButton;
     @FXML
-    private TableView <Przedszkolanka> przedszkolankaTableView;
+    private TableView<Przedszkolanka> przedszkolankaTableView;
+    @FXML
+    private TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
+    @FXML
+    private TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
+    @FXML
+    private TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
+    @FXML
+    private TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
+    @FXML
+    private TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
+    @FXML
+    private TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
+    @FXML
+    private TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
+
     @FXML
     private TableView dzieckoTableView;
     @FXML
@@ -52,15 +67,8 @@ public class MainViewController {
     @FXML
     public void initialize() {
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
         imie.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
-        TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
-        TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
-        TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
-        TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
 
         ObservableList<Przedszkolanka> products = FXCollections.observableArrayList();
         Przedszkolanka p = new Przedszkolanka();

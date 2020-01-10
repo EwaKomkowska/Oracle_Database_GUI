@@ -1,6 +1,10 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,13 +16,13 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class Przedszkolanka {
-    private int id;
-    private String imie;
-    private String nazwisko;
-    private String kwalifikacje;
-    private int placa;
-    private int idGrupy;
-    private int idHospitacji;
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private StringProperty imie = new SimpleStringProperty();
+    private StringProperty nazwisko = new SimpleStringProperty();
+    private StringProperty kwalifikacje = new SimpleStringProperty();
+    private IntegerProperty placa = new SimpleIntegerProperty();
+    private IntegerProperty idGrupy = new SimpleIntegerProperty();
+    private IntegerProperty idHospitacji = new SimpleIntegerProperty();
 
     private DataBase dataBase;
 
@@ -42,37 +46,106 @@ public class Przedszkolanka {
     public void initialize() {
     }
 
-    public String getImie() {
-        return imie;
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public String getImie() {
+        return imie.get();
+    }
+
+    public StringProperty imieProperty() {
+        return imie;
     }
 
     public void setImie(String imie) {
-        this.imie = imie;
+        this.imie.set(imie);
+    }
+
+    public String getNazwisko() {
+        return nazwisko.get();
+    }
+
+    public StringProperty nazwiskoProperty() {
+        return nazwisko;
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
+        this.nazwisko.set(nazwisko);
+    }
+
+    public String getKwalifikacje() {
+        return kwalifikacje.get();
+    }
+
+    public StringProperty kwalifikacjeProperty() {
+        return kwalifikacje;
+    }
+
+    public void setKwalifikacje(String kwalifikacje) {
+        this.kwalifikacje.set(kwalifikacje);
+    }
+
+    public int getPlaca() {
+        return placa.get();
+    }
+
+    public IntegerProperty placaProperty() {
+        return placa;
+    }
+
+    public void setPlaca(int placa) {
+        this.placa.set(placa);
+    }
+
+    public int getIdGrupy() {
+        return idGrupy.get();
+    }
+
+    public IntegerProperty idGrupyProperty() {
+        return idGrupy;
+    }
+
+    public void setIdGrupy(int idGrupy) {
+        this.idGrupy.set(idGrupy);
+    }
+
+    public int getIdHospitacji() {
+        return idHospitacji.get();
+    }
+
+    public IntegerProperty idHospitacjiProperty() {
+        return idHospitacji;
+    }
+
+    public void setIdHospitacji(int idHospitacji) {
+        this.idHospitacji.set(idHospitacji);
     }
 
     public void add () {
-        //tutaj zrobić zczytywanie z okienka, więc bez parametrów
+        //TODO: tutaj zrobić zczytywanie z okienka, więc bez parametrów
         try {
-            this.id = Integer.parseInt(idField.getText());
+            this.id = new SimpleIntegerProperty(Integer.parseInt(idField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
-        this.imie = imieField.getText();
-        this. nazwisko = nazwiskoField.getText();
-        this.kwalifikacje = kwalifikacjeField.getText();
+        this.imie = new SimpleStringProperty(imieField.getText());
+        this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
+        this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
         try {
-            this.placa = Integer.parseInt(placaField.getText());
+            this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -102,6 +175,6 @@ public class Przedszkolanka {
 
     @FXML
     public void clear() {
-        //czy da sie jakos wyczyscic wcisniety tylko
+        //TODO: czy da sie jakos wyczyscic wcisniety tylko
     }
 }
