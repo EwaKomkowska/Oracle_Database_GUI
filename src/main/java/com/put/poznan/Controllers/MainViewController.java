@@ -20,31 +20,31 @@ public class MainViewController {
     public MainViewController(){    }
 
     @FXML
-    Button przedszkolankaAddButton;
+    private Button przedszkolankaAddButton;
     @FXML
-    Button przedszkolankaRemoveButton;
+    private Button przedszkolankaRemoveButton;
     @FXML
-    TableView przedszkolankaTableView;
+    private TableView przedszkolankaTableView;
     @FXML
-    TableView dzieckoTableView;
+    private TableView dzieckoTableView;
     @FXML
-    TableView grupa_przedszkolnaTableView;
+    private TableView grupa_przedszkolnaTableView;
     @FXML
-    TableView festynTableView;
+    private TableView festynTableView;
     @FXML
-    TableView hospitacjaTableView;
+    private TableView hospitacjaTableView;
     @FXML
-    TableView oplataTableView;
+    private TableView oplataTableView;
     @FXML
-    TableView pomoc_dydaktycznaTableView;
+    private TableView pomoc_dydaktycznaTableView;
     @FXML
-    TableView posilekTableView;
+    private TableView posilekTableView;
     @FXML
-    TableView sekretarkaTableView;
+    private TableView sekretarkaTableView;
     @FXML
-    TableView zajecia_dodatkoweTableView;
+    private TableView zajecia_dodatkoweTableView;
     @FXML
-    TableView zebranie_rodziceTableView;
+    private TableView zebranie_rodziceTableView;
 
 
     @FXML
