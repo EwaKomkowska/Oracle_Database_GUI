@@ -13,7 +13,7 @@
       </Label>
       <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
          <children>
-            <PasswordField fx:id="passwordField" layoutX="8.0" layoutY="88.0" onMouseClicked="#clearPassword" onMousePressed="#showPassword" onMouseReleased="#hidePassword" prefHeight="66.0" prefWidth="316.0" text="**********" />
+            <PasswordField fx:id="passwordField" layoutX="8.0" layoutY="88.0" onMouseClicked="#clearPassword" prefHeight="66.0" prefWidth="316.0" text="**********" />
             <TextField fx:id="loginTextField" layoutX="8.0" layoutY="7.0" onMouseClicked="#clearLogin" prefHeight="66.0" prefWidth="316.0" text="login">
                <font>
                   <Font name="Noto Sans Regular" size="14.0" />
