@@ -1,6 +1,7 @@
 package com.put.poznan.Controllers;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -50,23 +51,88 @@ public class MainViewController {
     //============DZIECKO--------------------------------\\
 
     @FXML
-    private TableView dzieckoTableView;
+    private TableView<Dziecko> dzieckoTableView;
+
+    @FXML
+    private TableColumn<Dziecko, Number> idDzieckoColumn;
+    @FXML
+    private TableColumn<Dziecko, String> imieDzieckoColumn;
+    @FXML
+    private TableColumn<Dziecko, String> nazwiskoDzieckoColumn;
+    @FXML
+    private TableColumn<Dziecko, Date> dataUrodzeniaDzieckoColumn;
+    @FXML
+    private TableColumn<Dziecko, Number> grupaPrzedszkolnaDzieckoColumn;
+    @FXML
+    private TableColumn<Dziecko, Number> idPosilkuDzieckoColumn;
 
     //============GRUPA_PRZEDSZKOLNA--------------------------------\\
     @FXML
-    private TableView grupa_przedszkolnaTableView;
+    private TableView<GrupaPrzedszkolna> grupa_przedszkolnaTableView;
+
+    @FXML
+    private TableColumn<GrupaPrzedszkolna, Number> idGrupaPrzedszkolnaColumn;
+    @FXML
+    private TableColumn<GrupaPrzedszkolna, Number> salaGrupaPrzedszkolnaColumn;
+    @FXML
+    private TableColumn<GrupaPrzedszkolna, String> nazwaGrupaPrzedszkolnaColumn;
+    @FXML
+    private TableColumn<GrupaPrzedszkolna, Number> wiekDzieciGrupaPrzedszkolnaColumn;
+    @FXML
+    private TableColumn<GrupaPrzedszkolna, Number> idPracGrupaPrzedszkolnaColumn;
+
+    //============ETAT--------------------------------\\
+    @FXML
+    private TableView<Etat> etatTableView;
+
+    @FXML
+    private TableColumn<Etat, String> nazwaEtatColumn;
+    @FXML
+    private TableColumn<Etat, Number> placaMinEtatColumn;
+    @FXML
+    private TableColumn<Etat, Number> placaMaxEtatColumn;
 
     //============FESTYN--------------------------------\\
+
     @FXML
-    private TableView festynTableView;
+    private TableView<Festyn> festynTableView;
+
+    @FXML
+    private TableColumn<Festyn, Number> idFestynColumn;
+    @FXML
+    private TableColumn<Festyn, Number> grupaWystepujacaFestynColumn;
+    @FXML
+    private TableColumn<Festyn, Number> osobaOdpowiedzialnaFestynColumn;
+    @FXML
+    private TableColumn<Festyn, Date> terminWydarzeniaFestynColumn;
+    @FXML
+    private TableColumn<Festyn, String> nazwaFestynColumn;
 
     //============HOSPITACJA--------------------------------\\
     @FXML
-    private TableView hospitacjaTableView;
+    private TableView<Hospitacja> hospitacjaTableView;
+
+    @FXML
+    private TableColumn<Hospitacja, Number> idHospitacjaColumn;
+    @FXML
+    private TableColumn<Hospitacja, Date> terminHospitacjaColumn;
+    @FXML
+    private TableColumn<Hospitacja, Number> ktoNadzorowanyHospitacjaColumn;
+    @FXML
+    private TableColumn<Hospitacja, Number> ktoNadzorujeHospitacjaColumn;
 
     //============OPLATA--------------------------------\\
     @FXML
-    private TableView oplataTableView;
+    private TableView<Oplata> oplataTableView;
+
+    @FXML
+    private TableColumn<Oplata, Number> idOplataColumn;
+    @FXML
+    private TableColumn<Oplata, Number> wielkoscOplataColumn;
+    @FXML
+    private TableColumn<Oplata, String> przedmiotOplataColumn;
+    @FXML
+    private TableColumn<Oplata, String> czestoscOplataColumn;
 
     //============POMOC_DYDAKTYCZNA--------------------------------\\
     @FXML
