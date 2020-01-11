@@ -39,8 +39,6 @@ public class PrzedszkolankaController {
 
 
     public void add () {
-
-       /*
         int id = 0;
         String imie;
         String nazwisko;
@@ -60,7 +58,6 @@ public class PrzedszkolankaController {
         this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
         this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
         */
-       /*
         imie = imieField.getText();
         nazwisko = nazwiskoField.getText();
         kwalifikacje =  kwalifikacjeField.getText();
@@ -75,7 +72,6 @@ public class PrzedszkolankaController {
             alert.showAndWait();
         }
         Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);
-        */
     }
 
     public DataBase getDataBase() {

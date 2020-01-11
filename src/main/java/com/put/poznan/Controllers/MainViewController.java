@@ -459,6 +459,114 @@ public class MainViewController {
         App.getStage().setScene(scene);
     }
 
+    @FXML
+    private void addPosilek() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("posilek");
+        Parent root = loader.load();
+        posilekController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addDziecko() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("dziecko");
+        Parent root = loader.load();
+        dzieckoController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addFestyn() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("festyn");
+        Parent root = loader.load();
+        dzieckoController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addGrupa() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("grupa");
+        Parent root = loader.load();
+        grupaPrzedszkolnaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addHospitacja() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("hospitacja");
+        Parent root = loader.load();
+        hospitacjaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addOplata() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("oplata");
+        Parent root = loader.load();
+        oplataController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addPomoc() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("pomoc");
+        Parent root = loader.load();
+        pomocDydaktycznaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addZajecia() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("zajecia");
+        Parent root = loader.load();
+        zajeciaDodatkoweController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+    @FXML
+    private void addZebranie() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("zebranie");
+        Parent root = loader.load();
+        zebranieRodziceController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addSekretarka() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("sekretarka");
+        Parent root = loader.load();
+        sekretarkaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
 
     private void remove(String statement, int parameter) {
         PreparedStatement stmt;

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.MainViewController">
+   <items>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab id="przedszkolankaTab" text="Przedszkolanka">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="526.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                <buttons>
+                                  <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove" />
+                                    <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
+                                    <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
+                                </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="przedszkolankaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
+                                 <columns>
+                                    <TableColumn fx:id="idPrzedszkolankaColumn" prefWidth="75.0" text="ID" />
+                                    <TableColumn fx:id="imiePrzedszkolankaColumn" prefWidth="75.0" text="Imię" />
+                                    <TableColumn fx:id="nazwiskoPrzedszkolankaColumn" prefWidth="75.0" text="Nazwisko" />
+                                    <TableColumn fx:id="kwalifikacjePrzedszkolankaColumn" prefWidth="130.0" text="Kwalifikacje" />
+                                    <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
+                                    <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
+                                    <TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />
+                                 </columns></TableView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="sekretarkaTab" text="Sekretarka">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeSekretarka" text="Remove" />
+                                    <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addSekretarka"/>
+                                    <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="sekretarkaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="dzieckoTab" text="Dziecko">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
+                                    <Button fx:id="dzieckoAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addDziecko"/>
+                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="dzieckoTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="grupaPrzedszkolnaTab" text="Grupa Przedszkolna">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeGrupa" text="Remove" />
+                                    <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addGrupa" />
+                                    <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="grupa_przedszkolnaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="zajeciaDodatkoweTab" text="Zajęcia Dodatkowe">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZajecia" text="Remove" />
+                                    <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addZajecia"/>
+                                    <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="zajecia_dodatkoweTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="posilekTab" text="Posiłek">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="posilekRemoveButton" mnemonicParsing="false" onMouseClicked="#removePosilek" text="Remove" />
+                                    <Button fx:id="posilekAddButton" mnemonicParsing="false" onMouseClicked="#addPosilek" text="Add" />
+                                    <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="posilekTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="pomocDydaktycznaTab" text="Pomoc dydaktyczna">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePomoc" text="Remove" />
+                                    <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addPomoc"/>
+                                    <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="pomoc_dydaktycznaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="oplataTab" closable="false" text="Opłata">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="oplataRemoveButton" mnemonicParsing="false" onMouseClicked="#removeOplata" text="Remove" />
+                                    <Button fx:id="oplataAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addOplata"/>
+                                    <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="oplataTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="festynTab" text="Festyn">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="festynRemoveButton" mnemonicParsing="false" onMouseClicked="#removeFestyn" text="Remove" />
+                                    <Button fx:id="festynAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addFestyn"/>
+                                    <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="festynTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="zebranieTab" text="Zebranie z Rodzicami">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="603.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZebranie" text="Remove" />
+                                    <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addZebranie"/>
+                                    <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="zebranie_rodziceTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab id="hospitacjaTab" text="Hospitacja">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="335.0" prefWidth="597.0">
+                           <children>
+                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                 <buttons>
+                                    <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeHospitacja" text="Remove" />
+                                    <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" text="Add" onMouseClicked="#addHospitacja"/>
+                                    <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
+                                 </buttons>
+                              </ButtonBar>
+                              <TableView fx:id="hospitacjaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;">
+        <buttons>
+          <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
+               <font>
+                  <Font name="Droid Sans" size="15.0" />
+               </font>
+            </Button>
+        </buttons>
+      </ButtonBar>
+   </items>
+</SplitPane>
