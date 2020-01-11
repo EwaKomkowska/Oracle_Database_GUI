@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+    <persistence-unit name="NewPersistenceUnit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.put.poznan.SchemaObjects.Dziecko</class>
+        <class>com.put.poznan.SchemaObjects.Etaty</class>
+        <class>com.put.poznan.SchemaObjects.Festyn</class>
+        <class>com.put.poznan.SchemaObjects.Grupaprzedszkolna</class>
+        <class>com.put.poznan.SchemaObjects.Hospitacja</class>
+        <class>com.put.poznan.SchemaObjects.Oplata</class>
+        <class>com.put.poznan.SchemaObjects.Pomocdydaktyczna</class>
+        <class>com.put.poznan.SchemaObjects.Posilek</class>
+        <class>com.put.poznan.SchemaObjects.Pracownik</class>
+        <class>com.put.poznan.SchemaObjects.Sekretarka</class>
+        <class>com.put.poznan.SchemaObjects.Zajeciadodatkowe</class>
+        <class>com.put.poznan.SchemaObjects.Zebraniezrodzicami</class>
+        <class>com.put.poznan.SchemaObjects.Zespoly</class>
+        <class>com.put.poznan.SchemaObjects.Przedszkolanka</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:PAWEL"/>
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
+            <property name="hibernate.connection.username" value=""/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
