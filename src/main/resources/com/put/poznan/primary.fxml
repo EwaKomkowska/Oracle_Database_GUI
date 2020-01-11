@@ -23,13 +23,13 @@
                               </ButtonBar>
                               <TableView fx:id="przedszkolankaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
                                  <columns>
-                                    <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="imieColumn" prefWidth="75.0" text="Imię" />
-                                    <TableColumn fx:id="nazwiskoColumn" prefWidth="75.0" text="Nazwisko" />
-                                    <TableColumn fx:id="kwalifikacjeColumn" prefWidth="130.0" text="Kwalifikacje" />
-                                    <TableColumn fx:id="placaColumn" prefWidth="95.0" text="Płaca" />
-                                    <TableColumn fx:id="idGrupyColumn" prefWidth="69.0" text="ID grupy" />
-                                    <TableColumn fx:id="idHospitacjiColumn" prefWidth="79.0" text="ID hospitacji" />
+                                    <TableColumn fx:id="idPrzedszkolankaColumn" prefWidth="75.0" text="ID" />
+                                    <TableColumn fx:id="imiePrzedszkolankaColumn" prefWidth="75.0" text="Imię" />
+                                    <TableColumn fx:id="nazwiskoPrzedszkolankaColumn" prefWidth="75.0" text="Nazwisko" />
+                                    <TableColumn fx:id="kwalifikacjePrzedszkolankaColumn" prefWidth="130.0" text="Kwalifikacje" />
+                                    <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
+                                    <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
+                                    <TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />
                                  </columns></TableView>
                            </children>
                         </Pane>

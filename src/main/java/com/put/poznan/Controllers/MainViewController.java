@@ -7,11 +7,7 @@ import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class MainViewController {
 
@@ -28,6 +23,7 @@ public class MainViewController {
 
     public MainViewController(){    }
 
+    //============PRZEDSZKOLANKA--------------------------------\\
     @FXML
     private Button przedszkolankaAddButton;
     @FXML
@@ -35,58 +31,78 @@ public class MainViewController {
     @FXML
     private TableView<Przedszkolanka> przedszkolankaTableView;
     @FXML
-    private TableColumn<Przedszkolanka, Number> idColumn; // = new TableColumn<>("id");
+    private TableColumn<Przedszkolanka, Number> idPrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, String> imieColumn; // = new TableColumn<>("imie");
+    private TableColumn<Przedszkolanka, String> imiePrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, String> nazwiskoColumn; // = new TableColumn<>("nazwisko");
+    private TableColumn<Przedszkolanka, String> nazwiskoPrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, String> kwalifikacjeColumn; // = new TableColumn<>("kwalifikacje");
+    private TableColumn<Przedszkolanka, String> kwalifikacjePrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, Number> placaColumn; // = new TableColumn<>("płaca");
+    private TableColumn<Przedszkolanka, Number> placaPrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, Number> idGrupyColumn; // = new TableColumn<>("id grupy");
+    private TableColumn<Przedszkolanka, Number> idGrupyPrzedszkolankaColumn;
     @FXML
-    private TableColumn<Przedszkolanka, Number> idHospitacjiColumn; // = new TableColumn<>("id hospitacji");
+    private TableColumn<Przedszkolanka, Number> idHospitacjiPrzedszkolankaColumn;
 
     private ObservableList<Przedszkolanka> przedszkolanki;
 
+    //============DZIECKO--------------------------------\\
+
     @FXML
     private TableView dzieckoTableView;
+
+    //============GRUPA_PRZEDSZKOLNA--------------------------------\\
     @FXML
     private TableView grupa_przedszkolnaTableView;
+
+    //============FESTYN--------------------------------\\
     @FXML
     private TableView festynTableView;
+
+    //============HOSPITACJA--------------------------------\\
     @FXML
     private TableView hospitacjaTableView;
+
+    //============OPLATA--------------------------------\\
     @FXML
     private TableView oplataTableView;
+
+    //============POMOC_DYDAKTYCZNA--------------------------------\\
     @FXML
     private TableView pomoc_dydaktycznaTableView;
+
+    //============POSILEK--------------------------------\\
     @FXML
     private TableView posilekTableView;
+
+    //============SEKRETARKA--------------------------------\\
     @FXML
     private TableView sekretarkaTableView;
+
+    //============ZAJECIA_DODATKOWE--------------------------------\\
     @FXML
     private TableView zajecia_dodatkoweTableView;
+
+    //============ZEBRANIE_Z_RODZICAMI--------------------------------\\
     @FXML
     private TableView zebranie_rodziceTableView;
+
+    //-----------------------------------------------------
 
     @FXML
     public void initialize() {
 
         //przedszkolankaTableView.getColumns().addAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, idGrupyColumn, idHospitacjiColumn);
 
-        //idColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("id"));
-        idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()));
-        imieColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
-        nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
-        kwalifikacjeColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
-        //kwalifikacjeColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper( String.valueOf( c.getValue().getKwalifikacje())));
-        placaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
-        idGrupyColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
-        idHospitacjiColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
-
+        //idPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("id"));
+        idPrzedszkolankaColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()));
+        imiePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
+        nazwiskoPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
+        kwalifikacjePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
+        placaPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
+        idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
+        idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
 
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
 
@@ -103,7 +119,7 @@ public class MainViewController {
         System.out.println(przedszkolanki.toString());
 
         przedszkolankaTableView.setItems(przedszkolanki);
-        System.out.println(idColumn.getCellObservableValue(0).toString());
+        System.out.println(idPrzedszkolankaColumn.getCellObservableValue(0).toString());
 
 /*
         dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
