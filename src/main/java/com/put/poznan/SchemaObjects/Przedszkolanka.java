@@ -1,16 +1,17 @@
 package com.put.poznan.SchemaObjects;
 
 
+import javafx.beans.value.ObservableValue;
 
 public class Przedszkolanka {
 
-    private int id; // IntegerProperty id = new SimpleIntegerProperty();
+    private Integer id; // IntegerProperty id = new SimpleIntegerProperty();
     private String imie; //StringProperty imie = new SimpleStringProperty();
     private String nazwisko; //StringProperty nazwisko = new SimpleStringProperty();
     private String kwalifikacje; //StringProperty kwalifikacje = new SimpleStringProperty();
-    private float placa; //IntegerProperty placa = new SimpleIntegerProperty();
-    private int idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
-    private int idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
+    private Float placa; //IntegerProperty placa = new SimpleIntegerProperty();
+    private Integer idGrupy; //IntegerProperty idGrupy = new SimpleIntegerProperty();
+    private Integer idHospitacji; //IntegerProperty idHospitacji = new SimpleIntegerProperty();
 /*
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty imie = new SimpleStringProperty();
@@ -21,11 +22,13 @@ public class Przedszkolanka {
     private int IntegerProperty idHospitacji = new SimpleIntegerProperty();
 */
     public Przedszkolanka(){
-        this.id = 0;
+        this.id =  new Integer(34);
         this.imie = "imie";
-        this.nazwisko = "nazwisko";
+        this.nazwisko = "łohoho";
         this.kwalifikacje = "kwalifikacje";
-        this.placa = 0;
+        this.placa = new Float(1.2);
+        this.idGrupy =  new Integer(23);
+        this.idHospitacji= new Integer(0);
     }
 
     public Przedszkolanka(int id, String imie, String nazwisko, String kwalifikacje, float placa){
@@ -36,11 +39,12 @@ public class Przedszkolanka {
         this.placa = placa;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,36 +72,27 @@ public class Przedszkolanka {
         this.kwalifikacje = kwalifikacje;
     }
 
-    public float getPlaca() {
+    public Float getPlaca() {
         return placa;
     }
 
-    public void setPlaca(int placa) {
+    public void setPlaca(Float placa) {
         this.placa = placa;
     }
 
-    public int getIdGrupy() {
+    public Integer getIdGrupy() {
         return idGrupy;
     }
 
-    public void setIdGrupy(int idGrupy) {
+    public void setIdGrupy(Integer idGrupy) {
         this.idGrupy = idGrupy;
     }
 
-    public int getIdHospitacji() {
+    public Integer getIdHospitacji() {
         return idHospitacji;
     }
 
-    public void setIdHospitacji(int idHospitacji) {
+    public void setIdHospitacji(Integer idHospitacji) {
         this.idHospitacji = idHospitacji;
     }
-
-
-
-
-
-
-
-
-
 }

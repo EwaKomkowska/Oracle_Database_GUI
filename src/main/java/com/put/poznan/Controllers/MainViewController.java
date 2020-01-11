@@ -7,6 +7,11 @@ import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class MainViewController {
 
@@ -29,19 +35,19 @@ public class MainViewController {
     @FXML
     private TableView<Przedszkolanka> przedszkolankaTableView;
     @FXML
-    private TableColumn<Przedszkolanka, Integer> id = new TableColumn<>("id");
+    private TableColumn<Przedszkolanka, Number> idColumn; // = new TableColumn<>("id");
     @FXML
-    private TableColumn<Przedszkolanka, String> imie = new TableColumn<>("imie");
+    private TableColumn<Przedszkolanka, String> imieColumn; // = new TableColumn<>("imie");
     @FXML
-    private TableColumn<Przedszkolanka, String> nazwisko = new TableColumn<>("nazwisko");
+    private TableColumn<Przedszkolanka, String> nazwiskoColumn; // = new TableColumn<>("nazwisko");
     @FXML
-    private TableColumn<Przedszkolanka, String> kwalifikacje = new TableColumn<>("kwalifikacje");
+    private TableColumn<Przedszkolanka, String> kwalifikacjeColumn; // = new TableColumn<>("kwalifikacje");
     @FXML
-    private TableColumn<Przedszkolanka, Double> placa = new TableColumn<>("płaca");
+    private TableColumn<Przedszkolanka, Number> placaColumn; // = new TableColumn<>("płaca");
     @FXML
-    private TableColumn<Przedszkolanka, Integer> idGrupy = new TableColumn<>("id grupy");
+    private TableColumn<Przedszkolanka, Number> idGrupyColumn; // = new TableColumn<>("id grupy");
     @FXML
-    private TableColumn<Przedszkolanka, Integer> idHospitacji= new TableColumn<>("id hospitacji");
+    private TableColumn<Przedszkolanka, Number> idHospitacjiColumn; // = new TableColumn<>("id hospitacji");
 
     private ObservableList<Przedszkolanka> przedszkolanki;
 
@@ -69,34 +75,43 @@ public class MainViewController {
     @FXML
     public void initialize() {
 
+        //przedszkolankaTableView.getColumns().addAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, idGrupyColumn, idHospitacjiColumn);
+
+        //idColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("id"));
+        idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()));
+        imieColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
+        nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
+        kwalifikacjeColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
+        //kwalifikacjeColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper( String.valueOf( c.getValue().getKwalifikacje())));
+        placaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
+        idGrupyColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
+        idHospitacjiColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
+
+
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        id.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("id"));
-        imie.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
-        nazwisko.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
-        kwalifikacje.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
-        placa.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Double>("placa"));
-        idGrupy.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idGrupy"));
-        idHospitacji.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Integer>("idHospitacji"));
-
-
 
         przedszkolanki = FXCollections.observableList(new ArrayList<>());
         Przedszkolanka p = new Przedszkolanka();
         p.setImie("Ania");
-        System.out.println(p.getImie());
+        p.setIdHospitacji(2);
+        p.setId(232);
+        System.out.println("Id: " + p.getId() + " imie:  " + p.getImie() + " placa: " + p.getPlaca() + " idHos: " + p.getIdHospitacji());
         przedszkolanki.add(p);
+        for(int i=0; i<5; i++) {
+            przedszkolanki.add(new Przedszkolanka());
+        }
         System.out.println(przedszkolanki.toString());
 
-        przedszkolankaTableView.getColumns().addAll(id, imie, nazwisko, kwalifikacje, placa, idGrupy, idHospitacji);
         przedszkolankaTableView.setItems(przedszkolanki);
+        System.out.println(idColumn.getCellObservableValue(0).toString());
 
-
+/*
         dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
         TableColumn dataUrodzenia = new TableColumn("data urodzenia");
         dataUrodzenia.setPrefWidth(100.0);
         TableColumn idPosilku = new TableColumn("id posiłku");
 
-        dzieckoTableView.getColumns().setAll(id, imie, nazwisko, dataUrodzenia, idGrupy, idPosilku);
+       // dzieckoTableView.getColumns().setAll(idColumn, imieColumn, nazwiskoColumn, dataUrodzenia, idGrupyColumn, idPosilku);
 
 
         grupa_przedszkolnaTableView.setEditable(false);
@@ -105,7 +120,7 @@ public class MainViewController {
         TableColumn wiek = new TableColumn("wiek");
         TableColumn osobaOdpowiedzialna = new TableColumn("id przedszkolanki");
 
-        grupa_przedszkolnaTableView.getColumns().setAll(id, miejsce, nazwa, wiek, osobaOdpowiedzialna);
+        grupa_przedszkolnaTableView.getColumns().setAll(idColumn, miejsce, nazwa, wiek, osobaOdpowiedzialna);
 
 
         festynTableView.setEditable(false);
@@ -113,14 +128,14 @@ public class MainViewController {
         TableColumn data = new TableColumn("data");
         TableColumn haslo = new TableColumn("hasło");
 
-        festynTableView.getColumns().setAll(id, idGrupy, osobaOdpowiedzialna, data, haslo);
+       // festynTableView.getColumns().setAll(idColumn, idGrupyColumn, osobaOdpowiedzialna, data, haslo);
 
 
         hospitacjaTableView.setEditable(false);
         TableColumn osobaNadzorujaca = new TableColumn("id nadzorującego");
         osobaNadzorujaca.setPrefWidth(150.0);
 
-        hospitacjaTableView.getColumns().setAll(id, data, osobaOdpowiedzialna, osobaNadzorujaca);
+        hospitacjaTableView.getColumns().setAll(idColumn, data, osobaOdpowiedzialna, osobaNadzorujaca);
 
 
         oplataTableView.setEditable(false);
@@ -129,12 +144,12 @@ public class MainViewController {
         TableColumn czestosc = new TableColumn("częstość");
 
         //polaczenia chyba nie powinny być widoczne, wiec to starczy???
-        oplataTableView.getColumns().setAll(id, wielkosc, przedmiot, czestosc);
+        oplataTableView.getColumns().setAll(idColumn, wielkosc, przedmiot, czestosc);
 
         pomoc_dydaktycznaTableView.setEditable(false);
         TableColumn oplata = new TableColumn("oplaty");
 
-        pomoc_dydaktycznaTableView.getColumns().setAll(id, przedmiot, oplata, idGrupy, osobaOdpowiedzialna);
+        //pomoc_dydaktycznaTableView.getColumns().setAll(idColumn, przedmiot, oplata, idGrupyColumn, osobaOdpowiedzialna);
 
 
         posilekTableView.setEditable(false);
@@ -142,7 +157,7 @@ public class MainViewController {
         godzina.setPrefWidth(120.0);
         TableColumn dieta = new TableColumn("dieta");
 
-        posilekTableView.getColumns().setAll(id, nazwa, godzina, dieta);
+        posilekTableView.getColumns().setAll(idColumn, nazwa, godzina, dieta);
 
 
         sekretarkaTableView.setEditable(false);
@@ -150,21 +165,21 @@ public class MainViewController {
         pocz.setPrefWidth(100.0);
         TableColumn koniec = new TableColumn("koniec pracy");
 
-        sekretarkaTableView.getColumns().setAll(id, imie, nazwisko, kwalifikacje, placa, pocz, koniec);
+        sekretarkaTableView.getColumns().setAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, pocz, koniec);
 
 
         zajecia_dodatkoweTableView.setEditable(false);
         TableColumn czas = new TableColumn("czas tygodniowo");
         czas.setPrefWidth(100.0);
 
-        zajecia_dodatkoweTableView.getColumns().setAll(id, nazwa, data, oplata, czas, idGrupy);
+       // zajecia_dodatkoweTableView.getColumns().setAll(idColumn, nazwa, data, oplata, czas, idGrupyColumn);
 
 
         zebranie_rodziceTableView.setEditable(false);
         TableColumn czyobow = new TableColumn("obowiązkowe");
         czyobow.setPrefWidth(100.0);
 
-        zebranie_rodziceTableView.getColumns().setAll(id, data, idGrupy, miejsce, osobaOdpowiedzialna, czyobow);
+       // zebranie_rodziceTableView.getColumns().setAll(idColumn, data, idGrupyColumn, miejsce, osobaOdpowiedzialna, czyobow);*/
     }
 
     @FXML

@@ -53,7 +53,7 @@ public class LoginController {
         if(this.onceLog){
             this.login = "";
             this.loginTextField.setText("");
-            this.oncePass = false;
+            this.onceLog = false;
         }
     }
 
