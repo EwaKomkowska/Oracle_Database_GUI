@@ -3,11 +3,12 @@ package com.put.poznan.Controllers;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.SchemaObjects.Przedszkolanka;
+import com.put.poznan.SchemaObjects.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,37 +61,43 @@ public class MainViewController {
     @FXML
     private TableColumn<Dziecko, String> nazwiskoDzieckoColumn;
     @FXML
-    private TableColumn<Dziecko, Date> dataUrodzeniaDzieckoColumn;
+    private TableColumn<Dziecko, Date> dataUrodzeniaDzieckoColumn; //TODO: Time
     @FXML
     private TableColumn<Dziecko, Number> grupaPrzedszkolnaDzieckoColumn;
     @FXML
     private TableColumn<Dziecko, Number> idPosilkuDzieckoColumn;
 
+    private ObservableList<Dziecko> dzieci;
+
     //============GRUPA_PRZEDSZKOLNA--------------------------------\\
     @FXML
-    private TableView<GrupaPrzedszkolna> grupa_przedszkolnaTableView;
+    private TableView<Grupaprzedszkolna> grupa_przedszkolnaTableView;
 
     @FXML
-    private TableColumn<GrupaPrzedszkolna, Number> idGrupaPrzedszkolnaColumn;
+    private TableColumn<Grupaprzedszkolna, Number> idGrupaPrzedszkolnaColumn;
     @FXML
-    private TableColumn<GrupaPrzedszkolna, Number> salaGrupaPrzedszkolnaColumn;
+    private TableColumn<Grupaprzedszkolna, Number> salaGrupaPrzedszkolnaColumn;
     @FXML
-    private TableColumn<GrupaPrzedszkolna, String> nazwaGrupaPrzedszkolnaColumn;
+    private TableColumn<Grupaprzedszkolna, String> nazwaGrupaPrzedszkolnaColumn;
     @FXML
-    private TableColumn<GrupaPrzedszkolna, Number> wiekDzieciGrupaPrzedszkolnaColumn;
+    private TableColumn<Grupaprzedszkolna, Number> wiekDzieciGrupaPrzedszkolnaColumn;
     @FXML
-    private TableColumn<GrupaPrzedszkolna, Number> idPracGrupaPrzedszkolnaColumn;
+    private TableColumn<Grupaprzedszkolna, Number> idPracGrupaPrzedszkolnaColumn;
+
+    private ObservableList<Grupaprzedszkolna> grupyPrzedszkolne;
 
     //============ETAT--------------------------------\\
     @FXML
-    private TableView<Etat> etatTableView;
+    private TableView<Etaty> etatTableView;
 
     @FXML
-    private TableColumn<Etat, String> nazwaEtatColumn;
+    private TableColumn<Etaty, String> nazwaEtatColumn;
     @FXML
-    private TableColumn<Etat, Number> placaMinEtatColumn;
+    private TableColumn<Etaty, Number> placaMinEtatColumn;
     @FXML
-    private TableColumn<Etat, Number> placaMaxEtatColumn;
+    private TableColumn<Etaty, Number> placaMaxEtatColumn;
+
+    private ObservableList<Etaty> etaty;
 
     //============FESTYN--------------------------------\\
 
@@ -108,6 +115,8 @@ public class MainViewController {
     @FXML
     private TableColumn<Festyn, String> nazwaFestynColumn;
 
+    private ObservableList<Festyn> festyny;
+
     //============HOSPITACJA--------------------------------\\
     @FXML
     private TableView<Hospitacja> hospitacjaTableView;
@@ -120,6 +129,8 @@ public class MainViewController {
     private TableColumn<Hospitacja, Number> ktoNadzorowanyHospitacjaColumn;
     @FXML
     private TableColumn<Hospitacja, Number> ktoNadzorujeHospitacjaColumn;
+
+    private ObservableList<Hospitacja> hospitacje;
 
     //============OPLATA--------------------------------\\
     @FXML
@@ -134,134 +145,217 @@ public class MainViewController {
     @FXML
     private TableColumn<Oplata, String> czestoscOplataColumn;
 
+    private ObservableList<Oplata> oplaty;
+
     //============POMOC_DYDAKTYCZNA--------------------------------\\
     @FXML
-    private TableView pomoc_dydaktycznaTableView;
+    private TableView<Pomocdydaktyczna> pomoc_dydaktycznaTableView;
+
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> idPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, String> rodzajPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> dodatkoweOplatyPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> grupaDocelowaPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> osobaOdpowiedzialnaPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> przedszkolankaIdPomocDydatktycznaColumn;
+    @FXML
+    private TableColumn<Pomocdydaktyczna, Number> grupaPrzedszkolnaIdPomocDydatktycznaColumn;
+
+    private ObservableList<Pomocdydaktyczna> pomoceDydaktyczne;
 
     //============POSILEK--------------------------------\\
     @FXML
-    private TableView posilekTableView;
+    private TableView<Posilek> posilekTableView;
+
+    @FXML
+    private TableColumn<Posilek, Number> idPosilekColumn;
+    @FXML
+    private TableColumn<Posilek, String> nazwaPosilekColumn;
+    @FXML
+    private TableColumn<Posilek, Time> godzRozwozeniaPosilekColumn;
+    @FXML
+    private TableColumn<Posilek, String> dietaPosilekColumn;
+
+    private ObservableList<Posilek> posliki;
 
     //============SEKRETARKA--------------------------------\\
     @FXML
-    private TableView sekretarkaTableView;
+    private TableView<Sekretarka> sekretarkaTableView;
+
+    @FXML
+    private TableColumn<Sekretarka, Number> idSekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, String> imieSekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, String> nazwiskoSekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, String> kwalifikacjeSekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, Number> placaSekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, Time> godzRozpoczeciaPracySekretarkaColumn;
+    @FXML
+    private TableColumn<Sekretarka, Time> godzZakonczeniaPracySekretarkaColumn;
+
+    private ObservableList<Sekretarka> sekretarki;
 
     //============ZAJECIA_DODATKOWE--------------------------------\\
     @FXML
-    private TableView zajecia_dodatkoweTableView;
+    private TableView<Zajeciadodatkowe> zajecia_dodatkoweTableView;
+
+    @FXML
+    private TableColumn<Zajeciadodatkowe, Number> idZajeciaDodatkoweColumn;
+    @FXML
+    private TableColumn<Zajeciadodatkowe, String> rodzajZajeciaDodatkoweColumn;
+    @FXML
+    private TableColumn<Zajeciadodatkowe, Time> dataProwadzeniaZajeciaDodatkoweColumn; //TODO: date???
+    @FXML
+    private TableColumn<Zajeciadodatkowe, Number> oplatyZajeciaDodatkoweColumn;
+    @FXML
+    private TableColumn<Zajeciadodatkowe, Number> czasTygodniowoZajeciaDodatkoweColumn;
+    @FXML
+    private TableColumn<Zajeciadodatkowe, Number> dlaKogoZajeciaDodatkoweColumn;
+
+    private ObservableList<Zajeciadodatkowe> zajeciaDodatkowe;
 
     //============ZEBRANIE_Z_RODZICAMI--------------------------------\\
     @FXML
-    private TableView zebranie_rodziceTableView;
+    private TableView<Zebraniezrodzicami> zebranie_rodziceTableView;
+
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Number> idZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Time> dataZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Number> grupaZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Number> miejscaSalaZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Number> prowadzacyZebranieZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, String> czyObowiazkoweZebranieRodziceColumn;
+    @FXML
+    private TableColumn<Zebraniezrodzicami, Number> przedszkolankaIdHospitacjiZebranieRodziceColumn;
+
+    private ObservableList<Zebraniezrodzicami> zebraniaZRodzicami;
 
     //-----------------------------------------------------
+
 
     @FXML
     public void initialize() {
 
         //przedszkolankaTableView.getColumns().addAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, idGrupyColumn, idHospitacjiColumn);
 
-        //idPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("id"));
-        idPrzedszkolankaColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()));
+        //idPrzedszkolankaColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()));
+        idPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idprac"));
         imiePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("imie"));
         nazwiskoPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
         kwalifikacjePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
         placaPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
-        idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
-        idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
+        //FIXME: tych dwoch kolumn nie ma wgl w obiekcie przedszkolanka
+        // idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
+        //FIXME: NIE MA ID TEGO
+        // idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
 
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
 
+        //============DzieckoColumns--------------------------------\\
+        idDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("iddziecka"));
+        imieDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("imie"));
+        nazwiskoDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("nazwisko"));
+        dataUrodzeniaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Date>("dataurodzenia"));
+        grupaPrzedszkolnaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("grupaprzedszkolnaIdgrupy"));
+        idPosilkuDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("posilekIdposilku"));
+
+        //TODO: czy set eitable wszedzie tez???
+        //============GrupaPrzedszkolnaColumns--------------------------------\\
+        idGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("idgrupy"));
+        salaGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("sala"));
+        nazwaGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, String>("nazwa"));
+        wiekDzieciGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("wiekdzieci"));
+        idPracGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("idprac"));
+
+        //============EtatColumns--------------------------------\\
+        nazwaEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, String>("nazwa"));
+        placaMinEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMin"));
+        placaMaxEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMax"));
+
+        //============FestynColumns--------------------------------\\
+        idFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("idfestynu"));
+        grupaWystepujacaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("grupawystepujaca"));
+        osobaOdpowiedzialnaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("osobaodpowiedzialna"));
+        terminWydarzeniaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Date>("terminwydarzena")); //TODO: date czy time
+        nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("nazwaHaslo"));
+
+        //============HospitacjaColumns--------------------------------\\
+        idHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("idhospitacji"));
+        terminHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Date>("termin")); //TODO: date czy time
+        ktoNadzorowanyHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("ktonadzorowany"));
+        ktoNadzorujeHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("ktonadzoruje"));
+
+        //============OplataColumns--------------------------------\\
+        idOplataColumn.setCellValueFactory(new PropertyValueFactory<Oplata, Number>("idoplaty"));
+        wielkoscOplataColumn.setCellValueFactory(new PropertyValueFactory<Oplata, Number>("wielkosc"));
+        przedmiotOplataColumn.setCellValueFactory(new PropertyValueFactory<Oplata, String>("przedmiotoplaty"));
+        czestoscOplataColumn.setCellValueFactory(new PropertyValueFactory<Oplata, String>("czestosc"));
+
+        //============PomocDydatktycznaColumns--------------------------------\\
+        idPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("idpomocy"));
+        rodzajPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, String>("rodzaj"));
+        dodatkoweOplatyPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("dodatkoweoplaty"));
+        grupaDocelowaPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("grupadocelowa"));
+        osobaOdpowiedzialnaPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("osobaodpowiedzialna"));
+        przedszkolankaIdPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("przedszkolankaIdprac"));
+        grupaPrzedszkolnaIdPomocDydatktycznaColumn.setCellValueFactory(new PropertyValueFactory<Pomocdydaktyczna, Number>("grupaprzedszkolnaIdgrupy"));
+
+        //============PosilekColumns--------------------------------\\
+        idPosilekColumn.setCellValueFactory(new PropertyValueFactory<Posilek, Number>("idposilku"));
+        nazwaPosilekColumn.setCellValueFactory(new PropertyValueFactory<Posilek, String>("nazwa"));
+        godzRozwozeniaPosilekColumn.setCellValueFactory(new PropertyValueFactory<Posilek, Time>("godzrozwozenia"));
+        dietaPosilekColumn.setCellValueFactory(new PropertyValueFactory<Posilek, String>("dieta"));
+
+        //============SekretarkaColumns--------------------------------\\
+        idSekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, Number>("idprac"));
+        imieSekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, String>("imie"));
+        nazwiskoSekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, String>("nazwisko"));
+        kwalifikacjeSekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, String>("kwalifikacje"));
+        placaSekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, Number>("placa"));
+        godzRozpoczeciaPracySekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, Time>("godzrozpoczeciapracy"));
+        godzZakonczeniaPracySekretarkaColumn.setCellValueFactory(new PropertyValueFactory<Sekretarka, Time>("godzzakonczeniapracy"));
+
+        //============ZajeciaDodatkoweColumns--------------------------------\\
+        idZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("idzajecia"));
+        rodzajZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, String>("rodzaj"));
+        dataProwadzeniaZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Time>("dataprowadzenia"));
+        oplatyZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("oplaty"));
+        czasTygodniowoZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("czastygodniowo"));
+        dlaKogoZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("dlakogo"));
+
+        //============ZebranieRodziceColumns--------------------------------\\
+        idZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("idzebrania"));
+        dataZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Time>("data"));
+        grupaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("grupa"));
+        miejscaSalaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("miejscaSala"));
+        prowadzacyZebranieZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("prowadzacyzebranie"));
+        czyObowiazkoweZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, String>("czyobowiazkowe"));
+        przedszkolankaIdHospitacjiZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("przedszkolankaIdhospitacji"));
+
+
         przedszkolanki = FXCollections.observableList(new ArrayList<>());
-        Przedszkolanka p = new Przedszkolanka();
-        p.setImie("Ania");
-        p.setIdHospitacji(2);
-        p.setId(232);
-        System.out.println("Id: " + p.getId() + " imie:  " + p.getImie() + " placa: " + p.getPlaca() + " idHos: " + p.getIdHospitacji());
-        przedszkolanki.add(p);
         for(int i=0; i<5; i++) {
-            przedszkolanki.add(new Przedszkolanka());
+            Przedszkolanka p = new Przedszkolanka();
+            p.setImie(Integer.toString(i));
+            przedszkolanki.add(p);
         }
         System.out.println(przedszkolanki.toString());
 
         przedszkolankaTableView.setItems(przedszkolanki);
-        System.out.println(idPrzedszkolankaColumn.getCellObservableValue(0).toString());
-
-/*
-        dzieckoTableView.setEditable(false);             //modyfikacja tylko przy przycisku
-        TableColumn dataUrodzenia = new TableColumn("data urodzenia");
-        dataUrodzenia.setPrefWidth(100.0);
-        TableColumn idPosilku = new TableColumn("id posiłku");
-
-       // dzieckoTableView.getColumns().setAll(idColumn, imieColumn, nazwiskoColumn, dataUrodzenia, idGrupyColumn, idPosilku);
-
-
-        grupa_przedszkolnaTableView.setEditable(false);
-        TableColumn miejsce = new TableColumn("sala");
-        TableColumn nazwa = new TableColumn("nazwa");
-        TableColumn wiek = new TableColumn("wiek");
-        TableColumn osobaOdpowiedzialna = new TableColumn("id przedszkolanki");
-
-        grupa_przedszkolnaTableView.getColumns().setAll(idColumn, miejsce, nazwa, wiek, osobaOdpowiedzialna);
-
-
-        festynTableView.setEditable(false);
-        osobaOdpowiedzialna.setPrefWidth(150.0);
-        TableColumn data = new TableColumn("data");
-        TableColumn haslo = new TableColumn("hasło");
-
-       // festynTableView.getColumns().setAll(idColumn, idGrupyColumn, osobaOdpowiedzialna, data, haslo);
-
-
-        hospitacjaTableView.setEditable(false);
-        TableColumn osobaNadzorujaca = new TableColumn("id nadzorującego");
-        osobaNadzorujaca.setPrefWidth(150.0);
-
-        hospitacjaTableView.getColumns().setAll(idColumn, data, osobaOdpowiedzialna, osobaNadzorujaca);
-
-
-        oplataTableView.setEditable(false);
-        TableColumn wielkosc = new TableColumn("wysokosc");
-        TableColumn przedmiot = new TableColumn("przedmiot");
-        TableColumn czestosc = new TableColumn("częstość");
-
-        //polaczenia chyba nie powinny być widoczne, wiec to starczy???
-        oplataTableView.getColumns().setAll(idColumn, wielkosc, przedmiot, czestosc);
-
-        pomoc_dydaktycznaTableView.setEditable(false);
-        TableColumn oplata = new TableColumn("oplaty");
-
-        //pomoc_dydaktycznaTableView.getColumns().setAll(idColumn, przedmiot, oplata, idGrupyColumn, osobaOdpowiedzialna);
-
-
-        posilekTableView.setEditable(false);
-        TableColumn godzina = new TableColumn("godzina rozdawania");
-        godzina.setPrefWidth(120.0);
-        TableColumn dieta = new TableColumn("dieta");
-
-        posilekTableView.getColumns().setAll(idColumn, nazwa, godzina, dieta);
-
-
-        sekretarkaTableView.setEditable(false);
-        TableColumn pocz = new TableColumn("poczatek pracy");
-        pocz.setPrefWidth(100.0);
-        TableColumn koniec = new TableColumn("koniec pracy");
-
-        sekretarkaTableView.getColumns().setAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, pocz, koniec);
-
-
-        zajecia_dodatkoweTableView.setEditable(false);
-        TableColumn czas = new TableColumn("czas tygodniowo");
-        czas.setPrefWidth(100.0);
-
-       // zajecia_dodatkoweTableView.getColumns().setAll(idColumn, nazwa, data, oplata, czas, idGrupyColumn);
-
-
-        zebranie_rodziceTableView.setEditable(false);
-        TableColumn czyobow = new TableColumn("obowiązkowe");
-        czyobow.setPrefWidth(100.0);
-
-       // zebranie_rodziceTableView.getColumns().setAll(idColumn, data, idGrupyColumn, miejsce, osobaOdpowiedzialna, czyobow);*/
     }
 
     @FXML
