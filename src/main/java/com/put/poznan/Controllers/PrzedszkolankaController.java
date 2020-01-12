@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 public class PrzedszkolankaController {
@@ -39,6 +41,8 @@ public class PrzedszkolankaController {
 
 
     public void add () {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("newPersistanceUnit");
+        /*
         int id = 0;
         String imie;
         String nazwisko;
@@ -58,6 +62,7 @@ public class PrzedszkolankaController {
         this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
         this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
         */
+        /*
         imie = imieField.getText();
         nazwisko = nazwiskoField.getText();
         kwalifikacje =  kwalifikacjeField.getText();
@@ -71,7 +76,7 @@ public class PrzedszkolankaController {
             alert.setContentText("Podałeś błędną płacę - sprawdź, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
-        Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);
+        Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);*/
     }
 
     public DataBase getDataBase() {

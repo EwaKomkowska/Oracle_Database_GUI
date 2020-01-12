@@ -11,5 +11,16 @@
         <property name="v$session.program" value="DataGrip" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="NewPersistenceUnit/Hibernate" uuid="1d169561-218c-4f0b-b00d-cd0186056562">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/paulc/Documents/Idea_Projects/Java/Oracle_Database_GUI/src/main/resources/META-INF/persistence.xml</remarks>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@localhost:1521:PAWEL</jdbc-url>
+    </data-source>
   </component>
 </project>
