@@ -6,8 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.cfg.Environment;
 
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * JavaFX App
@@ -60,6 +62,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
         launch();
         //System.out.println("DISCONNECTION");
         //dataBase.closeConnection();

@@ -41,7 +41,7 @@ public class PrzedszkolankaController {
 
 
     public void add () {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("newPersistanceUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("NewPersistenceUnit");
         /*
         int id = 0;
         String imie;

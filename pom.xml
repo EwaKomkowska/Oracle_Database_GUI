@@ -35,8 +35,18 @@
                     <artifactId>javax.persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
                 </exclusion>
+               <!-- <exclusion>
+                    <artifactId>byte-buddy</artifactId>
+                    <groupId>net.bytebuddy</groupId>
+                </exclusion>-->
             </exclusions>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
+        <!--<dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.6</version>
+        </dependency>-->
     </dependencies>
     <build>
         <plugins>

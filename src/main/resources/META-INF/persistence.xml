@@ -23,8 +23,8 @@
         <properties>
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:PAWEL"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
-            <property name="hibernate.connection.username" value=""/>
-            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.connection.username" value="paweu"/>
+            <property name="hibernate.connection.password" value="haslo"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
