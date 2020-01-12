@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
@@ -19,9 +20,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 public class MainViewController {
 
     private DataBase dataBase;
+    private EntityManager em = App.getEm();
 
     public MainViewController(){    }
 
@@ -87,7 +92,7 @@ public class MainViewController {
     private ObservableList<Grupaprzedszkolna> grupyPrzedszkolne;
 
     //============ETAT--------------------------------\\
-    @FXML
+   /* @FXML
     private TableView<Etaty> etatTableView;
 
     @FXML
@@ -97,7 +102,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Etaty, Number> placaMaxEtatColumn;
 
-    private ObservableList<Etaty> etaty;
+    private ObservableList<Etaty> etaty;*/
 
     //============FESTYN--------------------------------\\
 
@@ -181,7 +186,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Posilek, String> dietaPosilekColumn;
 
-    private ObservableList<Posilek> posliki;
+    private ObservableList<Posilek> posilki;
 
     //============SEKRETARKA--------------------------------\\
     @FXML
@@ -246,6 +251,8 @@ public class MainViewController {
 
     //-----------------------------------------------------
 
+    private ObservableList<Zebraniezrodzicami> pracownicy;
+
 
     @FXML
     public void initialize() {
@@ -258,12 +265,11 @@ public class MainViewController {
         nazwiskoPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
         kwalifikacjePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
         placaPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
-        //FIXME: tych dwoch kolumn nie ma wgl w obiekcie przedszkolanka
-        // idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
+        idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("nazwagrupy"));
         //FIXME: NIE MA ID TEGO
         // idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
-
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
+
 
         //============DzieckoColumns--------------------------------\\
         idDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("iddziecka"));
@@ -282,9 +288,9 @@ public class MainViewController {
         idPracGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("idprac"));
 
         //============EtatColumns--------------------------------\\
-        nazwaEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, String>("nazwa"));
+       /* nazwaEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, String>("nazwa"));
         placaMinEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMin"));
-        placaMaxEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMax"));
+        placaMaxEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMax"));*/
 
         //============FestynColumns--------------------------------\\
         idFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("idfestynu"));
@@ -346,17 +352,78 @@ public class MainViewController {
         czyObowiazkoweZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, String>("czyobowiazkowe"));
         przedszkolankaIdHospitacjiZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("przedszkolankaIdhospitacji"));
 
+        wyswietl();
+    }
+
+    public void wyswietl() {
+        //TODO: czy tego nie wrzucic w osobna funkcje zeby aktualizowac ladnie czy listenery wystarcza???
+        dzieci = FXCollections.observableList(new ArrayList<>());
+        Query query=em.createQuery("SELECT p FROM Dziecko p");
+        dzieci.addAll(query.getResultList());
+        dzieckoTableView.setItems(dzieci);
+
+
+        grupyPrzedszkolne = FXCollections.observableList(new ArrayList<>());
+        query=em.createQuery("SELECT p FROM Grupaprzedszkolna p");
+        grupyPrzedszkolne.addAll(query.getResultList());
+        grupa_przedszkolnaTableView.setItems(grupyPrzedszkolne);
+
+
+        zajeciaDodatkowe = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT zd from Zajeciadodatkowe zd");
+        zajeciaDodatkowe.addAll(query.getResultList());
+        zajecia_dodatkoweTableView.setItems(zajeciaDodatkowe);
+
+
+        posilki = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT p FROM Posilek p");
+        posilki.addAll(query.getResultList());
+        posilekTableView.setItems(posilki);
+
+
+        zebraniaZRodzicami = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT zr FROM Zebraniezrodzicami zr");
+        zebraniaZRodzicami.addAll(query.getResultList());
+        zebranie_rodziceTableView.setItems(zebraniaZRodzicami);
+
+
+        festyny = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT f FROM Festyn f");
+        festyny.addAll(query.getResultList());
+        festynTableView.setItems(festyny);
+
+
+        hospitacje = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT h FROM Hospitacja h");
+        hospitacje.addAll(query.getResultList());
+        hospitacjaTableView.setItems(hospitacje);
+
+
+        oplaty = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT o FROM Oplata o");
+        oplaty.addAll(query.getResultList());
+        oplataTableView.setItems(oplaty);
+
+
+        pomoceDydaktyczne = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT pd FROM Pomocdydaktyczna pd");
+        pomoceDydaktyczne.addAll(query.getResultList());
+        pomoc_dydaktycznaTableView.setItems(pomoceDydaktyczne);
+
 
         przedszkolanki = FXCollections.observableList(new ArrayList<>());
-        for(int i=0; i<5; i++) {
-            Przedszkolanka p = new Przedszkolanka();
-            p.setImie(Integer.toString(i));
-            przedszkolanki.add(p);
-        }
-        System.out.println(przedszkolanki.toString());
-
+        query = em.createQuery("SELECT p FROM Przedszkolanka p");
+        przedszkolanki.addAll(query.getResultList());
         przedszkolankaTableView.setItems(przedszkolanki);
+
+
+        sekretarki = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT s FROM Sekretarka s");
+        sekretarki.addAll(query.getResultList());
+        sekretarkaTableView.setItems(sekretarki);
     }
+
+
 
     @FXML
     private void removePrzedszkolanka() {
@@ -459,6 +526,114 @@ public class MainViewController {
         App.getStage().setScene(scene);
     }
 
+    @FXML
+    private void addPosilek() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("posilek");
+        Parent root = loader.load();
+        posilekController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addDziecko() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("dziecko");
+        Parent root = loader.load();
+        dzieckoController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addFestyn() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("festyn");
+        Parent root = loader.load();
+        festynController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addGrupa() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("grupa");
+        Parent root = loader.load();
+        grupaPrzedszkolnaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addHospitacja() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("hospitacja");
+        Parent root = loader.load();
+        hospitacjaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addOplata() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("oplata");
+        Parent root = loader.load();
+        oplataController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addPomoc() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("pomoc");
+        Parent root = loader.load();
+        pomocDydaktycznaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addZajecia() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("zajecia");
+        Parent root = loader.load();
+        zajeciaDodatkoweController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+    @FXML
+    private void addZebranie() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("zebranie");
+        Parent root = loader.load();
+        zebranieRodziceController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
+
+    @FXML
+    private void addSekretarka() throws IOException {
+        FXMLLoader loader = App.getFXMLLoader("sekretarka");
+        Parent root = loader.load();
+        sekretarkaController c = loader.getController();
+        c.setDataBase(this.dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
+    }
+
 
     private void remove(String statement, int parameter) {
         PreparedStatement stmt;
@@ -494,6 +669,8 @@ public class MainViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        wyswietl();
     }
 
     //TODO: CHECK IF THIS WORKS

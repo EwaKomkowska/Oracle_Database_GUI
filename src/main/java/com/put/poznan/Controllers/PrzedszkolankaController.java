@@ -2,6 +2,7 @@ package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 public class PrzedszkolankaController {
@@ -39,8 +43,6 @@ public class PrzedszkolankaController {
 
 
     public void add () {
-
-       /*
         int id = 0;
         String imie;
         String nazwisko;
@@ -56,26 +58,6 @@ public class PrzedszkolankaController {
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
         }
-        /*this.imie = new SimpleStringProperty(imieField.getText());
-        this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
-        this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
-        */
-       /*
-        imie = imieField.getText();
-        nazwisko = nazwiskoField.getText();
-        kwalifikacje =  kwalifikacjeField.getText();
-        try {
-
-            //this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
-            placa = Float.parseFloat(placaField.getText());
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną płacę - sprawdź, czy jest liczbą całkowitą dodatnią!");
-            alert.showAndWait();
-        }
-        Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);
-        */
     }
 
     public DataBase getDataBase() {

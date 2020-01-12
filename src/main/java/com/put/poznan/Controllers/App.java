@@ -7,6 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.IOException;
 
 /**
@@ -18,6 +21,11 @@ public class App extends Application {
     private static Scene scene;
     private static Stage stage;
     private static DataBase dataBase;
+    private static EntityManager em;
+
+    public static EntityManager getEm() {
+        return em;
+    }
 
     public static Stage getStage() {
         return stage;
@@ -42,6 +50,10 @@ public class App extends Application {
         stage.setScene(scene); //, 500, 500));
         //scene = new Scene(loadFXML("login"));
         //stage.setScene(scene);
+
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit");
+        em = emf.createEntityManager();
+
         stage.show();
     }
 
