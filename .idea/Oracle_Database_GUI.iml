@@ -7,6 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="ff3cd7e7-3471-440b-8d04-5f63dc8bc533" />
+          <factory-entry name="https://stackoverflow.com/questions/41920178/how-to-configure-hibernate-db-connection-settings-in-java-based-spring-config" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />

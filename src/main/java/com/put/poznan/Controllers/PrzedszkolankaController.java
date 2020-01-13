@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrzedszkolankaController {
 
@@ -41,7 +43,12 @@ public class PrzedszkolankaController {
 
 
     public void add () {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("NewPersistenceUnit");
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put("hibernate.connection.username", "paweu");
+        properties.put("hibernate.connection.password", "haslo");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(
+                "NewPersistenceUnit", properties);
+        emf.close();
         /*
         int id = 0;
         String imie;
