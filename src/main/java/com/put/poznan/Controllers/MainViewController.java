@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -297,7 +298,7 @@ public class MainViewController {
         grupaWystepujacaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("grupawystepujaca"));
         osobaOdpowiedzialnaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("osobaodpowiedzialna"));
         terminWydarzeniaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Date>("terminwydarzena")); //TODO: date czy time
-        nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("nazwaHaslo"));
+        nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("Haslo"));
 
         //============HospitacjaColumns--------------------------------\\
         idHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("idhospitacji"));
@@ -347,7 +348,7 @@ public class MainViewController {
         idZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("idzebrania"));
         dataZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Time>("data"));
         grupaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("grupa"));
-        miejscaSalaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("miejscaSala"));
+        miejscaSalaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("miejsca"));
         prowadzacyZebranieZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("prowadzacyzebranie"));
         czyObowiazkoweZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, String>("czyobowiazkowe"));
         przedszkolankaIdHospitacjiZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("przedszkolankaIdhospitacji"));
@@ -427,91 +428,169 @@ public class MainViewController {
 
     @FXML
     private void removePrzedszkolanka() {
-        int idPrzed = 5;
-        String statement = "DELETE FROM PRZEDSZKOLANKA WHERE IDPRAC = ?";
+        try {
+            long idPrzed = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
+            String statement = "DELETE FROM PRZEDSZKOLANKA WHERE IDPRAC = ?";
 
-        remove(statement, idPrzed);
+            remove(statement, idPrzed);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeSekretarka() {
-        int id = 5;
-        String statement = "DELETE FROM SEKRETARKA WHERE IDPRAC = ?";
+        try {
+            long id = sekretarkaTableView.getSelectionModel().getSelectedItem().getIdprac();
+            String statement = "DELETE FROM SEKRETARKA WHERE IDPRAC = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
     @FXML
     private void removeDziecko() {
-        int id = 5;
+        try {
+        long id = dzieckoTableView.getSelectionModel().getSelectedItem().getIddziecka();
         String statement = "DELETE FROM DZIECKO WHERE IDDZIECKA = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeFestyn() {
-        int id = 5;
-        String statement = "DELETE FROM FESTYN WHERE IDFESTYNU = ?";
+        try {
+            long id = festynTableView.getSelectionModel().getSelectedItem().getIdfestynu();
+            String statement = "DELETE FROM FESTYN WHERE IDFESTYNU = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
     @FXML
     private void removeOplata() {
-        int id = 5;
-        String statement = "DELETE FROM OPLATA WHERE IDOPLATY = ?";
+        try {
+            long id = oplataTableView.getSelectionModel().getSelectedItem().getIdoplaty();
+            String statement = "DELETE FROM OPLATA WHERE IDOPLATY = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
 
     @FXML
     private void removeZajecia() {
-        int id = 5;
+        try {
+        long id = zajecia_dodatkoweTableView.getSelectionModel().getSelectedItem().getIdzajecia();
         String statement = "DELETE FROM ZAJECIADODATKOWE WHERE IDZAJECIA = ?";
 
         remove(statement, id);
+
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeZebranie() {
-        int id = 5;
+        try {
+        long id = zebranie_rodziceTableView.getSelectionModel().getSelectedItem().getIdzebrania();
         String statement = "DELETE FROM ZEBRANIEZRODZICAMI WHERE IDZEBRANIA = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removePosilek() {
-        int id = 5;
+        try {
+        long id = posilekTableView.getSelectionModel().getSelectedItem().getIdposilku();
         String statement = "DELETE FROM POSILEK WHERE IDPOSILKU = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeHospitacja() {
-        int id = 5;
+        try {
+        long id = hospitacjaTableView.getSelectionModel().getSelectedItem().getIdhospitacji();
         String statement = "DELETE FROM HOSPITACJA WHERE IDHOSPITACJI = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeGrupa() {
-        int id = 5;
+        try {
+        long id = grupa_przedszkolnaTableView.getSelectionModel().getSelectedItem().getIdgrupy();
         String statement = "DELETE FROM GRUPAPRZEDSZKOLNA WHERE IDGRUPY = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removePomoc() {
-        int id = 5;
+        try {
+        long id = pomoc_dydaktycznaTableView.getSelectionModel().getSelectedItem().getIdpomocy();
         String statement = "DELETE FROM POMOCDYDAKTYCZNA WHERE IDPOMOCY = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
 
@@ -635,14 +714,14 @@ public class MainViewController {
     }
 
 
-    private void remove(String statement, int parameter) {
+    private void remove(String statement, long parameter) {
         PreparedStatement stmt;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
 
         try {
             stmt = App.getDataBase().getConnection().prepareStatement(statement);
-            stmt.setInt(1, parameter);        //ustaw pierwszy znak zapytania ma wartosc paramtetru
+            stmt.setLong(1, parameter);        //ustaw pierwszy znak zapytania ma wartosc paramtetru
 
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Jesteś pewien, że chcesz usunąć obekt o id: " + parameter + "?");
@@ -698,5 +777,20 @@ public class MainViewController {
     @FXML
     private void switchToSecondary() throws IOException {
         App.setRoot("secondary");
+    }
+
+    public static void add(DataBase dataBase) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Poprawnie dodano 1 obiekt");
+        alert.showAndWait();
+
+        //przejście do menu głównego
+        FXMLLoader loader = App.getFXMLLoader("primary");
+        Parent root = loader.load();
+        MainViewController c = loader.getController();
+        c.setDataBase(dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
     }
 }

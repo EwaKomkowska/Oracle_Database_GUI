@@ -91,7 +91,7 @@ public class Przedszkolanka {
     @Override
     public int hashCode() {
         int result = (int) (idprac ^ (idprac >>> 32));
-        result = 31 * result + (nazwagrupy != null ? nazwagrupy.hashCode() : 0);
+        result = 31 * result + (nazwagrupy != null ? nazwagrupy.hashCode() : 0);        //było duże Long nazwagrupy
         return result;
     }
 }

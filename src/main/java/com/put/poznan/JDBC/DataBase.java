@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DataBase {
 
-    private Connection connection;
+    private static Connection connection;
 
     public DataBase(){
         this.setUp();
@@ -44,7 +44,7 @@ public class DataBase {
         }
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
