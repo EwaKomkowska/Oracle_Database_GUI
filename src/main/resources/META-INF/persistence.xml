@@ -14,7 +14,6 @@
         <class>com.put.poznan.SchemaObjects.Oplata</class>
         <class>com.put.poznan.SchemaObjects.Pomocdydaktyczna</class>
         <class>com.put.poznan.SchemaObjects.Posilek</class>
-        <class>com.put.poznan.SchemaObjects.Pracownik</class>
         <class>com.put.poznan.SchemaObjects.Sekretarka</class>
         <class>com.put.poznan.SchemaObjects.Zajeciadodatkowe</class>
         <class>com.put.poznan.SchemaObjects.Zebraniezrodzicami</class>
@@ -23,8 +22,8 @@
         <properties>
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1523:XE"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
-            <property name="hibernate.connection.username" value="system"/>
-            <property name="hibernate.connection.password" value="Oracle2019"/>
+            <property name="hibernate.connection.username" value=""/>
+            <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>

@@ -17,6 +17,8 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -47,7 +49,7 @@ public class zajeciaDodatkoweController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -57,11 +59,18 @@ public class zajeciaDodatkoweController {
         query=App.getEm().createQuery("SELECT DISTINCT o.idoplaty FROM Oplata o");
         listaOplat.addAll(query.getResultList());
         id_oplatyBox.setItems(listaOplat);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZAJDOD_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
     @FXML
     public void add() {
         Zajeciadodatkowe zd = new Zajeciadodatkowe();
+        boolean czyDodac = true;
         zd.setRodzaj(rodzajField.getText());
 
         try {
@@ -71,6 +80,7 @@ public class zajeciaDodatkoweController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -80,6 +90,7 @@ public class zajeciaDodatkoweController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -89,6 +100,7 @@ public class zajeciaDodatkoweController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędny czas tygodniowo - sprawdź, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -96,6 +108,7 @@ public class zajeciaDodatkoweController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś numeru grupy");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             zd.setDlakogo((Long) id_grupyBox.getValue());
         }
@@ -105,23 +118,25 @@ public class zajeciaDodatkoweController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id oplaty");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             zd.setOplaty((Long) id_oplatyBox.getValue());
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZAJECIADODATKOWE(idzajecia, rodzaj, dataprowadzenia, oplaty, czastygodniowo, dlakogo) values (?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, zd.getIdzajecia());
-            stmt.setString(2, zd.getRodzaj());
-            stmt.setTime(3, zd.getDataprowadzenia());
-            stmt.setLong(4, zd.getOplaty());
-            stmt.setLong(5, zd.getCzastygodniowo());
-            stmt.setLong(6, zd.getDlakogo());
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZAJECIADODATKOWE(idzajecia, rodzaj, dataprowadzenia, oplaty, czastygodniowo, dlakogo) values (?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, zd.getIdzajecia());
+                stmt.setString(2, zd.getRodzaj());
+                stmt.setTime(3, zd.getDataprowadzenia());
+                stmt.setLong(4, zd.getOplaty());
+                stmt.setLong(5, zd.getCzastygodniowo());
+                stmt.setLong(6, zd.getDlakogo());
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

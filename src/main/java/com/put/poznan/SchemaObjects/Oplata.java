@@ -32,7 +32,7 @@ public class Oplata {
         //TODO: czy tu nie da sie jakiegos wyjatku rzucić???
         if (wielkosc >= 0)
             this.wielkosc = wielkosc;
-        //else throw IllegalArgumentException;
+        else throw new IllegalArgumentException("Opłata musi być większa od 0");
     }
 
     @Basic

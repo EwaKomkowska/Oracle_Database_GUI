@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static java.lang.Long.parseLong;
 
@@ -42,9 +44,20 @@ public class sekretarkaController {
         this.dataBase = dataBase;
     }
 
+
+    @FXML
+    public void initialize() throws SQLException {
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT SEKRETARKA_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
+    }
+
     @FXML
     public void add() {
         Sekretarka s = new Sekretarka();
+        boolean czyDodac = true;
 
         try {
             s.setIdprac(Integer.parseInt(idField.getText()));
@@ -53,6 +66,7 @@ public class sekretarkaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         s.setImie(imieField.getText());
@@ -66,21 +80,23 @@ public class sekretarkaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną płacę - sprawdz, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into SEKRETARKA(idprac, godzrozpoczeciapracy, godzzakonczeniapracy, imie, nazwisko, kwalifikacje, placa) values (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, s.getIdprac());
-            stmt.setTime(2,s.getGodzrozpoczeciapracy());
-            stmt.setTime(3, s.getGodzzakonczeniapracy());
-            stmt.setString(4, s.getImie());
-            stmt.setString(5, s.getNazwisko());
-            stmt.setString(6, s.getKwalifikacje());
-            stmt.setLong(7, s.getPlaca());
-            stmt.executeQuery();
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into SEKRETARKA(idprac, godzrozpoczeciapracy, godzzakonczeniapracy, imie, nazwisko, kwalifikacje, placa) values (?, ?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, s.getIdprac());
+                stmt.setTime(2, s.getGodzrozpoczeciapracy());
+                stmt.setTime(3, s.getGodzzakonczeniapracy());
+                stmt.setString(4, s.getImie());
+                stmt.setString(5, s.getNazwisko());
+                stmt.setString(6, s.getKwalifikacje());
+                stmt.setLong(7, s.getPlaca());
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class festynController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -56,11 +58,18 @@ public class festynController {
         query=App.getEm().createQuery("SELECT DISTINCT p.idprac FROM Przedszkolanka p");
         listaPrzedszkolanek.addAll(query.getResultList());
         id_przedszkolankiBox.setItems(listaPrzedszkolanek);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT FESTYN_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
 
     @FXML
     public void add() {
+        boolean czyDodac = true;
         Festyn f = new Festyn();
         f.setHaslo(hasloField.getText());
 
@@ -71,6 +80,7 @@ public class festynController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -80,6 +90,7 @@ public class festynController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -87,6 +98,7 @@ public class festynController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś numeru grupy");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             f.setGrupawystepujaca((Long) id_grupyBox.getValue());
         }
@@ -96,22 +108,24 @@ public class festynController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id przedszkolanki");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             f.setOsobaodpowiedzialna((Long) id_przedszkolankiBox.getValue());
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into FESTYN(idfestynu, grupawystepujaca, osobaodpowiedzialna, terminwydarzena, haslo) values (?, ?, ?, ?, ?)");
-            stmt.setLong(1, f.getIdfestynu());
-            stmt.setLong(2, f.getGrupawystepujaca());
-            stmt.setLong(3, f.getOsobaodpowiedzialna());
-            stmt.setTime(4, f.getTerminwydarzena());
-            stmt.setString(5, f.getHaslo());
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into FESTYN(idfestynu, grupawystepujaca, osobaodpowiedzialna, terminwydarzena, haslo) values (?, ?, ?, ?, ?)");
+                stmt.setLong(1, f.getIdfestynu());
+                stmt.setLong(2, f.getGrupawystepujaca());
+                stmt.setLong(3, f.getOsobaodpowiedzialna());
+                stmt.setTime(4, f.getTerminwydarzena());
+                stmt.setString(5, f.getHaslo());
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
-import com.put.poznan.SchemaObjects.Zebraniezrodzicami;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,15 +16,14 @@ import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Long.parseLong;
 
 public class PrzedszkolankaController {
 
     private DataBase dataBase;
-    private Przedszkolanka przedszkolanka;
 
     @FXML
     private TextField imieField;
@@ -44,7 +42,7 @@ public class PrzedszkolankaController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -54,12 +52,18 @@ public class PrzedszkolankaController {
         query=App.getEm().createQuery("SELECT DISTINCT h.idhospitacji FROM Hospitacja h");
         listaHospitacji.addAll(query.getResultList());
         id_hospitacjiBox.setItems(listaHospitacji);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
 
     public void add () {
-       Przedszkolanka p = new Przedszkolanka();
-        //TODO: tutaj zrobić zczytywanie z okienka, więc bez parametrów
+        boolean czyDodawac = true;
+        Przedszkolanka p = new Przedszkolanka();
         try {
             p.setIdprac(Integer.parseInt(idField.getText()));
         } catch (Exception e) {
@@ -67,6 +71,7 @@ public class PrzedszkolankaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodawac = false;
         }
 
        if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -74,6 +79,7 @@ public class PrzedszkolankaController {
            alert.setHeaderText(null);
            alert.setContentText("Nie wybrałeś numeru grupy");
            alert.showAndWait();
+           czyDodawac = false;
        } else {
            p.setNazwagrupy((Long) id_grupyBox.getValue());
        }
@@ -89,23 +95,26 @@ public class PrzedszkolankaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną płacę - sprawdz, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodawac = false;
         }
 
         try {
             //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into Przedszkolanka (idprac, imie, nazwisko, kwalifikacje, placa, nazwagrupy, HOS_IDHOS) values (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, p.getIdprac());
-            stmt.setString(2,p.getImie());
-            stmt.setString(3, p.getNazwisko());
-            stmt.setString(4, p.getKwalifikacje());
-            stmt.setLong(5, p.getPlaca());
-            stmt.setLong(6, p.getNazwagrupy());
-            stmt.setLong(7, 1);     //p.gethospitacja???
-            //TODO: jeszcze z tym id_hospitacji trzeba pomyslec jak to ma byc dokładnie
-            //ResultSet rs = //trzeba by i tak petla sprawdzac ile jest
-            stmt.executeQuery();
+            if (czyDodawac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into Przedszkolanka (idprac, imie, nazwisko, kwalifikacje, placa, nazwagrupy, HOS_IDHOS) values (?, ?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, p.getIdprac());
+                stmt.setString(2, p.getImie());
+                stmt.setString(3, p.getNazwisko());
+                stmt.setString(4, p.getKwalifikacje());
+                stmt.setLong(5, p.getPlaca());
+                stmt.setLong(6, p.getNazwagrupy());
+                stmt.setLong(7, 1);     //p.gethospitacja???
+                //TODO: jeszcze z tym id_hospitacji trzeba pomyslec jak to ma byc dokładnie
+                //ResultSet rs = //trzeba by i tak petla sprawdzac ile jest
+                stmt.executeQuery();
 
-           MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,11 +136,6 @@ public class PrzedszkolankaController {
         c.setDataBase(this.dataBase);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
-    }
-
-    @FXML
-    public void clearId() {
-        idField.setText("");
     }
 
     @FXML

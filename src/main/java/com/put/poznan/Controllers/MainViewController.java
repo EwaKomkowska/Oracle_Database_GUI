@@ -250,9 +250,6 @@ public class MainViewController {
 
     private ObservableList<Zebraniezrodzicami> zebraniaZRodzicami;
 
-    //-----------------------------------------------------
-
-    private ObservableList<Zebraniezrodzicami> pracownicy;
 
 
     @FXML
@@ -784,6 +781,7 @@ public class MainViewController {
         alert.setHeaderText(null);
         alert.setContentText("Poprawnie dodano 1 obiekt");
         alert.showAndWait();
+
 
         //przejście do menu głównego
         FXMLLoader loader = App.getFXMLLoader("primary");

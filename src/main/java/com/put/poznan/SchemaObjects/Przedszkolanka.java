@@ -62,7 +62,11 @@ public class Przedszkolanka {
     }
 
     public void setPlaca(Long placa) {
-        this.placa = placa;
+        if (placa == null)
+            this.placa = placa;
+        else if (placa > 0)
+            this.placa = placa;
+        else throw new IllegalArgumentException("Płaca musi być dodatnia");
     }
 
     @Basic

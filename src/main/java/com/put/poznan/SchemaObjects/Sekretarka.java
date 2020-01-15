@@ -8,7 +8,7 @@ import java.sql.Time;
 
 @Entity
 public class Sekretarka {
-    private long idprac; //TODO: USUNAC IDPRAC BO JEST DZIEDZICZONE Z PRACOWNIKA???
+    private long idprac;
     private Time godzrozpoczeciapracy;
     private Time godzzakonczeniapracy;
     protected String imie;
@@ -63,7 +63,9 @@ public class Sekretarka {
     }
 
     public void setPlaca(Long placa) {
-        this.placa = placa;
+        if (placa > 0)
+            this.placa = placa;
+        else throw new IllegalArgumentException("Płaca musi byc dodatnia");
     }
 
     @Basic

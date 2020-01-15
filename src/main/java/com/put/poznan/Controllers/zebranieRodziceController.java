@@ -17,6 +17,8 @@ import org.hibernate.type.TrueFalseType;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -48,7 +50,7 @@ public class zebranieRodziceController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -62,11 +64,18 @@ public class zebranieRodziceController {
         ObservableList<Boolean> obowiazek = FXCollections.observableList(new ArrayList<>());
         obowiazek.addAll(true, false);
         obowiazkoweBox.setItems(obowiazek);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
     @FXML
     public void add() {
         Zebraniezrodzicami zr = new Zebraniezrodzicami();
+        boolean czyDodac = true;
 
         try {
             zr.setData(Time.valueOf(dataField.getText()));
@@ -75,6 +84,7 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną datę zebrania - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -84,6 +94,7 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -93,6 +104,7 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną salę - sprawdź, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -100,6 +112,7 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś numeru grupy");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             zr.setGrupa((Long) id_grupyBox.getValue());
         }
@@ -109,6 +122,7 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id przedszkolanki");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             zr.setProwadzacyzebranie((Long) id_przedszkolankiBox.getValue());
         }
@@ -118,25 +132,29 @@ public class zebranieRodziceController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś wariantu obowiązkowości");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             zr.setCzyobowiazkowe(obowiazkoweBox.getValue().toString());
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZEBRANIEZRODZICAMI(idzebrania, data, grupa, miejsca, prowadzacyzebranie, czyobowiazkowe, PRZEDSZKOLANKA_IDHOSPITACJI) values (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, zr.getIdzebrania());
-            stmt.setTime(2, zr.getData());
-            stmt.setLong(3, zr.getGrupa());
-            stmt.setLong(4, zr.getMiejsca());
-            stmt.setLong(5, zr.getProwadzacyzebranie());
-            stmt.setString(6, zr.getCzyobowiazkowe());
-            stmt.setInt(7,1);
-            //TODO: nie mozna wartosci null do przedszkolanka_idhospitacji NAPRAWIC
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZEBRANIEZRODZICAMI(idzebrania, data, grupa, miejsca, prowadzacyzebranie, czyobowiazkowe, PRZEDSZKOLANKA_IDHOSPITACJI) values (?, ?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, zr.getIdzebrania());
+                stmt.setTime(2, zr.getData());
+                stmt.setLong(3, zr.getGrupa());
+                stmt.setLong(4, zr.getMiejsca());
+                stmt.setLong(5, zr.getProwadzacyzebranie());
+                stmt.setString(6, zr.getCzyobowiazkowe());
+                stmt.setInt(7, 1);
+                //TODO: nie mozna wartosci null do przedszkolanka_idhospitacji NAPRAWIC
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+                PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
+                pstm.executeQuery();
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

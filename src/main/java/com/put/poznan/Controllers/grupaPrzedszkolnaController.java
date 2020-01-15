@@ -12,10 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -43,16 +46,23 @@ public class grupaPrzedszkolnaController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaPrzedszkolanek = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idprac FROM Przedszkolanka p");
         listaPrzedszkolanek.addAll(query.getResultList());
         id_przedszkolankiBox.setItems(listaPrzedszkolanek);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
 
     @FXML
     public void add() {
+        boolean czyDodac = true;
         Grupaprzedszkolna g = new Grupaprzedszkolna();
         g.setNazwa(nazwaField.getText());
 
@@ -63,6 +73,7 @@ public class grupaPrzedszkolnaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -72,6 +83,7 @@ public class grupaPrzedszkolnaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś nieodpowiedni wiek dzieci!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -81,6 +93,7 @@ public class grupaPrzedszkolnaController {
             alert.setHeaderText(null);
             alert.setContentText("Sala musi być liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_przedszkolankiBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -88,23 +101,25 @@ public class grupaPrzedszkolnaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id przedszkolanki");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             g.setIdprac((Long) id_przedszkolankiBox.getValue());
         }
 
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into GRUPAPRZEDSZKOLNA(idgrupy, sala, nazwa, wiekdzieci, idprac) values (?, ?, ?, ?, ?)");
-            stmt.setLong(1, g.getIdgrupy());
-            stmt.setLong(2, g.getSala());
-            stmt.setString(3, g.getNazwa());
-            stmt.setLong(4, g.getWiekdzieci());
-            stmt.setLong(5, g.getIdprac());
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into GRUPAPRZEDSZKOLNA(idgrupy, sala, nazwa, wiekdzieci, idprac) values (?, ?, ?, ?, ?)");
+                stmt.setLong(1, g.getIdgrupy());
+                stmt.setLong(2, g.getSala());
+                stmt.setString(3, g.getNazwa());
+                stmt.setLong(4, g.getWiekdzieci());
+                stmt.setLong(5, g.getIdprac());
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

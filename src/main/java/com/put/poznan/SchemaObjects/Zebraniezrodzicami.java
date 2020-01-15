@@ -51,7 +51,13 @@ public class Zebraniezrodzicami {
     }
 
     public void setMiejsca(Long miejscaSala) {
-        this.miejsca = miejscaSala;
+        if (miejscaSala == null) {
+            this.miejsca = miejscaSala;
+        } else if (miejscaSala > 0) {
+            this.miejsca = miejscaSala;
+        } else {
+            throw new IllegalArgumentException("Sala musi być większa od 0");
+        }
     }
 
     @Basic

@@ -16,7 +16,7 @@
                 <TextField fx:id="imieField" layoutX="8.0" layoutY="7.0" onMouseClicked="#clearImie" prefHeight="66.0" prefWidth="250.0" text="imie"/>
                 <TextField fx:id="nazwiskoField" layoutX="8.0" layoutY="87.0" onMouseClicked="#clearNazwisko" prefHeight="66.0" prefWidth="250.0" text="nazwisko"/>
                 <TextField fx:id="kwalifikacjeField" layoutX="8.0" layoutY="167.0" onMouseClicked="#clearKwalifikacje" prefHeight="66.0" prefWidth="250.0" text="kwalifikacje"/>
-                <TextField fx:id="idField" layoutX="8.0" layoutY="247.0" onMouseClicked="#clearId" prefHeight="66.0" prefWidth="250.0" text="id">
+                <TextField fx:id="idField" layoutX="8.0" layoutY="247.0" prefHeight="66.0" prefWidth="250.0" text="id">
                     <font>
                         <Font name="Noto Sans Regular" size="14.0" />
                     </font>

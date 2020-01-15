@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class dzieckoController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -56,10 +58,17 @@ public class dzieckoController {
         query=App.getEm().createQuery("SELECT DISTINCT p.idposilku FROM Posilek p");
         listaPosilkow.addAll(query.getResultList());
         id_posilkuBox.setItems(listaPosilkow);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
     @FXML
     public void add() {
+        boolean czyDodac = true;
         Dziecko d = new Dziecko();
         d.setImie(imieField.getText());
         d.setNazwisko(nazwiskoField.getText());
@@ -71,6 +80,7 @@ public class dzieckoController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -80,6 +90,7 @@ public class dzieckoController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -87,6 +98,7 @@ public class dzieckoController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś numeru grupy");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             d.setGrupaprzedszkolnaIdgrupy((Long) id_grupyBox.getValue());
         }
@@ -96,23 +108,26 @@ public class dzieckoController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś numeru posilku");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             d.setPosilekIdposilku((Long) id_posilkuBox.getValue());
         }
 
         try {
             //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into DZIECKO(iddziecka, imie, nazwisko, dataurodzenia, grupaprzedszkolna_idgrupy, posilek_idposilku) values (?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, d.getIddziecka());
-            stmt.setString(2,d.getImie());
-            stmt.setString(3, d.getNazwisko());
-            stmt.setTime(4, d.getDataurodzenia());
-            stmt.setLong(5, d.getGrupaprzedszkolnaIdgrupy());
-            stmt.setLong(6, d.getPosilekIdposilku());
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into DZIECKO(iddziecka, imie, nazwisko, dataurodzenia, grupaprzedszkolna_idgrupy, posilek_idposilku) values (?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, d.getIddziecka());
+                stmt.setString(2, d.getImie());
+                stmt.setString(3, d.getNazwisko());
+                stmt.setTime(4, d.getDataurodzenia());
+                stmt.setLong(5, d.getGrupaprzedszkolnaIdgrupy());
+                stmt.setLong(6, d.getPosilekIdposilku());
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

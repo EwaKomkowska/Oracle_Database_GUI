@@ -17,6 +17,8 @@ import javafx.scene.control.TextField;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class pomocDydaktycznaController {
 
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
         ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
         listaGrup.addAll(query.getResultList());
@@ -61,6 +63,12 @@ public class pomocDydaktycznaController {
         query=App.getEm().createQuery("SELECT DISTINCT o.idoplaty FROM Oplata o");
         listaOplat.addAll(query.getResultList());
         id_oplatyBox.setItems(listaOplat);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT POMOCDYD_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
 
@@ -68,6 +76,7 @@ public class pomocDydaktycznaController {
     @FXML
     public void add() {
         Pomocdydaktyczna p = new Pomocdydaktyczna();
+        boolean czyDodac = true;
         p.setRodzaj(rodzajField.getText());
 
         try {
@@ -77,6 +86,7 @@ public class pomocDydaktycznaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_oplatyBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -84,6 +94,7 @@ public class pomocDydaktycznaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id oplaty");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             p.setDodatkoweoplaty((Long) id_oplatyBox.getValue());
         }
@@ -93,6 +104,7 @@ public class pomocDydaktycznaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id przedszkolanki");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             p.setPrzedszkolankaIdprac((Long) id_przedszkolankiBox.getValue());
         }
@@ -102,26 +114,27 @@ public class pomocDydaktycznaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś id grupy");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             p.setGrupadocelowa((Long) id_grupyBox.getValue());
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into POMOCDYDAKTYCZNA(idpomocy, rodzaj, dodatkoweoplaty, grupadocelowa, osobaodpowiedzialna, oplata_idoplaty, przedszkolanka_idprac, grupaprzedszkolna_idgrupy) values (?, ?, ?, ?, ?, ?, ?, ?)");
-            stmt.setLong(1, p.getIdpomocy());
-            stmt.setString(2, p.getRodzaj());
-            stmt.setLong(3, p.getDodatkoweoplaty());
-            stmt.setLong(4, p.getGrupadocelowa());
-            stmt.setLong(5, p.getOsobaodpowiedzialna());
-            stmt.setLong(6, p.getDodatkoweoplaty());
-            stmt.setLong(7, p.getPrzedszkolankaIdprac());
-            stmt.setLong(8, p.getGrupadocelowa());
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into POMOCDYDAKTYCZNA(idpomocy, rodzaj, dodatkoweoplaty, grupadocelowa, osobaodpowiedzialna, oplata_idoplaty, przedszkolanka_idprac, grupaprzedszkolna_idgrupy) values (?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, p.getIdpomocy());
+                stmt.setString(2, p.getRodzaj());
+                stmt.setLong(3, p.getDodatkoweoplaty());
+                stmt.setLong(4, p.getGrupadocelowa());
+                stmt.setLong(5, p.getOsobaodpowiedzialna());
+                stmt.setLong(6, p.getDodatkoweoplaty());
+                stmt.setLong(7, p.getPrzedszkolankaIdprac());
+                stmt.setLong(8, p.getGrupadocelowa());
 
+                stmt.executeQuery();
 
-            stmt.executeQuery();
-
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

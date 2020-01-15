@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class oplataController {
     private DataBase dataBase;
@@ -35,10 +37,20 @@ public class oplataController {
         this.dataBase = dataBase;
     }
 
+    @FXML
+    public void initialize() throws SQLException {
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
+    }
+
 
     @FXML
     public void add() {
         //TODO: czy na pewno nie jest potrzebne wiecej informacji (w okienku)
+        boolean czyDodac = true;
         Oplata o = new Oplata();
 
         o.setCzestosc(czestoscField.getText());
@@ -51,32 +63,33 @@ public class oplataController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
-            //TODO: czy oplata jest >= 0
-            if (Integer.parseInt(wielkoscField.getText()) >= 0)
-                o.setWielkosc((long) Integer.parseInt(wielkoscField.getText()));
-        } catch (Exception e) {         //IllegalArgumentException
+            o.setWielkosc((long) Integer.parseInt(wielkoscField.getText()));
+        } catch (IllegalArgumentException e1) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną wielkość opłaty - sprawdź czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into OPLATA(idoplaty, wielkosc, przedmiotoplaty, czestosc, ZAJECIADODATKOWE_IDZAJECIA) values (?, ?, ?, ?, ?)");
-            stmt.setLong(1, o.getIdoplaty());
-            stmt.setLong(2, o.getWielkosc());
-            stmt.setString(3, o.getPrzedmiotoplaty());
-            stmt.setString(4, o.getCzestosc());
-            stmt.setLong(5, 1);
-            //TODO: cos nie do konca tu z iloscia dziwnych polaczen - idzajeciaDodatkowe nie zczytywane
-            stmt.executeQuery();
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into OPLATA(idoplaty, wielkosc, przedmiotoplaty, czestosc, ZAJECIADODATKOWE_IDZAJECIA) values (?, ?, ?, ?, ?)");
+                stmt.setLong(1, o.getIdoplaty());
+                stmt.setLong(2, o.getWielkosc());
+                stmt.setString(3, o.getPrzedmiotoplaty());
+                stmt.setString(4, o.getCzestosc());
+                stmt.setLong(5, 1);
+                //TODO: cos nie do konca tu z iloscia dziwnych polaczen - idzajeciaDodatkowe nie zczytywane
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

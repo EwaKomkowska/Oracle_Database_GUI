@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 
 public class posilekController {
@@ -35,11 +37,19 @@ public class posilekController {
     @FXML
     private TextField godzField;
 
-
+    @FXML
+    public void initialize()throws SQLException {
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT POSILEK_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
+    }
 
     @FXML
     public void add() {
         Posilek p = new Posilek();
+        boolean czyDodac = true;
         p.setDieta(dietaField.getText());
         try {
             p.setGodzrozwozenia(Time.valueOf(godzField.getText()));
@@ -48,6 +58,7 @@ public class posilekController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną godzinę rozwożenia - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         p.setNazwa(nazwaField.getText());
@@ -59,18 +70,20 @@ public class posilekController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into POSILEK (IDPOSILKU, NAZWA, GODZROZWOZENIA, DIETA) values (?, ?, ?, ?)");
-            stmt.setLong(1, p.getIdposilku());
-            stmt.setString(2,p.getNazwa());
-            stmt.setTime(3, p.getGodzrozwozenia());
-            stmt.setString(4, p.getDieta());
-            stmt.executeQuery();
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into POSILEK (IDPOSILKU, NAZWA, GODZROZWOZENIA, DIETA) values (?, ?, ?, ?)");
+                stmt.setLong(1, p.getIdposilku());
+                stmt.setString(2, p.getNazwa());
+                stmt.setTime(3, p.getGodzrozwozenia());
+                stmt.setString(4, p.getDieta());
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

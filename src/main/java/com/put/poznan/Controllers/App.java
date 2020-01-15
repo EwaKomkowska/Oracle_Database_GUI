@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JavaFX App
@@ -51,7 +53,10 @@ public class App extends Application {
         //scene = new Scene(loadFXML("login"));
         //stage.setScene(scene);
 
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit");
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put("hibernate.connection.username", "system");
+        properties.put("hibernate.connection.password", "Oracle2019");
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
         em = emf.createEntityManager();
 
         stage.show();

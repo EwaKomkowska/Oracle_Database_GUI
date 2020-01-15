@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -40,18 +42,26 @@ public class hospitacjaController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ObservableList<Long> listaPrzedszkolanek = FXCollections.observableList(new ArrayList<>());
         Query query=App.getEm().createQuery("SELECT DISTINCT p.idprac FROM Przedszkolanka p");
         listaPrzedszkolanek.addAll(query.getResultList());
         id_przedszkolankiBox.setItems(listaPrzedszkolanek);
         id_przedszkolanki2Box.setItems(listaPrzedszkolanek);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT HOSPITACJA_SEQ.nextval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
     @FXML
     public void add() {
         //TODO: żeby przedszkolanka nie mogla nadzorowac samej siebie
         Hospitacja h = new Hospitacja();
+        boolean czyDodac = true;
+
         try {
             h.setIdhospitacji(Integer.parseInt(idField.getText()));
         } catch (Exception e) {
@@ -59,6 +69,7 @@ public class hospitacjaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         try {
@@ -68,6 +79,7 @@ public class hospitacjaController {
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną datę hospitacji - sprawdź, czy jest w formacie...");
             alert.showAndWait();
+            czyDodac = false;
         }
 
         if (id_przedszkolankiBox.getSelectionModel().getSelectedIndex() == -1) {
@@ -75,6 +87,7 @@ public class hospitacjaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś nadzorowanego");
             alert.showAndWait();
+            czyDodac = false;
         } else {
             h.setKtonadzorowany((long)id_przedszkolankiBox.getValue());
         }
@@ -84,21 +97,23 @@ public class hospitacjaController {
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś nadzorujacego");
             alert.showAndWait();
+            czyDodac = false;
         } else {
-            h.setKtonadzoruje((byte[])id_przedszkolanki2Box.getValue());
+            h.setKtonadzoruje((long)id_przedszkolanki2Box.getValue());
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci- dodaje mimo błednej godziny rozwozenia, pomija ja
-            PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into HOSPITACJA(idhospitacji, termin, ktonadzorowany, ktonadzoruje) values (?, ?, ?, ?)");
-            stmt.setLong(1, h.getIdhospitacji());
-            stmt.setTime(2, h.getTermin());
-            stmt.setLong(3, h.getKtonadzorowany());
-            stmt.setBytes(4, h.getKtonadzoruje());
+            if(czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into HOSPITACJA(idhospitacji, termin, ktonadzorowany, ktonadzoruje) values (?, ?, ?, ?)");
+                stmt.setLong(1, h.getIdhospitacji());
+                stmt.setTime(2, h.getTermin());
+                stmt.setLong(3, h.getKtonadzorowany());
+                stmt.setLong(4, h.getKtonadzoruje());
 
-            stmt.executeQuery();
+                stmt.executeQuery();
 
-            MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }

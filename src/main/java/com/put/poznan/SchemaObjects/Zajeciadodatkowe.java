@@ -62,7 +62,9 @@ public class Zajeciadodatkowe {
     }
 
     public void setCzastygodniowo(Long czastygodniowo) {
-        this.czastygodniowo = czastygodniowo;
+        if(czastygodniowo > 0)
+            this.czastygodniowo = czastygodniowo;
+        else throw new IllegalArgumentException("Czas musi być dodatni");
     }
 
     @Basic
