@@ -59,7 +59,7 @@ public class dzieckoController {
         listaPosilkow.addAll(query.getResultList());
         id_posilkuBox.setItems(listaPosilkow);
 
-        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.currval FROM dual");
         ResultSet rs = pstm.executeQuery();
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));
@@ -127,6 +127,8 @@ public class dzieckoController {
                 stmt.executeQuery();
 
                 MainViewController.add(this.dataBase);
+                PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
+                pstm.executeQuery();
             }
         }catch (Exception e) {
             e.printStackTrace();

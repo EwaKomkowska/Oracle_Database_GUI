@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -100,7 +102,7 @@ public class LoginController {
     }
 
     @FXML
-    private void startConnection() throws IOException {
+    private void startConnection() throws IOException, SQLException {
         this.setLogin();
         this.setPassword();
         Boolean conState = false;
@@ -123,6 +125,40 @@ public class LoginController {
             c.setDataBase(this.dataBase);
             Scene scene = new Scene(root);
             App.getStage().setScene(scene); //, 500, 500));
+
+            //inicjalizacje ID:
+            PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT ZAJDOD_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT SEKRETARKA_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT POSILEK_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT POMOCDYD_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT HOSPITACJA_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT FESTYN_SEQ.nextval FROM dual");
+            pstm.executeQuery();
+
+            pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
+            pstm.executeQuery();
             //TODO: przekaz referencje na baze danych
         }
         //try to connect if fail pop a window that says try again wrong shit and reset

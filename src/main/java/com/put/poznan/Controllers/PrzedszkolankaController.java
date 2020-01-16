@@ -53,7 +53,7 @@ public class PrzedszkolankaController {
         listaHospitacji.addAll(query.getResultList());
         id_hospitacjiBox.setItems(listaHospitacji);
 
-        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.currval FROM dual");
         ResultSet rs = pstm.executeQuery();
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));
@@ -99,7 +99,6 @@ public class PrzedszkolankaController {
         }
 
         try {
-            //TODO: jesli jakis blad zlapany to nie wykonywac tej czesci
             if (czyDodawac) {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into Przedszkolanka (idprac, imie, nazwisko, kwalifikacje, placa, nazwagrupy, HOS_IDHOS) values (?, ?, ?, ?, ?, ?, ?)");
                 stmt.setLong(1, p.getIdprac());
@@ -114,6 +113,8 @@ public class PrzedszkolankaController {
                 stmt.executeQuery();
 
                 MainViewController.add(this.dataBase);
+                PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+                pstm.executeQuery();
             }
         }catch (Exception e) {
             e.printStackTrace();

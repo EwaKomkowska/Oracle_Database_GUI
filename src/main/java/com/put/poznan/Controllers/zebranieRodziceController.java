@@ -65,7 +65,7 @@ public class zebranieRodziceController {
         obowiazek.addAll(true, false);
         obowiazkoweBox.setItems(obowiazek);
 
-        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.currval FROM dual");
         ResultSet rs = pstm.executeQuery();
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));

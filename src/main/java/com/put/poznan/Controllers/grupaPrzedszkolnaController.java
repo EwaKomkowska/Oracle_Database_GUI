@@ -52,7 +52,7 @@ public class grupaPrzedszkolnaController {
         listaPrzedszkolanek.addAll(query.getResultList());
         id_przedszkolankiBox.setItems(listaPrzedszkolanek);
 
-        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.currval FROM dual");
         ResultSet rs = pstm.executeQuery();
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));
@@ -119,6 +119,8 @@ public class grupaPrzedszkolnaController {
                 stmt.executeQuery();
 
                 MainViewController.add(this.dataBase);
+                PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
+                pstm.executeQuery();
             }
         }catch (Exception e) {
             e.printStackTrace();
