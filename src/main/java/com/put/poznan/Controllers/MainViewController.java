@@ -769,10 +769,29 @@ public class MainViewController {
         App.getStage().setScene(scene);
     }
 
+
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private void urodziny() throws SQLException{
+        CallableStatement stmt = DataBase.getConnection().prepareCall("{? = call URODZINY()}");
+        stmt.registerOutParameter(1, Types.INTEGER);
+        stmt.execute();
+
+        int idDziecka = stmt.getInt(1);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT imie, NAZWISKO FROM DZIECKO where IDDZIECKA = ?");
+        pstm.setLong(1, idDziecka);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        String imie = rs.getString(1);
+        String nazwisko = rs.getString(2);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Dziś urodizny ma " + imie + " " + nazwisko);
+        alert.showAndWait();
+        stmt.close();
     }
+
 
     public static void add(DataBase dataBase) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
