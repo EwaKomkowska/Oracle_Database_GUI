@@ -351,6 +351,7 @@ public class MainViewController {
         wyswietl();
     }
 
+
     public void wyswietl() {
         //TODO: czy tego nie wrzucic w osobna funkcje zeby aktualizowac ladnie czy listenery wystarcza???
         dzieci = FXCollections.observableList(new ArrayList<>());
@@ -774,29 +775,60 @@ public class MainViewController {
     private void urodziny() throws SQLException{
         CallableStatement stmt = DataBase.getConnection().prepareCall("{? = call URODZINY()}");
         stmt.registerOutParameter(1, Types.INTEGER);
-        stmt.execute();
+        try {
+            stmt.execute();
 
-        int idDziecka = stmt.getInt(1);
+            int idDziecka = stmt.getInt(1);
 
-        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT imie, NAZWISKO FROM DZIECKO where IDDZIECKA = ?");
-        pstm.setLong(1, idDziecka);
-        ResultSet rs = pstm.executeQuery();
-        rs.next();
-        String imie = rs.getString(1);
-        String nazwisko = rs.getString(2);
+            PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT imie, NAZWISKO FROM DZIECKO where IDDZIECKA = ?");
+            pstm.setLong(1, idDziecka);
+            ResultSet rs = pstm.executeQuery();
+            rs.next();
+            String imie = rs.getString(1);
+            String nazwisko = rs.getString(2);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText("Dziś urodizny ma " + imie + " " + nazwisko);
-        alert.showAndWait();
-        stmt.close();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Dziś urodizny ma " + imie + " " + nazwisko);
+            alert.showAndWait();
+            stmt.close();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Dziś nikt nie ma urodzin");
+            alert.showAndWait();
+            stmt.close();
+        }
+    }
+
+    @FXML
+    public void modifyDziecko() {
+        try {
+            Long id = dzieckoTableView.getSelectionModel().getSelectedItem().getIddziecka();
+
+
+            FXMLLoader loader = App.getFXMLLoader("dziecko");
+            Parent root = loader.load();
+            dzieckoController dc = loader.getController();
+            dc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            dc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś dziecka do modyfikacji");
+            alert.showAndWait();
+        }
     }
 
 
     public static void add(DataBase dataBase) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
-        alert.setContentText("Poprawnie dodano 1 obiekt");
+        alert.setContentText("Poprawnie zaktualizowano 1 obiekt");      //wywoluje sie przy modify i add
         alert.showAndWait();
 
 

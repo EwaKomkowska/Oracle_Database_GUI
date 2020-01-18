@@ -39,6 +39,10 @@ public class App extends Application {
 
     public static DataBase getDataBase(){return dataBase;}
 
+    public static void setDataBase(DataBase dataBase) {
+        App.dataBase = dataBase;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;

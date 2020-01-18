@@ -106,9 +106,10 @@ public class LoginController {
         this.setLogin();
         this.setPassword();
         Boolean conState = false;
-        conState = dataBase.startConnection(this.login, this.password);
+        try {
+            conState = dataBase.startConnection(this.login, this.password);
+        }catch (Exception e) {
         //System.out.println("it worked");
-        if (!conState) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error connecting to the database.\nWrong login or password.\nTry again.", ButtonType.OK);
             alert.showAndWait();
             this.resetFormula();
@@ -117,7 +118,8 @@ public class LoginController {
                 //this
                 //"**********";
             }
-        } else {
+        }
+        if (conState) {
            // App.getStage().setScene(new Scene(App.loadFXML("primary")) );
             FXMLLoader loader = App.getFXMLLoader("primary");
             Parent root = loader.load();

@@ -76,7 +76,7 @@
                                  <buttons>
                                     <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
                                     <Button fx:id="dzieckoAddButton" mnemonicParsing="false" onMouseClicked="#addDziecko" text="Add" />
-                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" />
+                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" onMouseClicked="#modifyDziecko"/>
                                     <Button fx:id="urodzinyButton" mnemonicParsing="false" onMouseClicked="#urodziny" text="Urodziny" />
                                  </buttons>
                               </ButtonBar>
