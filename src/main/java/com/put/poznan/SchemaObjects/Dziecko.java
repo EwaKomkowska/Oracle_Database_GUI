@@ -1,7 +1,8 @@
 package com.put.poznan.SchemaObjects;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @IdClass(DzieckoPK.class)
@@ -9,7 +10,7 @@ public class Dziecko {
     private long iddziecka;
     private String imie;
     private String nazwisko;
-    private Time dataurodzenia;
+    private Date dataurodzenia;
     private long grupaprzedszkolnaIdgrupy;
     private long posilekIdposilku;
 
@@ -45,11 +46,11 @@ public class Dziecko {
 
     @Basic
     @Column(name = "DATAURODZENIA")
-    public Time getDataurodzenia() {
+    public Date getDataurodzenia() {
         return dataurodzenia;
     }
 
-    public void setDataurodzenia(Time dataurodzenia) {
+    public void setDataurodzenia(Date dataurodzenia) {
         this.dataurodzenia = dataurodzenia;
     }
 
@@ -83,9 +84,9 @@ public class Dziecko {
         if (iddziecka != dziecko.iddziecka) return false;
         if (grupaprzedszkolnaIdgrupy != dziecko.grupaprzedszkolnaIdgrupy) return false;
         if (posilekIdposilku != dziecko.posilekIdposilku) return false;
-        if (imie != null ? !imie.equals(dziecko.imie) : dziecko.imie != null) return false;
-        if (nazwisko != null ? !nazwisko.equals(dziecko.nazwisko) : dziecko.nazwisko != null) return false;
-        if (dataurodzenia != null ? !dataurodzenia.equals(dziecko.dataurodzenia) : dziecko.dataurodzenia != null)
+        if (!Objects.equals(imie, dziecko.imie)) return false;
+        if (!Objects.equals(nazwisko, dziecko.nazwisko)) return false;
+        if (!Objects.equals(dataurodzenia, dziecko.dataurodzenia))
             return false;
 
         return true;

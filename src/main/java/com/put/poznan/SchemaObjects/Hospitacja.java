@@ -4,15 +4,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
-import java.util.Arrays;
+import java.sql.Date;
 
 @Entity
 public class Hospitacja {
     private long idhospitacji;
-    private Time termin;
+    private Date termin;
     private Long ktonadzorowany;
-    private byte[] ktonadzoruje; //TODO: CZY TO MA BYC TYP BYTE[]
+    private Long ktonadzoruje;
 
     @Id
     @Column(name = "IDHOSPITACJI")
@@ -26,11 +25,11 @@ public class Hospitacja {
 
     @Basic
     @Column(name = "TERMIN")
-    public Time getTermin() {
+    public Date getTermin() {
         return termin;
     }
 
-    public void setTermin(Time termin) {
+    public void setTermin(Date termin) {
         this.termin = termin;
     }
 
@@ -46,11 +45,15 @@ public class Hospitacja {
 
     @Basic
     @Column(name = "KTONADZORUJE")
-    public byte[] getKtonadzoruje() {
+    public Long getKtonadzoruje() {
         return ktonadzoruje;
     }
 
-    public void setKtonadzoruje(byte[] ktonadzoruje) {
+    public void setKtonadzoruje(Long ktonadzoruje) {
+       //TODO: nie mozna nadzorowac samego siebie!!!
+        /* if (ktonadzoruje != this.getKtonadzorowany())
+            this.ktonadzoruje = ktonadzoruje;
+        else throw new IllegalArgumentException("Nie mozna nadzorowac samego siebie");*/
         this.ktonadzoruje = ktonadzoruje;
     }
 
@@ -65,7 +68,8 @@ public class Hospitacja {
         if (termin != null ? !termin.equals(that.termin) : that.termin != null) return false;
         if (ktonadzorowany != null ? !ktonadzorowany.equals(that.ktonadzorowany) : that.ktonadzorowany != null)
             return false;
-        if (!Arrays.equals(ktonadzoruje, that.ktonadzoruje)) return false;
+        if (ktonadzoruje != null ? !ktonadzoruje.equals(that.ktonadzoruje) : that.ktonadzoruje != null)
+            return false;
 
         return true;
     }
@@ -75,7 +79,7 @@ public class Hospitacja {
         int result = (int) (idhospitacji ^ (idhospitacji >>> 32));
         result = 31 * result + (termin != null ? termin.hashCode() : 0);
         result = 31 * result + (ktonadzorowany != null ? ktonadzorowany.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(ktonadzoruje);
+        result = 31 * result + (ktonadzoruje != null ? ktonadzoruje.hashCode() : 0);
         return result;
     }
 }

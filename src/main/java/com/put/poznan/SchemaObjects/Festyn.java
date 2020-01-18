@@ -4,15 +4,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 public class Festyn {
     private long idfestynu;
     private Long grupawystepujaca;
     private Long osobaodpowiedzialna;
-    private Time terminwydarzena;
-    private String nazwaHaslo;
+    private Date terminwydarzena;
+    private String haslo;
 
     @Id
     @Column(name = "IDFESTYNU")
@@ -46,22 +46,22 @@ public class Festyn {
 
     @Basic
     @Column(name = "TERMINWYDARZENA")
-    public Time getTerminwydarzena() {
+    public Date getTerminwydarzena() {
         return terminwydarzena;
     }
 
-    public void setTerminwydarzena(Time terminwydarzena) {
+    public void setTerminwydarzena(Date terminwydarzena) {
         this.terminwydarzena = terminwydarzena;
     }
 
     @Basic
-    @Column(name = "Nazwa(hasĹ‚o)")
-    public String getNazwaHaslo() {
-        return nazwaHaslo;
+    @Column(name = "HASLO")
+    public String getHaslo() {
+        return haslo;
     }
 
-    public void setNazwaHaslo(String nazwaHasĹO) {
-        this.nazwaHaslo = nazwaHasĹO;
+    public void setHaslo(String nazwaHaslo) {
+        this.haslo = nazwaHaslo;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Festyn {
             return false;
         if (terminwydarzena != null ? !terminwydarzena.equals(festyn.terminwydarzena) : festyn.terminwydarzena != null)
             return false;
-        if (nazwaHaslo != null ? !nazwaHaslo.equals(festyn.nazwaHaslo) : festyn.nazwaHaslo != null) return false;
+        if (haslo != null ? !haslo.equals(festyn.haslo) : festyn.haslo != null) return false;
 
         return true;
     }
@@ -89,7 +89,7 @@ public class Festyn {
         result = 31 * result + (grupawystepujaca != null ? grupawystepujaca.hashCode() : 0);
         result = 31 * result + (osobaodpowiedzialna != null ? osobaodpowiedzialna.hashCode() : 0);
         result = 31 * result + (terminwydarzena != null ? terminwydarzena.hashCode() : 0);
-        result = 31 * result + (nazwaHaslo != null ? nazwaHaslo.hashCode() : 0);
+        result = 31 * result + (haslo != null ? haslo.hashCode() : 0);
         return result;
     }
 }

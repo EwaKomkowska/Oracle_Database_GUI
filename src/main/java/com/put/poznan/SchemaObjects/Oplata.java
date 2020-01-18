@@ -29,7 +29,10 @@ public class Oplata {
     }
 
     public void setWielkosc(Long wielkosc) {
-        this.wielkosc = wielkosc;
+        //TODO: czy tu nie da sie jakiegos wyjatku rzucić???
+        if (wielkosc >= 0)
+            this.wielkosc = wielkosc;
+        else throw new IllegalArgumentException("Opłata musi być większa od 0");
     }
 
     @Basic

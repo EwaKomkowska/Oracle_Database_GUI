@@ -1,15 +1,15 @@
 package com.put.poznan.SchemaObjects;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 @IdClass(ZebraniezrodzicamiPK.class)
 public class Zebraniezrodzicami {
     private long idzebrania;
-    private Time data;
+    private Date data;
     private Long grupa;
-    private Long miejscaSala;
+    private Long miejsca;
     private Long prowadzacyzebranie;
     private String czyobowiazkowe;
     private long przedszkolankaIdhospitacji;
@@ -26,11 +26,11 @@ public class Zebraniezrodzicami {
 
     @Basic
     @Column(name = "DATA")
-    public Time getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Time data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -45,13 +45,19 @@ public class Zebraniezrodzicami {
     }
 
     @Basic
-    @Column(name = "Miejsca(sala)")
-    public Long getMiejscaSala() {
-        return miejscaSala;
+    @Column(name = "Miejsca")
+    public Long getMiejsca() {
+        return miejsca;
     }
 
-    public void setMiejscaSala(Long miejscaSala) {
-        this.miejscaSala = miejscaSala;
+    public void setMiejsca(Long miejscaSala) {
+        if (miejscaSala == null) {
+            this.miejsca = miejscaSala;
+        } else if (miejscaSala > 0) {
+            this.miejsca = miejscaSala;
+        } else {
+            throw new IllegalArgumentException("Sala musi być większa od 0");
+        }
     }
 
     @Basic
@@ -95,7 +101,7 @@ public class Zebraniezrodzicami {
         if (przedszkolankaIdhospitacji != that.przedszkolankaIdhospitacji) return false;
         if (data != null ? !data.equals(that.data) : that.data != null) return false;
         if (grupa != null ? !grupa.equals(that.grupa) : that.grupa != null) return false;
-        if (miejscaSala != null ? !miejscaSala.equals(that.miejscaSala) : that.miejscaSala != null) return false;
+        if (miejsca != null ? !miejsca.equals(that.miejsca) : that.miejsca != null) return false;
         if (prowadzacyzebranie != null ? !prowadzacyzebranie.equals(that.prowadzacyzebranie) : that.prowadzacyzebranie != null)
             return false;
         if (czyobowiazkowe != null ? !czyobowiazkowe.equals(that.czyobowiazkowe) : that.czyobowiazkowe != null)
@@ -109,7 +115,7 @@ public class Zebraniezrodzicami {
         int result = (int) (idzebrania ^ (idzebrania >>> 32));
         result = 31 * result + (data != null ? data.hashCode() : 0);
         result = 31 * result + (grupa != null ? grupa.hashCode() : 0);
-        result = 31 * result + (miejscaSala != null ? miejscaSala.hashCode() : 0);
+        result = 31 * result + (miejsca != null ? miejsca.hashCode() : 0);
         result = 31 * result + (prowadzacyzebranie != null ? prowadzacyzebranie.hashCode() : 0);
         result = 31 * result + (czyobowiazkowe != null ? czyobowiazkowe.hashCode() : 0);
         result = 31 * result + (int) (przedszkolankaIdhospitacji ^ (przedszkolankaIdhospitacji >>> 32));

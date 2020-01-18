@@ -4,13 +4,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 public class Zajeciadodatkowe {
     private long idzajecia;
     private String rodzaj;
-    private Time dataprowadzenia;
+    private Date dataprowadzenia;
     private Long oplaty;
     private Long czastygodniowo;
     private Long dlakogo;
@@ -37,11 +37,11 @@ public class Zajeciadodatkowe {
 
     @Basic
     @Column(name = "DATAPROWADZENIA")
-    public Time getDataprowadzenia() {
+    public Date getDataprowadzenia() {
         return dataprowadzenia;
     }
 
-    public void setDataprowadzenia(Time dataprowadzenia) {
+    public void setDataprowadzenia(Date dataprowadzenia) {
         this.dataprowadzenia = dataprowadzenia;
     }
 
@@ -62,7 +62,9 @@ public class Zajeciadodatkowe {
     }
 
     public void setCzastygodniowo(Long czastygodniowo) {
-        this.czastygodniowo = czastygodniowo;
+        if(czastygodniowo > 0)
+            this.czastygodniowo = czastygodniowo;
+        else throw new IllegalArgumentException("Czas musi być dodatni");
     }
 
     @Basic

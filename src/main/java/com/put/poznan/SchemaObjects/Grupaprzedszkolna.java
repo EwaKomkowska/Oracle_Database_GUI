@@ -30,7 +30,13 @@ public class Grupaprzedszkolna {
     }
 
     public void setSala(Long sala) {
-        this.sala = sala;
+        if (sala == null) {
+            this.sala = sala;
+        } else if (sala > 0) {
+            this.sala = sala;
+        } else {
+            throw new IllegalArgumentException("Sala musi być większa od 0");
+        }
     }
 
     @Basic
@@ -50,7 +56,13 @@ public class Grupaprzedszkolna {
     }
 
     public void setWiekdzieci(Long wiekdzieci) {
-        this.wiekdzieci = wiekdzieci;
+        if (wiekdzieci == null) {
+            this.wiekdzieci = wiekdzieci;
+        } else if (wiekdzieci > 0) {
+            this.wiekdzieci = wiekdzieci;
+        } else {
+            throw new IllegalArgumentException("Wiek dzieci musi być większy od 0");
+        }
     }
 
     @Basic

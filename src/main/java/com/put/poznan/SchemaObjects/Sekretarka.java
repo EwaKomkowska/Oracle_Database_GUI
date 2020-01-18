@@ -7,10 +7,14 @@ import javax.persistence.Id;
 import java.sql.Time;
 
 @Entity
-public class Sekretarka extends Pracownik{
-    private long idprac; //TODO: USUNAC IDPRAC BO JEST DZIEDZICZONE Z PRACOWNIKA???
+public class Sekretarka {
+    private long idprac;
     private Time godzrozpoczeciapracy;
     private Time godzzakonczeniapracy;
+    protected String imie;
+    protected String nazwisko;
+    protected String kwalifikacje;
+    protected Long placa;
 
     @Id
     @Column(name = "IDPRAC")
@@ -20,6 +24,48 @@ public class Sekretarka extends Pracownik{
 
     public void setIdprac(long idprac) {
         this.idprac = idprac;
+    }
+
+    @Basic
+    @Column(name = "IMIE")
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    @Basic
+    @Column(name = "NAZWISKO")
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+
+    @Basic
+    @Column(name = "KWALIFIKACJE")
+    public String getKwalifikacje() {
+        return kwalifikacje;
+    }
+
+    public void setKwalifikacje(String kwalifikacje) {
+        this.kwalifikacje = kwalifikacje;
+    }
+
+    @Basic
+    @Column(name = "PLACA")
+    public Long getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(Long placa) {
+        if (placa > 0)
+            this.placa = placa;
+        else throw new IllegalArgumentException("Płaca musi byc dodatnia");
     }
 
     @Basic
