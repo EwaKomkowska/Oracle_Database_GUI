@@ -14,7 +14,7 @@
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
                 <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="idHospitacji"/>
-                <TextField fx:id="dataField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="termin (DD-MM-RRRR)"/>
+                <TextField fx:id="dataField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="termin (YYYY-MM-DD)"/>
                 <ComboBox fx:id="id_przedszkolankiBox" layoutX="25.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id nadzorowany"/>
                 <ComboBox fx:id="id_przedszkolanki2Box" layoutX="285.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id nadzoruje"/>
             </children>

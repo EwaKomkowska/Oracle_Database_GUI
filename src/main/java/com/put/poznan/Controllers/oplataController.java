@@ -53,8 +53,12 @@ public class oplataController {
         boolean czyDodac = true;
         Oplata o = new Oplata();
 
-        o.setCzestosc(czestoscField.getText());
-        o.setPrzedmiotoplaty(przedmiotField.getText());
+        try {
+            o.setCzestosc(czestoscField.getText());
+            o.setPrzedmiotoplaty(przedmiotField.getText());
+        }catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
             o.setIdoplaty(Integer.parseInt(idField.getText()));

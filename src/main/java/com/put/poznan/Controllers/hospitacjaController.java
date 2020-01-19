@@ -14,10 +14,7 @@ import javafx.scene.control.TextField;
 
 import javax.persistence.Query;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class hospitacjaController {
@@ -73,11 +70,11 @@ public class hospitacjaController {
         }
 
         try {
-            h.setTermin(Time.valueOf(dataField.getText()));
+            h.setTermin(Date.valueOf(dataField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę hospitacji - sprawdź, czy jest w formacie...");
+            alert.setContentText("Podałeś błędną datę hospitacji - sprawdź, czy jest w formacie YYYY-MM-DD");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -106,7 +103,7 @@ public class hospitacjaController {
             if(czyDodac) {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into HOSPITACJA(idhospitacji, termin, ktonadzorowany, ktonadzoruje) values (?, ?, ?, ?)");
                 stmt.setLong(1, h.getIdhospitacji());
-                stmt.setTime(2, h.getTermin());
+                stmt.setDate(2, h.getTermin());
                 stmt.setLong(3, h.getKtonadzorowany());
                 stmt.setLong(4, h.getKtonadzoruje());
 

@@ -11,9 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static java.lang.Long.parseLong;
 
@@ -79,6 +77,26 @@ public class sekretarkaController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędną płacę - sprawdz, czy jest liczbą całkowitą dodatnią!");
+            alert.showAndWait();
+            czyDodac = false;
+        }
+
+        try {
+            s.setGodzrozpoczeciapracy(Time.valueOf(godzRozField.getText()));
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Podałeś błędną godzine rozpoczecia pracy - sprawdź, czy jest w formacie HH:MM:SS");
+            alert.showAndWait();
+            czyDodac = false;
+        }
+
+        try {
+            s.setGodzzakonczeniapracy(Time.valueOf(godzZakField.getText()));
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Podałeś błędną godzine zakonczenia pracy - sprawdź, czy jest w formacie HH:MM:SS");
             alert.showAndWait();
             czyDodac = false;
         }

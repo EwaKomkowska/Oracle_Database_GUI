@@ -4,13 +4,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
-import java.util.Arrays;
+import java.sql.Date;
 
 @Entity
 public class Hospitacja {
     private long idhospitacji;
-    private Time termin;
+    private Date termin;
     private Long ktonadzorowany;
     private Long ktonadzoruje;
 
@@ -26,11 +25,11 @@ public class Hospitacja {
 
     @Basic
     @Column(name = "TERMIN")
-    public Time getTermin() {
+    public Date getTermin() {
         return termin;
     }
 
-    public void setTermin(Time termin) {
+    public void setTermin(Date termin) {
         this.termin = termin;
     }
 

@@ -1,17 +1,19 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 public class Festyn {
     private long idfestynu;
     private Long grupawystepujaca;
     private Long osobaodpowiedzialna;
-    private Time terminwydarzena;
+    private Date terminwydarzena;
     private String haslo;
 
     @Id
@@ -46,11 +48,11 @@ public class Festyn {
 
     @Basic
     @Column(name = "TERMINWYDARZENA")
-    public Time getTerminwydarzena() {
+    public Date getTerminwydarzena() {
         return terminwydarzena;
     }
 
-    public void setTerminwydarzena(Time terminwydarzena) {
+    public void setTerminwydarzena(Date terminwydarzena) {
         this.terminwydarzena = terminwydarzena;
     }
 
@@ -61,7 +63,15 @@ public class Festyn {
     }
 
     public void setHaslo(String nazwaHaslo) {
-        this.haslo = nazwaHaslo;
+        if (haslo.length() <= 25)
+            this.haslo = nazwaHaslo;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Hasło nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

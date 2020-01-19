@@ -16,10 +16,7 @@ import javafx.scene.control.TextField;
 import javax.persistence.Query;
 import javax.persistence.Table;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class zajeciaDodatkoweController {
@@ -71,14 +68,18 @@ public class zajeciaDodatkoweController {
     public void add() {
         Zajeciadodatkowe zd = new Zajeciadodatkowe();
         boolean czyDodac = true;
-        zd.setRodzaj(rodzajField.getText());
+        try {
+            zd.setRodzaj(rodzajField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
-            zd.setDataprowadzenia(Time.valueOf(dataField.getText()));
+            zd.setDataprowadzenia(Date.valueOf(dataField.getText()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie...");
+            alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie YYYY-MM-DD");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -94,7 +95,7 @@ public class zajeciaDodatkoweController {
         }
 
         try {
-            zd.setCzastygodniowo((long) Integer.parseInt(idField.getText()));
+            zd.setCzastygodniowo((long) Integer.parseInt(czasField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -128,7 +129,7 @@ public class zajeciaDodatkoweController {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZAJECIADODATKOWE(idzajecia, rodzaj, dataprowadzenia, oplaty, czastygodniowo, dlakogo) values (?, ?, ?, ?, ?, ?)");
                 stmt.setLong(1, zd.getIdzajecia());
                 stmt.setString(2, zd.getRodzaj());
-                stmt.setTime(3, zd.getDataprowadzenia());
+                stmt.setDate(3, zd.getDataprowadzenia());
                 stmt.setLong(4, zd.getOplaty());
                 stmt.setLong(5, zd.getCzastygodniowo());
                 stmt.setLong(6, zd.getDlakogo());

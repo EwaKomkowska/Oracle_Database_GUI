@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,13 @@ public class Sekretarka {
     protected String nazwisko;
     protected String kwalifikacje;
     protected Long placa;
+    private Alert alert;
+
+
+    public Sekretarka () {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+    }
 
     @Id
     @Column(name = "IDPRAC")
@@ -33,7 +42,13 @@ public class Sekretarka {
     }
 
     public void setImie(String imie) {
-        this.imie = imie;
+        if (imie.length() <= 25)
+            this.imie = imie;
+        else {
+            alert.setContentText("Imie nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -43,7 +58,13 @@ public class Sekretarka {
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
+        if (nazwisko.length() <= 50)
+            this.nazwisko = nazwisko;
+        else {
+            alert.setContentText("Nazwisko nie może być dłuższe niż 50 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -53,7 +74,13 @@ public class Sekretarka {
     }
 
     public void setKwalifikacje(String kwalifikacje) {
-        this.kwalifikacje = kwalifikacje;
+        if (kwalifikacje.length() <= 100)
+            this.kwalifikacje = kwalifikacje;
+        else {
+            alert.setContentText("Kwalifikacje nie mogą być dłuższe niż 100 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -75,7 +102,13 @@ public class Sekretarka {
     }
 
     public void setGodzrozpoczeciapracy(Time godzrozpoczeciapracy) {
-        this.godzrozpoczeciapracy = godzrozpoczeciapracy;
+        if (this.godzzakonczeniapracy == null || this.godzzakonczeniapracy.after(godzrozpoczeciapracy))
+            this.godzrozpoczeciapracy = godzrozpoczeciapracy;
+        else {
+            alert.setContentText("Godz rozpoczęcia musi być wcześniejsza od zakończenia pracy!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -85,7 +118,13 @@ public class Sekretarka {
     }
 
     public void setGodzzakonczeniapracy(Time godzzakonczeniapracy) {
-        this.godzzakonczeniapracy = godzzakonczeniapracy;
+        if (this.godzrozpoczeciapracy == null || godzzakonczeniapracy.after(this.godzrozpoczeciapracy))
+            this.godzzakonczeniapracy = godzzakonczeniapracy;
+        else {
+            alert.setContentText("Godz rozpoczęcia musi być wcześniejsza od zakończenia pracy!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

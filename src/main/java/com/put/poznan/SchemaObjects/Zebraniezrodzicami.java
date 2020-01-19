@@ -1,13 +1,13 @@
 package com.put.poznan.SchemaObjects;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 @IdClass(ZebraniezrodzicamiPK.class)
 public class Zebraniezrodzicami {
     private long idzebrania;
-    private Time data;
+    private Date data;
     private Long grupa;
     private Long miejsca;
     private Long prowadzacyzebranie;
@@ -26,11 +26,11 @@ public class Zebraniezrodzicami {
 
     @Basic
     @Column(name = "DATA")
-    public Time getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Time data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

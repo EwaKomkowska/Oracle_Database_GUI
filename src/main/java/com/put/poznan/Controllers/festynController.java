@@ -1,7 +1,6 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.SchemaObjects.Dziecko;
 import com.put.poznan.SchemaObjects.Festyn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +14,7 @@ import javafx.scene.control.TextField;
 
 import javax.persistence.Query;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.time.temporal.Temporal;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class festynController {
@@ -71,14 +66,18 @@ public class festynController {
     public void add() {
         boolean czyDodac = true;
         Festyn f = new Festyn();
-        f.setHaslo(hasloField.getText());
+        try {
+            f.setHaslo(hasloField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
-            f.setTerminwydarzena(Time.valueOf(terminField.getText()));
+            f.setTerminwydarzena(Date.valueOf(terminField.getText()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie...");
+            alert.setContentText("Podałeś błędną datę wydarzenia - sprawdź, czy jest w formacie YYYY-MM-DD");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -119,7 +118,7 @@ public class festynController {
                 stmt.setLong(1, f.getIdfestynu());
                 stmt.setLong(2, f.getGrupawystepujaca());
                 stmt.setLong(3, f.getOsobaodpowiedzialna());
-                stmt.setTime(4, f.getTerminwydarzena());
+                stmt.setDate(4, f.getTerminwydarzena());
                 stmt.setString(5, f.getHaslo());
 
                 stmt.executeQuery();

@@ -14,7 +14,7 @@
                      <children>
                         <Pane prefHeight="335.0" prefWidth="597.0">
                            <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                              <ButtonBar layoutX="90.0" layoutY="256.0" prefHeight="40.0" prefWidth="300.0">
                                 <buttons>
                                   <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove" />
                                     <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
@@ -31,6 +31,7 @@
                                     <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
                                     <!--<TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />-->
                                  </columns></TableView>
+                              <Button fx:id="przedszkolankaPlacaButton" layoutX="400.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#placa" prefHeight="26.0" prefWidth="98.0" text="Zwiększ płacę" />
                            </children>
                         </Pane>
                      </children>
@@ -76,7 +77,7 @@
                                  <buttons>
                                     <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
                                     <Button fx:id="dzieckoAddButton" mnemonicParsing="false" onMouseClicked="#addDziecko" text="Add" />
-                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" text="Modify" onMouseClicked="#modifyDziecko"/>
+                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" onMouseClicked="#modifyDziecko" text="Modify" />
                                     <Button fx:id="urodzinyButton" mnemonicParsing="false" onMouseClicked="#urodziny" text="Urodziny" />
                                  </buttons>
                               </ButtonBar>

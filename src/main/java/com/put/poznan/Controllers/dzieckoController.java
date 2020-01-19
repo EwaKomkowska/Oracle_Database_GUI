@@ -69,15 +69,19 @@ public class dzieckoController {
 
     public boolean dodawanie(Dziecko d) {
         boolean czyDodac = true;
-        d.setImie(imieField.getText());
-        d.setNazwisko(nazwiskoField.getText());
+        try {
+            d.setImie(imieField.getText());
+            d.setNazwisko(nazwiskoField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
-            d.setDataurodzenia(Time.valueOf(dataField.getText()));
+            d.setDataurodzenia(Date.valueOf(dataField.getText()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie...");
+            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie YYYY-MM-DD");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -124,7 +128,7 @@ public class dzieckoController {
                 stmt.setLong(1, d.getIddziecka());
                 stmt.setString(2, d.getImie());
                 stmt.setString(3, d.getNazwisko());
-                stmt.setTime(4, d.getDataurodzenia());
+                stmt.setDate(4, d.getDataurodzenia());
                 stmt.setLong(5, d.getGrupaprzedszkolnaIdgrupy());
                 stmt.setLong(6, d.getPosilekIdposilku());
 
@@ -135,7 +139,10 @@ public class dzieckoController {
                 pstm.executeQuery();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nie udało się dodać dziecka");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
     }
 
@@ -177,7 +184,7 @@ public class dzieckoController {
 
                 stmt.setString(1, d.getImie());
                 stmt.setString(2, d.getNazwisko());
-                stmt.setTime(3, d.getDataurodzenia());
+                stmt.setDate(3, d.getDataurodzenia());
                 stmt.setLong(4, d.getGrupaprzedszkolnaIdgrupy());
                 stmt.setLong(5, d.getPosilekIdposilku());
                 stmt.setLong(6, d.getIddziecka());

@@ -14,7 +14,7 @@
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
                 <TextField fx:id="nazwaField" layoutX="25.0" layoutY="100.0" onMouseClicked="#clearNazwa" prefHeight="66.0" prefWidth="200.0" text="nazwa"/>
-                <TextField fx:id="godzField" layoutX="235.0" layoutY="10.0" onMouseClicked="#clearGodz" prefHeight="66.0" prefWidth="200.0" text="godzina rozwożenia"/>
+                <TextField fx:id="godzField" layoutX="235.0" layoutY="10.0" onMouseClicked="#clearGodz" prefHeight="66.0" prefWidth="200.0" text="godzina rozwożenia (HH:MM:SS)"/>
                 <TextField fx:id="dietaField" layoutX="235.0" layoutY="100.0" onMouseClicked="#clearDieta" prefHeight="66.0" prefWidth="200.0" text="dieta"/>
                 <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clearId" prefHeight="66.0" prefWidth="200.0" text="idPosilku"/>
             </children>

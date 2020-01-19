@@ -761,7 +761,7 @@ public class MainViewController {
     private void logOut() throws IOException {
         this.dataBase.closeConnection();
         //Platform.exit(); //TODO: zamiast tego idz do login formularza od nowa
-       // App.getStage().setScene(new Scene(App.loadFXML("login")) );
+        //App.getStage().setScene(new Scene(App.loadFXML("login")) );
         FXMLLoader loader = App.getFXMLLoader("login");
         Parent root = loader.load();
         LoginController c = loader.getController();
@@ -801,11 +801,32 @@ public class MainViewController {
         }
     }
 
+   @FXML
+   public void placa() {
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setHeaderText(null);
+       try {
+           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja,
+           // nie działa wylogowanie, tylko zamknięcie i ponowne otwarcie z wczytaniem bazy
+           long id = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
+           CallableStatement stmt = DataBase.getConnection().prepareCall("{call zwiekszPlace(?)}");
+           stmt.setLong(1, id);
+           stmt.execute();
+
+           alert.setAlertType(Alert.AlertType.INFORMATION);
+           alert.setContentText("Zwiększono placę przedszkolance o id: " + id);
+           alert.showAndWait();
+       } catch (Exception e) {
+           alert.setContentText("Nie wybrałeś przedszkolanki, której chcesz zwiększyć płacę");
+           alert.showAndWait();
+       }
+    }
+
+
     @FXML
     public void modifyDziecko() {
         try {
             Long id = dzieckoTableView.getSelectionModel().getSelectedItem().getIddziecka();
-
 
             FXMLLoader loader = App.getFXMLLoader("dziecko");
             Parent root = loader.load();

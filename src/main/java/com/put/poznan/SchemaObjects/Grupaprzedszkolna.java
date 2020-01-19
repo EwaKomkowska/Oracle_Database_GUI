@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +48,15 @@ public class Grupaprzedszkolna {
     }
 
     public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+        if (nazwa.length() <= 25)
+            this.nazwa = nazwa;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nazwa grupy nie może być dłuższa niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic

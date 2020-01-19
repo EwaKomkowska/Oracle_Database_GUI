@@ -16,10 +16,7 @@ import org.hibernate.type.TrueFalseType;
 
 import javax.persistence.Query;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class zebranieRodziceController {
@@ -78,11 +75,11 @@ public class zebranieRodziceController {
         boolean czyDodac = true;
 
         try {
-            zr.setData(Time.valueOf(dataField.getText()));
+            zr.setData(Date.valueOf(dataField.getText()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę zebrania - sprawdź, czy jest w formacie...");
+            alert.setContentText("Podałeś błędną datę zebrania - sprawdź, czy jest w formacie YYYY-MM-DD");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -141,7 +138,7 @@ public class zebranieRodziceController {
             if (czyDodac) {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZEBRANIEZRODZICAMI(idzebrania, data, grupa, miejsca, prowadzacyzebranie, czyobowiazkowe, PRZEDSZKOLANKA_IDHOSPITACJI) values (?, ?, ?, ?, ?, ?, ?)");
                 stmt.setLong(1, zr.getIdzebrania());
-                stmt.setTime(2, zr.getData());
+                stmt.setDate(2, zr.getData());
                 stmt.setLong(3, zr.getGrupa());
                 stmt.setLong(4, zr.getMiejsca());
                 stmt.setLong(5, zr.getProwadzacyzebranie());

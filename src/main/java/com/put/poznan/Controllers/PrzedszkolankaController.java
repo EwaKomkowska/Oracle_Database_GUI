@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 
 import javax.persistence.Query;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,9 +85,13 @@ public class PrzedszkolankaController {
            p.setNazwagrupy((Long) id_grupyBox.getValue());
        }
 
-        p.setImie(imieField.getText());
-        p.setNazwisko(nazwiskoField.getText());
-        p.setKwalifikacje(kwalifikacjeField.getText());
+       try {
+           p.setImie(imieField.getText());
+           p.setNazwisko(nazwiskoField.getText());
+           p.setKwalifikacje(kwalifikacjeField.getText());
+       } catch (Exception e) {
+           czyDodawac = false;
+       }
 
         try {
             p.setPlaca(parseLong(placaField.getText()));
