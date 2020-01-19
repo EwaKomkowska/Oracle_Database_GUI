@@ -1,5 +1,8 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +15,13 @@ public class Posilek {
     private String nazwa;
     private Time godzrozwozenia;
     private String dieta;
+    private Alert alert;
+
+
+    public Posilek () {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+    }
 
     @Id
     @Column(name = "IDPOSILKU")
@@ -30,7 +40,13 @@ public class Posilek {
     }
 
     public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+        if (nazwa.length() <= 50)
+            this.nazwa = nazwa;
+        else {
+            alert.setContentText("Nazwa posiłku nie może być dłuższa niż 50 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -50,7 +66,13 @@ public class Posilek {
     }
 
     public void setDieta(String dieta) {
-        this.dieta = dieta;
+        if (dieta.length() <= 20)
+            this.dieta = dieta;
+        else {
+            alert.setContentText("Dieta nie może być dłuższa niż 20 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

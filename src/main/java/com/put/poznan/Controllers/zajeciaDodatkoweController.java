@@ -68,7 +68,11 @@ public class zajeciaDodatkoweController {
     public void add() {
         Zajeciadodatkowe zd = new Zajeciadodatkowe();
         boolean czyDodac = true;
-        zd.setRodzaj(rodzajField.getText());
+        try {
+            zd.setRodzaj(rodzajField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
             zd.setDataprowadzenia(Date.valueOf(dataField.getText()));

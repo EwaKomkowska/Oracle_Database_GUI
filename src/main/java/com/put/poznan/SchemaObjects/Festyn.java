@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,7 +63,15 @@ public class Festyn {
     }
 
     public void setHaslo(String nazwaHaslo) {
-        this.haslo = nazwaHaslo;
+        if (haslo.length() <= 25)
+            this.haslo = nazwaHaslo;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Hasło nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

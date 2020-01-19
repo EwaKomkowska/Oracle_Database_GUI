@@ -66,7 +66,11 @@ public class festynController {
     public void add() {
         boolean czyDodac = true;
         Festyn f = new Festyn();
-        f.setHaslo(hasloField.getText());
+        try {
+            f.setHaslo(hasloField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
             f.setTerminwydarzena(Date.valueOf(terminField.getText()));

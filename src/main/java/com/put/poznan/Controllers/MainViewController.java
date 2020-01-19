@@ -761,7 +761,7 @@ public class MainViewController {
     private void logOut() throws IOException {
         this.dataBase.closeConnection();
         //Platform.exit(); //TODO: zamiast tego idz do login formularza od nowa
-       // App.getStage().setScene(new Scene(App.loadFXML("login")) );
+        //App.getStage().setScene(new Scene(App.loadFXML("login")) );
         FXMLLoader loader = App.getFXMLLoader("login");
         Parent root = loader.load();
         LoginController c = loader.getController();
@@ -806,7 +806,8 @@ public class MainViewController {
        Alert alert = new Alert(Alert.AlertType.ERROR);
        alert.setHeaderText(null);
        try {
-           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja, nie działa wylogowanie, tylko zamknięcie i ponowne otwarcie z wczytaniem bazy
+           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja,
+           // nie działa wylogowanie, tylko zamknięcie i ponowne otwarcie z wczytaniem bazy
            long id = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
            CallableStatement stmt = DataBase.getConnection().prepareCall("{call zwiekszPlace(?)}");
            stmt.setLong(1, id);

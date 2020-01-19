@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +34,15 @@ public class Zajeciadodatkowe {
     }
 
     public void setRodzaj(String rodzaj) {
-        this.rodzaj = rodzaj;
+        if (rodzaj.length() <= 50)
+            this.rodzaj = rodzaj;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Rodzaj zajęć musi być krótszy niż 50 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic

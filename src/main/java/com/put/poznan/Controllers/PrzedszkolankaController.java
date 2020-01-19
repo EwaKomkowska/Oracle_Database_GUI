@@ -85,9 +85,13 @@ public class PrzedszkolankaController {
            p.setNazwagrupy((Long) id_grupyBox.getValue());
        }
 
-        p.setImie(imieField.getText());
-        p.setNazwisko(nazwiskoField.getText());
-        p.setKwalifikacje(kwalifikacjeField.getText());
+       try {
+           p.setImie(imieField.getText());
+           p.setNazwisko(nazwiskoField.getText());
+           p.setKwalifikacje(kwalifikacjeField.getText());
+       } catch (Exception e) {
+           czyDodawac = false;
+       }
 
         try {
             p.setPlaca(parseLong(placaField.getText()));

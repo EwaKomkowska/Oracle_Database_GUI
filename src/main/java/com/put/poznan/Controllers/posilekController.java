@@ -47,7 +47,7 @@ public class posilekController {
     public void add() {
         Posilek p = new Posilek();
         boolean czyDodac = true;
-        p.setDieta(dietaField.getText());
+
         try {
             p.setGodzrozwozenia(Time.valueOf(godzField.getText()));
         }catch (Exception e) {
@@ -58,7 +58,12 @@ public class posilekController {
             czyDodac = false;
         }
 
-        p.setNazwa(nazwaField.getText());
+        try {
+            p.setNazwa(nazwaField.getText());
+            p.setDieta(dietaField.getText());
+        }catch (Exception e){
+            czyDodac = false;
+        }
 
         try {
             p.setIdposilku(Integer.parseInt(idField.getText()));

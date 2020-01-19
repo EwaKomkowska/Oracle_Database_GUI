@@ -69,8 +69,12 @@ public class dzieckoController {
 
     public boolean dodawanie(Dziecko d) {
         boolean czyDodac = true;
-        d.setImie(imieField.getText());
-        d.setNazwisko(nazwiskoField.getText());
+        try {
+            d.setImie(imieField.getText());
+            d.setNazwisko(nazwiskoField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
             d.setDataurodzenia(Date.valueOf(dataField.getText()));
@@ -135,7 +139,10 @@ public class dzieckoController {
                 pstm.executeQuery();
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nie udało się dodać dziecka");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
     }
 

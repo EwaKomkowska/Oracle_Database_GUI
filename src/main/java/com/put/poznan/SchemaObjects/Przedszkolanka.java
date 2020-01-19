@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,13 @@ public class Przedszkolanka {
     protected String nazwisko;
     protected String kwalifikacje;
     protected Long placa;
+    private Alert alert;
+
+
+    public Przedszkolanka () {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+    }
 
     @Id
     @Column(name = "IDPRAC")
@@ -32,7 +41,13 @@ public class Przedszkolanka {
     }
 
     public void setImie(String imie) {
-        this.imie = imie;
+        if (imie.length() <= 25)
+            this.imie = imie;
+        else {
+            alert.setContentText("Imie nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -42,7 +57,13 @@ public class Przedszkolanka {
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
+        if (nazwisko.length() <= 50)
+            this.nazwisko = nazwisko;
+        else {
+            alert.setContentText("Nazwisko nie może być dłuższe niż 50 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -52,7 +73,13 @@ public class Przedszkolanka {
     }
 
     public void setKwalifikacje(String kwalifikacje) {
-        this.kwalifikacje = kwalifikacje;
+        if (kwalifikacje.length() <= 100)
+            this.kwalifikacje = kwalifikacje;
+        else {
+            alert.setContentText("Kwalifikacje nie mogą być dłuższe niż 100 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic

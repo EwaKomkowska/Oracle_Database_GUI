@@ -64,7 +64,11 @@ public class grupaPrzedszkolnaController {
     public void add() {
         boolean czyDodac = true;
         Grupaprzedszkolna g = new Grupaprzedszkolna();
-        g.setNazwa(nazwaField.getText());
+        try {
+            g.setNazwa(nazwaField.getText());
+        } catch (Exception e) {
+            czyDodac = false;
+        }
 
         try {
             g.setIdgrupy(Integer.parseInt(idField.getText()));
