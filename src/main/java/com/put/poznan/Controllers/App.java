@@ -60,8 +60,8 @@ public class App extends Application {
         //stage.setScene(scene);
 
         Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.username", "system");
-        properties.put("hibernate.connection.password", "Oracle2019");
+        properties.put("hibernate.connection.username", "paweu"); //system
+        properties.put("hibernate.connection.password", "haslo"); //Oracle2019
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
         em = emf.createEntityManager();
 

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.put.poznan.Controllers.dzieckoController" prefHeight="400.0" prefWidth="600.0">
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.put.poznan.Controllers.festynController" prefHeight="400.0" prefWidth="600.0">
     <children>
         <Label fx:id="addLabel" alignment="CENTER" layoutX="150.0" layoutY="20.0" prefHeight="57.0" prefWidth="300.0" text="Please write new data for Festyn" textAlignment="CENTER">
             <font>
@@ -14,7 +14,7 @@
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
                 <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="idFestynu"/>
-                <TextField fx:id="terminField" layoutX="25.0" layoutY="100.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="termin (DD-MM-RRRR)"/>
+                <TextField fx:id="terminField" layoutX="25.0" layoutY="100.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="termin (YYYY-MM-DD)"/>
                 <TextField fx:id="hasloField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="haslo"/>
                 <ComboBox fx:id="id_grupyBox" layoutX="25.0" layoutY="190.0" prefHeight="66.0" prefWidth="250.0" promptText="id grupy"/>
                 <ComboBox fx:id="id_przedszkolankiBox" layoutX="285.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id przedszkolanki"/>
