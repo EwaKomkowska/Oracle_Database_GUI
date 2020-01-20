@@ -4,9 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.MainViewController">
-   <items>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+
+<BorderPane prefHeight="353.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.MainViewController">
+   <right>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;" BorderPane.alignment="CENTER">
+        <buttons>
+          <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
+               <font>
+                  <Font name="Droid Sans" size="15.0" />
+               </font>
+            </Button>
+        </buttons>
+      </ButtonBar>
+   </right>
+   <center>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
             <Tab id="przedszkolankaTab" text="Przedszkolanka">
               <content>
@@ -30,7 +42,8 @@
                                     <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
                                     <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
                                     <!--<TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />-->
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                               <Button fx:id="przedszkolankaPlacaButton" layoutX="400.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#placa" prefHeight="26.0" prefWidth="98.0" text="Zwiększ płacę" />
                            </children>
                         </Pane>
@@ -60,7 +73,8 @@
                                     <TableColumn fx:id="placaSekretarkaColumn" minWidth="0.0" prefWidth="76.0" text="Placa" />
                                     <TableColumn fx:id="godzRozpoczeciaPracySekretarkaColumn" minWidth="0.0" prefWidth="104.0" text="Godzina rozpoczęcia pracy" />
                                     <TableColumn fx:id="godzZakonczeniaPracySekretarkaColumn" prefWidth="101.0" text="Godzina zakończenia pracy" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -89,7 +103,8 @@
                                     <TableColumn fx:id="dataUrodzeniaDzieckoColumn" prefWidth="102.0" text="Data Urodzenia" />
                                     <TableColumn fx:id="grupaPrzedszkolnaDzieckoColumn" prefWidth="144.0" text="Grupa Przedszkolna" />
                                     <TableColumn fx:id="idPosilkuDzieckoColumn" prefWidth="82.0" text="ID posiłku" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -116,7 +131,8 @@
                                     <TableColumn fx:id="nazwaGrupaPrzedszkolnaColumn" prefWidth="92.0" text="Nazwa" />
                                     <TableColumn fx:id="wiekDzieciGrupaPrzedszkolnaColumn" prefWidth="116.0" text="Wiek Dzieci" />
                                     <TableColumn fx:id="idPracGrupaPrzedszkolnaColumn" prefWidth="154.0" text="ID opiekuna" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -144,7 +160,8 @@
                                     <TableColumn fx:id="oplatyZajeciaDodatkoweColumn" prefWidth="85.0" text="Opłaty" />
                                     <TableColumn fx:id="czasTygodniowoZajeciaDodatkoweColumn" prefWidth="122.0" text="Czas Tygodniowo" />
                                     <TableColumn fx:id="dlaKogoZajeciaDodatkoweColumn" prefWidth="95.0" text="Dla Kogo" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -170,7 +187,8 @@
                                     <TableColumn fx:id="nazwaPosilekColumn" prefWidth="141.0" text="Nazwa" />
                                     <TableColumn fx:id="godzRozwozeniaPosilekColumn" prefWidth="203.0" text="Godzina rozwożenia" />
                                     <TableColumn fx:id="dietaPosilekColumn" prefWidth="120.0" text="Dieta" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -199,7 +217,8 @@
                                     <TableColumn fx:id="osobaOdpowiedzialnaPomocDydatktycznaColumn" prefWidth="136.0" text="Osoba Odpowiedzialna" />
                                     <TableColumn fx:id="przedszkolankaIdPomocDydatktycznaColumn" prefWidth="115.0" text="ID przedszkolanki" />
                                     <TableColumn fx:id="grupaPrzedszkolnaIdPomocDydatktycznaColumn" prefWidth="74.0" text="ID Grupy Przedszkolnej" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -225,7 +244,8 @@
                                     <TableColumn fx:id="wielkoscOplataColumn" prefWidth="105.0" text="Suma" />
                                     <TableColumn fx:id="przedmiotOplataColumn" prefWidth="202.0" text="Przedmiot Opłaty" />
                                     <TableColumn fx:id="czestoscOplataColumn" prefWidth="198.0" text="Częstość opłaty" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -252,7 +272,8 @@
                                     <TableColumn fx:id="osobaOdpowiedzialnaFestynColumn" prefWidth="153.0" text="Osoba Odpowiedzialna" />
                                     <TableColumn fx:id="terminWydarzeniaFestynColumn" prefWidth="128.0" text="Termin Wydarzenia" />
                                     <TableColumn fx:id="nazwaFestynColumn" prefWidth="124.0" text="Nazwa" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -281,7 +302,8 @@
                                     <TableColumn fx:id="prowadzacyZebranieZebranieRodziceColumn" prefWidth="136.0" text="Prowadzący Zebranie" />
                                     <TableColumn fx:id="czyObowiazkoweZebranieRodziceColumn" prefWidth="114.0" text="Czy Obowiązkowe" />
                                     <TableColumn fx:id="przedszkolankaIdHospitacjiZebranieRodziceColumn" prefWidth="120.0" text="Przedszkolanka" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -307,7 +329,8 @@
                                     <TableColumn fx:id="terminHospitacjaColumn" prefWidth="133.0" text="Termin" />
                                     <TableColumn fx:id="ktoNadzorowanyHospitacjaColumn" prefWidth="174.0" text="Kto nadzorowany" />
                                     <TableColumn fx:id="ktoNadzorujeHospitacjaColumn" prefWidth="193.0" text="Kto nadzoruje" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
@@ -316,39 +339,30 @@
             </Tab>
           <!--<Tab id="etatyTab" text="Etaty">
               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                      <children>
-                          <Pane prefHeight="335.0" prefWidth="597.0">
-                              <children>
-                                  <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                      <buttons>
-                                          <Button fx:id="etatyRemoveButton" mnemonicParsing="false" text="Remove" />
-                                          <Button fx:id="etatyAddButton" mnemonicParsing="false" text="Add" />
-                                          <Button fx:id="etatyModifyButton" mnemonicParsing="false" text="Modify" />
-                                      </buttons>
-                                  </ButtonBar>
-                                  <TableView fx:id="etatTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                      <columns>
-                                          <TableColumn fx:id="nazwaEtatColumn" prefWidth="139.0" text="Nazwa" />
-                                          <TableColumn fx:id="placaMinEtatColumn" prefWidth="228.0" text="Placa minimalna" />
-                                          <TableColumn fx:id="placaMaxEtatColumn" prefWidth="232.0" text="Płaca maksymalna" />
-                                      </columns></TableView>
-                              </children>
-                          </Pane>
-                      </children>
-                  </AnchorPane>
-              </content>
-          </Tab>-->
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Pane prefHeight="335.0" prefWidth="597.0">
+                                    <children>
+                                        <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                            <buttons>
+                                                <Button fx:id="etatyRemoveButton" mnemonicParsing="false" text="Remove" />
+                                                <Button fx:id="etatyAddButton" mnemonicParsing="false" text="Add" />
+                                                <Button fx:id="etatyModifyButton" mnemonicParsing="false" text="Modify" />
+                                            </buttons>
+                                        </ButtonBar>
+                                        <TableView fx:id="etatTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
+                                            <columns>
+                                                <TableColumn fx:id="nazwaEtatColumn" prefWidth="139.0" text="Nazwa" />
+                                                <TableColumn fx:id="placaMinEtatColumn" prefWidth="228.0" text="Placa minimalna" />
+                                                <TableColumn fx:id="placaMaxEtatColumn" prefWidth="232.0" text="Płaca maksymalna" />
+                                            </columns></TableView>
+                                    </children>
+                                </Pane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>-->
         </tabs>
       </TabPane>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;">
-        <buttons>
-          <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
-               <font>
-                  <Font name="Droid Sans" size="15.0" />
-               </font>
-            </Button>
-        </buttons>
-      </ButtonBar>
-   </items>
-</SplitPane>
+   </center>
+</BorderPane>

@@ -66,12 +66,17 @@ public class Oplata {
     }
 
     public void setCzestosc(String czestosc) {
-        if (czestosc.length() <= 25)
-            this.czestosc = czestosc;
+        if (czestosc == null){
+            this.czestosc = null;
+        }
         else {
-            alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");
-            alert.showAndWait();
-            throw new IllegalArgumentException();
+            if (czestosc.length() <= 25)
+                this.czestosc = czestosc;
+            else {
+                alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");
+                alert.showAndWait();
+                throw new IllegalArgumentException();
+            }
         }
     }
 

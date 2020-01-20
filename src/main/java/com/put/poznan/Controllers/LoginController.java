@@ -1,6 +1,7 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -94,6 +95,16 @@ public class LoginController {
     }
 
     @FXML
+    public void onEnterStartConnection(ActionEvent ae){
+        try {
+            this.startConnection();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+        @FXML
     private void hidePassword(){
         StringBuilder stringBuilder = new StringBuilder();
         passwordField.setText(password);
