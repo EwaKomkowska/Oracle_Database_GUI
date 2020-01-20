@@ -14,4 +14,6 @@ module com.put.poznan {//.Controllers {
     exports com.put.poznan.Controllers;
     opens com.put.poznan.SchemaObjects to javafx.base, org.hibernate.orm.core;
     exports com.put.poznan.SchemaObjects;
+
+
 }

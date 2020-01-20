@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,13 @@ public class Oplata {
     private Long wielkosc;
     private String przedmiotoplaty;
     private String czestosc;
+    private Alert alert;
+
+
+    public Oplata() {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+    }
 
     @Id
     @Column(name = "IDOPLATY")
@@ -29,7 +38,9 @@ public class Oplata {
     }
 
     public void setWielkosc(Long wielkosc) {
-        this.wielkosc = wielkosc;
+        if (wielkosc >= 0)
+            this.wielkosc = wielkosc;
+        else throw new IllegalArgumentException("Opłata musi być większa od 0");
     }
 
     @Basic
@@ -39,7 +50,13 @@ public class Oplata {
     }
 
     public void setPrzedmiotoplaty(String przedmiotoplaty) {
-        this.przedmiotoplaty = przedmiotoplaty;
+        if (przedmiotoplaty.length() <= 100)
+            this.przedmiotoplaty = przedmiotoplaty;
+        else {
+            alert.setContentText("Przedmiot opłaty nie może mieć więcej niż 100 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -49,7 +66,13 @@ public class Oplata {
     }
 
     public void setCzestosc(String czestosc) {
-        this.czestosc = czestosc;
+        if (czestosc.length() <= 25)
+            this.czestosc = czestosc;
+        else {
+            alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

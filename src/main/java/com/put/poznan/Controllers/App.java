@@ -8,7 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.hibernate.cfg.Environment;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -20,6 +25,11 @@ public class App extends Application {
     private static Scene scene;
     private static Stage stage;
     private static DataBase dataBase;
+    private static EntityManager em;
+
+    public static EntityManager getEm() {
+        return em;
+    }
 
     public static Stage getStage() {
         return stage;
@@ -30,6 +40,10 @@ public class App extends Application {
     }
 
     public static DataBase getDataBase(){return dataBase;}
+
+    public static void setDataBase(DataBase dataBase) {
+        App.dataBase = dataBase;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -44,6 +58,13 @@ public class App extends Application {
         stage.setScene(scene); //, 500, 500));
         //scene = new Scene(loadFXML("login"));
         //stage.setScene(scene);
+
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put("hibernate.connection.username", "system");
+        properties.put("hibernate.connection.password", "Oracle2019");
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
+        em = emf.createEntityManager();
+
         stage.show();
     }
 
@@ -62,7 +83,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-
         launch();
         //System.out.println("DISCONNECTION");
         //dataBase.closeConnection();

@@ -2,6 +2,8 @@ package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,16 +12,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import static java.lang.Long.parseLong;
 
 public class PrzedszkolankaController {
 
     private DataBase dataBase;
-    private Przedszkolanka przedszkolanka;
 
     @FXML
     private TextField imieField;
@@ -38,52 +43,87 @@ public class PrzedszkolankaController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
+        ObservableList<Long> listaGrup = FXCollections.observableList(new ArrayList<>());
+        Query query=App.getEm().createQuery("SELECT DISTINCT p.idgrupy FROM Grupaprzedszkolna p");
+        listaGrup.addAll(query.getResultList());
+        id_grupyBox.setItems(listaGrup);
+
+        ObservableList<Long> listaHospitacji = FXCollections.observableList(new ArrayList<>());
+        query=App.getEm().createQuery("SELECT DISTINCT h.idhospitacji FROM Hospitacja h");
+        listaHospitacji.addAll(query.getResultList());
+        id_hospitacjiBox.setItems(listaHospitacji);
+
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.currval FROM dual");
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        idField.setText(String.valueOf(rs.getLong(1)));
+        idField.setDisable(true);
     }
 
 
     public void add () {
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.username", "paweu");
-        properties.put("hibernate.connection.password", "haslo");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(
-                "NewPersistenceUnit", properties);
-        emf.close();
-        /*
-        int id = 0;
-        String imie;
-        String nazwisko;
-        String kwalifikacje;
-        float placa = 0;
-        //TODO: tutaj zrobić zczytywanie z okienka, więc bez parametrów
+        boolean czyDodawac = true;
+        Przedszkolanka p = new Przedszkolanka();
         try {
-            //this.id = new SimpleIntegerProperty(Integer.parseInt(idField.getText()));
-            id = Integer.parseInt(idField.getText());
+            p.setIdprac(Integer.parseInt(idField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Podałeś błędne ID, sprawdź czy jest unikalne i czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodawac = false;
         }
-        /*this.imie = new SimpleStringProperty(imieField.getText());
-        this.nazwisko = new SimpleStringProperty(nazwiskoField.getText());
-        this.kwalifikacje =  new SimpleStringProperty(kwalifikacjeField.getText());
-        */
-        /*
-        imie = imieField.getText();
-        nazwisko = nazwiskoField.getText();
-        kwalifikacje =  kwalifikacjeField.getText();
-        try {
 
-            //this.placa = new SimpleIntegerProperty(Integer.parseInt(placaField.getText()));
-            placa = Float.parseFloat(placaField.getText());
+       if (id_grupyBox.getSelectionModel().getSelectedIndex() == -1) {
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setHeaderText(null);
+           alert.setContentText("Nie wybrałeś numeru grupy");
+           alert.showAndWait();
+           czyDodawac = false;
+       } else {
+           p.setNazwagrupy((Long) id_grupyBox.getValue());
+       }
+
+       try {
+           p.setImie(imieField.getText());
+           p.setNazwisko(nazwiskoField.getText());
+           p.setKwalifikacje(kwalifikacjeField.getText());
+       } catch (Exception e) {
+           czyDodawac = false;
+       }
+
+        try {
+            p.setPlaca(parseLong(placaField.getText()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną płacę - sprawdź, czy jest liczbą całkowitą dodatnią!");
+            alert.setContentText("Podałeś błędną płacę - sprawdz, czy jest liczbą całkowitą dodatnią!");
             alert.showAndWait();
+            czyDodawac = false;
         }
-        Przedszkolanka przedszkolanka = new Przedszkolanka(id,imie,nazwisko,kwalifikacje,placa);*/
+
+        try {
+            if (czyDodawac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into Przedszkolanka (idprac, imie, nazwisko, kwalifikacje, placa, nazwagrupy, HOS_IDHOS) values (?, ?, ?, ?, ?, ?, ?)");
+                stmt.setLong(1, p.getIdprac());
+                stmt.setString(2, p.getImie());
+                stmt.setString(3, p.getNazwisko());
+                stmt.setString(4, p.getKwalifikacje());
+                stmt.setLong(5, p.getPlaca());
+                stmt.setLong(6, p.getNazwagrupy());
+                stmt.setLong(7, 1);     //p.gethospitacja???
+                //TODO: jeszcze z tym id_hospitacji trzeba pomyslec jak to ma byc dokładnie
+                //ResultSet rs = //trzeba by i tak petla sprawdzac ile jest
+                stmt.executeQuery();
+
+                MainViewController.add(this.dataBase);
+                PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+                pstm.executeQuery();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public DataBase getDataBase() {
@@ -105,7 +145,22 @@ public class PrzedszkolankaController {
     }
 
     @FXML
-    public void clear() {
-        //TODO: czy da sie jakos wyczyscic wcisniety tylko
+    public void clearImie () {
+        imieField.setText("");
+    }
+
+    @FXML
+    public void clearNazwisko () {
+        nazwiskoField.setText("");
+    }
+
+    @FXML
+    public void clearKwalifikacje () {
+        kwalifikacjeField.setText("");
+    }
+
+    @FXML
+    public void clearPlaca () {
+        placaField.setText("");
     }
 }

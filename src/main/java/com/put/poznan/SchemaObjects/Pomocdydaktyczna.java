@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class Pomocdydaktyczna {
     private Long osobaodpowiedzialna;
     private long przedszkolankaIdprac;
     private long grupaprzedszkolnaIdgrupy;
+
 
     @Id
     @Column(name = "IDPOMOCY")
@@ -30,7 +33,15 @@ public class Pomocdydaktyczna {
     }
 
     public void setRodzaj(String rodzaj) {
-        this.rodzaj = rodzaj;
+        if (rodzaj.length() <= 50)
+            this.rodzaj = rodzaj;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Rodzaj nie może być dłuższy niż 50 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic

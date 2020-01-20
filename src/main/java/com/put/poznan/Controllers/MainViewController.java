@@ -1,10 +1,9 @@
 package com.put.poznan.Controllers;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.put.poznan.JDBC.DataBase;
@@ -19,9 +18,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 public class MainViewController {
 
     private DataBase dataBase;
+    private EntityManager em = App.getEm();
 
     public MainViewController(){    }
 
@@ -87,7 +90,7 @@ public class MainViewController {
     private ObservableList<Grupaprzedszkolna> grupyPrzedszkolne;
 
     //============ETAT--------------------------------\\
-    @FXML
+   /* @FXML
     private TableView<Etaty> etatTableView;
 
     @FXML
@@ -97,7 +100,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Etaty, Number> placaMaxEtatColumn;
 
-    private ObservableList<Etaty> etaty;
+    private ObservableList<Etaty> etaty;*/
 
     //============FESTYN--------------------------------\\
 
@@ -181,7 +184,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Posilek, String> dietaPosilekColumn;
 
-    private ObservableList<Posilek> posliki;
+    private ObservableList<Posilek> posilki;
 
     //============SEKRETARKA--------------------------------\\
     @FXML
@@ -244,7 +247,6 @@ public class MainViewController {
 
     private ObservableList<Zebraniezrodzicami> zebraniaZRodzicami;
 
-    //-----------------------------------------------------
 
 
     @FXML
@@ -258,12 +260,11 @@ public class MainViewController {
         nazwiskoPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("nazwisko"));
         kwalifikacjePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
         placaPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
-        //FIXME: tych dwoch kolumn nie ma wgl w obiekcie przedszkolanka
-        // idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idGrupy"));
+        idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("nazwagrupy"));
         //FIXME: NIE MA ID TEGO
         // idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
-
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
+
 
         //============DzieckoColumns--------------------------------\\
         idDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("iddziecka"));
@@ -282,16 +283,16 @@ public class MainViewController {
         idPracGrupaPrzedszkolnaColumn.setCellValueFactory(new PropertyValueFactory<Grupaprzedszkolna, Number>("idprac"));
 
         //============EtatColumns--------------------------------\\
-        nazwaEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, String>("nazwa"));
+       /* nazwaEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, String>("nazwa"));
         placaMinEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMin"));
-        placaMaxEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMax"));
+        placaMaxEtatColumn.setCellValueFactory(new PropertyValueFactory<Etaty, Number>("placaMax"));*/
 
         //============FestynColumns--------------------------------\\
         idFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("idfestynu"));
         grupaWystepujacaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("grupawystepujaca"));
         osobaOdpowiedzialnaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("osobaodpowiedzialna"));
         terminWydarzeniaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Date>("terminwydarzena")); //TODO: date czy time
-        nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("nazwaHaslo"));
+        nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("Haslo"));
 
         //============HospitacjaColumns--------------------------------\\
         idHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("idhospitacji"));
@@ -341,110 +342,250 @@ public class MainViewController {
         idZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("idzebrania"));
         dataZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Time>("data"));
         grupaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("grupa"));
-        miejscaSalaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("miejscaSala"));
+        miejscaSalaZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("miejsca"));
         prowadzacyZebranieZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("prowadzacyzebranie"));
         czyObowiazkoweZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, String>("czyobowiazkowe"));
         przedszkolankaIdHospitacjiZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("przedszkolankaIdhospitacji"));
 
+        wyswietl();
+    }
+
+
+    public void wyswietl() {
+        //TODO: czy tego nie wrzucic w osobna funkcje zeby aktualizowac ladnie czy listenery wystarcza???
+        dzieci = FXCollections.observableList(new ArrayList<>());
+        Query query=em.createQuery("SELECT p FROM Dziecko p");
+        dzieci.addAll(query.getResultList());
+        dzieckoTableView.setItems(dzieci);
+
+
+        grupyPrzedszkolne = FXCollections.observableList(new ArrayList<>());
+        query=em.createQuery("SELECT p FROM Grupaprzedszkolna p");
+        grupyPrzedszkolne.addAll(query.getResultList());
+        grupa_przedszkolnaTableView.setItems(grupyPrzedszkolne);
+
+
+        zajeciaDodatkowe = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT zd from Zajeciadodatkowe zd");
+        zajeciaDodatkowe.addAll(query.getResultList());
+        zajecia_dodatkoweTableView.setItems(zajeciaDodatkowe);
+
+
+        posilki = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT p FROM Posilek p");
+        posilki.addAll(query.getResultList());
+        posilekTableView.setItems(posilki);
+
+
+        zebraniaZRodzicami = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT zr FROM Zebraniezrodzicami zr");
+        zebraniaZRodzicami.addAll(query.getResultList());
+        zebranie_rodziceTableView.setItems(zebraniaZRodzicami);
+
+
+        festyny = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT f FROM Festyn f");
+        festyny.addAll(query.getResultList());
+        festynTableView.setItems(festyny);
+
+
+        hospitacje = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT h FROM Hospitacja h");
+        hospitacje.addAll(query.getResultList());
+        hospitacjaTableView.setItems(hospitacje);
+
+
+        oplaty = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT o FROM Oplata o");
+        oplaty.addAll(query.getResultList());
+        oplataTableView.setItems(oplaty);
+
+
+        pomoceDydaktyczne = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT pd FROM Pomocdydaktyczna pd");
+        pomoceDydaktyczne.addAll(query.getResultList());
+        pomoc_dydaktycznaTableView.setItems(pomoceDydaktyczne);
+
 
         przedszkolanki = FXCollections.observableList(new ArrayList<>());
-        for(int i=0; i<5; i++) {
-            Przedszkolanka p = new Przedszkolanka();
-            p.setImie(Integer.toString(i));
-            przedszkolanki.add(p);
-        }
-        System.out.println(przedszkolanki.toString());
-
+        query = em.createQuery("SELECT p FROM Przedszkolanka p");
+        przedszkolanki.addAll(query.getResultList());
         przedszkolankaTableView.setItems(przedszkolanki);
+
+
+        sekretarki = FXCollections.observableList(new ArrayList<>());
+        query = em.createQuery("SELECT s FROM Sekretarka s");
+        sekretarki.addAll(query.getResultList());
+        sekretarkaTableView.setItems(sekretarki);
     }
+
+
 
     @FXML
     private void removePrzedszkolanka() {
-        int idPrzed = 5;
-        String statement = "DELETE FROM PRZEDSZKOLANKA WHERE IDPRAC = ?";
+        try {
+            long idPrzed = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
+            String statement = "DELETE FROM PRZEDSZKOLANKA WHERE IDPRAC = ?";
 
-        remove(statement, idPrzed);
+            remove(statement, idPrzed);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeSekretarka() {
-        int id = 5;
-        String statement = "DELETE FROM SEKRETARKA WHERE IDPRAC = ?";
+        try {
+            long id = sekretarkaTableView.getSelectionModel().getSelectedItem().getIdprac();
+            String statement = "DELETE FROM SEKRETARKA WHERE IDPRAC = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
     @FXML
     private void removeDziecko() {
-        int id = 5;
+        try {
+        long id = dzieckoTableView.getSelectionModel().getSelectedItem().getIddziecka();
         String statement = "DELETE FROM DZIECKO WHERE IDDZIECKA = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeFestyn() {
-        int id = 5;
-        String statement = "DELETE FROM FESTYN WHERE IDFESTYNU = ?";
+        try {
+            long id = festynTableView.getSelectionModel().getSelectedItem().getIdfestynu();
+            String statement = "DELETE FROM FESTYN WHERE IDFESTYNU = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
     @FXML
     private void removeOplata() {
-        int id = 5;
-        String statement = "DELETE FROM OPLATA WHERE IDOPLATY = ?";
+        try {
+            long id = oplataTableView.getSelectionModel().getSelectedItem().getIdoplaty();
+            String statement = "DELETE FROM OPLATA WHERE IDOPLATY = ?";
 
-        remove(statement, id);
+            remove(statement, id);
+        }catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+        alert.showAndWait();
+    }
     }
 
 
     @FXML
     private void removeZajecia() {
-        int id = 5;
+        try {
+        long id = zajecia_dodatkoweTableView.getSelectionModel().getSelectedItem().getIdzajecia();
         String statement = "DELETE FROM ZAJECIADODATKOWE WHERE IDZAJECIA = ?";
 
         remove(statement, id);
+
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeZebranie() {
-        int id = 5;
+        try {
+        long id = zebranie_rodziceTableView.getSelectionModel().getSelectedItem().getIdzebrania();
         String statement = "DELETE FROM ZEBRANIEZRODZICAMI WHERE IDZEBRANIA = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removePosilek() {
-        int id = 5;
+        try {
+        long id = posilekTableView.getSelectionModel().getSelectedItem().getIdposilku();
         String statement = "DELETE FROM POSILEK WHERE IDPOSILKU = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeHospitacja() {
-        int id = 5;
+        try {
+        long id = hospitacjaTableView.getSelectionModel().getSelectedItem().getIdhospitacji();
         String statement = "DELETE FROM HOSPITACJA WHERE IDHOSPITACJI = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removeGrupa() {
-        int id = 5;
+        try {
+        long id = grupa_przedszkolnaTableView.getSelectionModel().getSelectedItem().getIdgrupy();
         String statement = "DELETE FROM GRUPAPRZEDSZKOLNA WHERE IDGRUPY = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void removePomoc() {
-        int id = 5;
+        try {
+        long id = pomoc_dydaktycznaTableView.getSelectionModel().getSelectedItem().getIdpomocy();
         String statement = "DELETE FROM POMOCDYDAKTYCZNA WHERE IDPOMOCY = ?";
 
         remove(statement, id);
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś obiektu do usunięcia");
+            alert.showAndWait();
+        }
     }
 
 
@@ -485,7 +626,7 @@ public class MainViewController {
     private void addFestyn() throws IOException {
         FXMLLoader loader = App.getFXMLLoader("festyn");
         Parent root = loader.load();
-        dzieckoController c = loader.getController();
+        festynController c = loader.getController();
         c.setDataBase(this.dataBase);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
@@ -568,14 +709,14 @@ public class MainViewController {
     }
 
 
-    private void remove(String statement, int parameter) {
+    private void remove(String statement, long parameter) {
         PreparedStatement stmt;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
 
         try {
             stmt = App.getDataBase().getConnection().prepareStatement(statement);
-            stmt.setInt(1, parameter);        //ustaw pierwszy znak zapytania ma wartosc paramtetru
+            stmt.setLong(1, parameter);        //ustaw pierwszy znak zapytania ma wartosc paramtetru
 
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Jesteś pewien, że chcesz usunąć obekt o id: " + parameter + "?");
@@ -602,6 +743,8 @@ public class MainViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        wyswietl();
     }
 
     //TODO: CHECK IF THIS WORKS
@@ -617,7 +760,7 @@ public class MainViewController {
     private void logOut() throws IOException {
         this.dataBase.closeConnection();
         //Platform.exit(); //TODO: zamiast tego idz do login formularza od nowa
-       // App.getStage().setScene(new Scene(App.loadFXML("login")) );
+        //App.getStage().setScene(new Scene(App.loadFXML("login")) );
         FXMLLoader loader = App.getFXMLLoader("login");
         Parent root = loader.load();
         LoginController c = loader.getController();
@@ -626,8 +769,95 @@ public class MainViewController {
         App.getStage().setScene(scene);
     }
 
+
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private void urodziny() throws SQLException{
+        CallableStatement stmt = DataBase.getConnection().prepareCall("{? = call URODZINY()}");
+        stmt.registerOutParameter(1, Types.INTEGER);
+        try {
+            stmt.execute();
+
+            int idDziecka = stmt.getInt(1);
+
+            PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT imie, NAZWISKO FROM DZIECKO where IDDZIECKA = ?");
+            pstm.setLong(1, idDziecka);
+            ResultSet rs = pstm.executeQuery();
+            rs.next();
+            String imie = rs.getString(1);
+            String nazwisko = rs.getString(2);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Dziś urodizny ma " + imie + " " + nazwisko);
+            alert.showAndWait();
+            stmt.close();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Dziś nikt nie ma urodzin");
+            alert.showAndWait();
+            stmt.close();
+        }
+    }
+
+   @FXML
+   public void placa() {
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setHeaderText(null);
+       try {
+           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja,
+           // nie działa wylogowanie, tylko zamknięcie i ponowne otwarcie z wczytaniem bazy
+           long id = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
+           CallableStatement stmt = DataBase.getConnection().prepareCall("{call zwiekszPlace(?)}");
+           stmt.setLong(1, id);
+           stmt.execute();
+
+           alert.setAlertType(Alert.AlertType.INFORMATION);
+           alert.setContentText("Zwiększono placę przedszkolance o id: " + id);
+           alert.showAndWait();
+       } catch (Exception e) {
+           alert.setContentText("Nie wybrałeś przedszkolanki, której chcesz zwiększyć płacę");
+           alert.showAndWait();
+       }
+    }
+
+
+    @FXML
+    public void modifyDziecko() {
+        try {
+            Long id = dzieckoTableView.getSelectionModel().getSelectedItem().getIddziecka();
+
+            FXMLLoader loader = App.getFXMLLoader("dziecko");
+            Parent root = loader.load();
+            dzieckoController dc = loader.getController();
+            dc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            dc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś dziecka do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+
+    public static void add(DataBase dataBase) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Poprawnie zaktualizowano 1 obiekt");      //wywoluje sie przy modify i add
+        alert.showAndWait();
+
+
+        //przejście do menu głównego
+        FXMLLoader loader = App.getFXMLLoader("primary");
+        Parent root = loader.load();
+        MainViewController c = loader.getController();
+        c.setDataBase(dataBase);
+        Scene scene = new Scene(root);
+        App.getStage().setScene(scene);
     }
 }

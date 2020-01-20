@@ -1,7 +1,10 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @IdClass(DzieckoPK.class)
@@ -9,9 +12,15 @@ public class Dziecko {
     private long iddziecka;
     private String imie;
     private String nazwisko;
-    private Time dataurodzenia;
+    private Date dataurodzenia;
     private long grupaprzedszkolnaIdgrupy;
     private long posilekIdposilku;
+    private Alert alert;
+
+    public Dziecko () {
+        alert  = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+    }
 
     @Id
     @Column(name = "IDDZIECKA")
@@ -30,7 +39,13 @@ public class Dziecko {
     }
 
     public void setImie(String imie) {
-        this.imie = imie;
+        if (imie.length() <= 15)
+            this.imie = imie;
+        else {
+            alert.setContentText("Imie dziecka nie może być dłuższe niż 15 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -40,16 +55,22 @@ public class Dziecko {
     }
 
     public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
+        if (nazwisko.length() <= 25)
+            this.nazwisko = nazwisko;
+        else {
+            alert.setContentText("Nazwisko dziecka nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
     @Column(name = "DATAURODZENIA")
-    public Time getDataurodzenia() {
+    public Date getDataurodzenia() {
         return dataurodzenia;
     }
 
-    public void setDataurodzenia(Time dataurodzenia) {
+    public void setDataurodzenia(Date dataurodzenia) {
         this.dataurodzenia = dataurodzenia;
     }
 
@@ -83,9 +104,9 @@ public class Dziecko {
         if (iddziecka != dziecko.iddziecka) return false;
         if (grupaprzedszkolnaIdgrupy != dziecko.grupaprzedszkolnaIdgrupy) return false;
         if (posilekIdposilku != dziecko.posilekIdposilku) return false;
-        if (imie != null ? !imie.equals(dziecko.imie) : dziecko.imie != null) return false;
-        if (nazwisko != null ? !nazwisko.equals(dziecko.nazwisko) : dziecko.nazwisko != null) return false;
-        if (dataurodzenia != null ? !dataurodzenia.equals(dziecko.dataurodzenia) : dziecko.dataurodzenia != null)
+        if (!Objects.equals(imie, dziecko.imie)) return false;
+        if (!Objects.equals(nazwisko, dziecko.nazwisko)) return false;
+        if (!Objects.equals(dataurodzenia, dziecko.dataurodzenia))
             return false;
 
         return true;

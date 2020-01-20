@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +32,13 @@ public class Grupaprzedszkolna {
     }
 
     public void setSala(Long sala) {
-        this.sala = sala;
+        if (sala == null) {
+            this.sala = sala;
+        } else if (sala > 0) {
+            this.sala = sala;
+        } else {
+            throw new IllegalArgumentException("Sala musi być większa od 0");
+        }
     }
 
     @Basic
@@ -40,7 +48,15 @@ public class Grupaprzedszkolna {
     }
 
     public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+        if (nazwa.length() <= 25)
+            this.nazwa = nazwa;
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nazwa grupy nie może być dłuższa niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Basic
@@ -50,7 +66,13 @@ public class Grupaprzedszkolna {
     }
 
     public void setWiekdzieci(Long wiekdzieci) {
-        this.wiekdzieci = wiekdzieci;
+        if (wiekdzieci == null) {
+            this.wiekdzieci = wiekdzieci;
+        } else if (wiekdzieci > 0) {
+            this.wiekdzieci = wiekdzieci;
+        } else {
+            throw new IllegalArgumentException("Wiek dzieci musi być większy od 0");
+        }
     }
 
     @Basic
