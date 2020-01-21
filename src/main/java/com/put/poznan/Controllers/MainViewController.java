@@ -1283,60 +1283,70 @@ public class MainViewController {
     @FXML
     private void refreshFestynTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.festynTableView.refresh();
     }
 
     @FXML
     private void refreshGrupaPrzedszkolnaTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.grupa_przedszkolnaTableView.refresh();
     }
 
     @FXML
     private void refreshHospitacjaTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.hospitacjaTableView.refresh();
     }
 
     @FXML
     private void refreshOplataTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.oplataTableView.refresh();
     }
 
     @FXML
     private void refreshPomocDydaktycznaTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.pomoc_dydaktycznaTableView.refresh();
     }
 
     @FXML
     private void refreshPosilekTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.posilekTableView.refresh();
     }
 
     @FXML
     private void refreshPrzedszkolankaTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.przedszkolankaTableView.refresh();
     }
 
     @FXML
     private void refreshSekretarkaTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.sekretarkaTableView.refresh();
     }
 
     @FXML
     private void refreshZajeciaDodatkoweTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.zajecia_dodatkoweTableView.refresh();
     }
 
     @FXML
     private void refreshZebranieRodziceTableView(){
         App.setProperties();
+        this.searchField.clear();
         this.zebranie_rodziceTableView.refresh();
     }
 

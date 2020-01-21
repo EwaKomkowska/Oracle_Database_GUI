@@ -10,7 +10,7 @@
          <items>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-background-color: grey;">
                <items>
-                  <TextField fx:id="searchField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" scaleY="0.9" style="-fx-background-color: white;" />
+                  <TextField fx:id="searchField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="SEARCH " scaleY="0.9" style="-fx-background-color: white;" />
                   <TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab id="przedszkolankaTab" onSelectionChanged="#refreshPrzedszkolankaTableView" text="Przedszkolanka">
