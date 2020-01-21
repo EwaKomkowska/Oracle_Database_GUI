@@ -1256,7 +1256,7 @@ public class MainViewController {
     }
 
 
-    public static void add(DataBase dataBase) throws IOException {
+    public static void add(DataBase dataBase, int idx) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText("Poprawnie zaktualizowano 1 obiekt");      //wywoluje sie przy modify i add
@@ -1267,6 +1267,7 @@ public class MainViewController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(dataBase);
+        c.setCurrentTab(idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }

@@ -85,7 +85,7 @@ public class posilekController {
                 stmt.setString(4, p.getDieta());
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT POSILEK_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

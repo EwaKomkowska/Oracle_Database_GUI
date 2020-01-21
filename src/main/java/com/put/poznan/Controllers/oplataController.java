@@ -92,7 +92,7 @@ public class oplataController {
                 //TODO: cos nie do konca tu z iloscia dziwnych polaczen - idzajeciaDodatkowe nie zczytywane
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

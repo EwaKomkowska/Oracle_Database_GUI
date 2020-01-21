@@ -137,7 +137,7 @@ public class zajeciaDodatkoweController {
 
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZAJDOD_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

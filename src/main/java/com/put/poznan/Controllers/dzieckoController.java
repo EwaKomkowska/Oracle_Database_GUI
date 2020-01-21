@@ -134,7 +134,7 @@ public class dzieckoController {
                 stmt.executeQuery();
                 stmt.close(); //TODO: DODAC DO RESZTY CLOSE!
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
                 pstm.executeQuery();
                 pstm.close();
@@ -196,7 +196,7 @@ public class dzieckoController {
 
                 stmt.close();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
             }
         }catch (Exception e) {
             e.printStackTrace();

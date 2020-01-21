@@ -41,6 +41,7 @@ public class PrzedszkolankaController {
     @FXML
     private ComboBox id_hospitacjiBox;
 
+    private int idx = 0;
 
     @FXML
     public void initialize() throws SQLException {
@@ -117,7 +118,7 @@ public class PrzedszkolankaController {
                 //ResultSet rs = //trzeba by i tak petla sprawdzac ile jest
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

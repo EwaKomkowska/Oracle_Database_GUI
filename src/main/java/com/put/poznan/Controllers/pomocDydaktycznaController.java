@@ -133,7 +133,7 @@ public class pomocDydaktycznaController {
 
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT POMOCDYD_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

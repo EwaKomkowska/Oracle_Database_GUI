@@ -149,7 +149,7 @@ public class zebranieRodziceController {
 
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

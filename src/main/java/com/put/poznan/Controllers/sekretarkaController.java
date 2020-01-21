@@ -120,7 +120,7 @@ public class sekretarkaController {
                 stmt.setLong(7, s.getPlaca());
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT SEKRETARKA_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }

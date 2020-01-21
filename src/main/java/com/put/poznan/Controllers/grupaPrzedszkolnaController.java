@@ -124,7 +124,7 @@ public class grupaPrzedszkolnaController {
 
                 stmt.executeQuery();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
                 pstm.executeQuery();
             }
