@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import javax.persistence.Query;
@@ -26,7 +27,7 @@ public class hospitacjaController {
     @FXML
     private TextField idField;
     @FXML
-    private TextField dataField;
+    private DatePicker terminDatePicker;
     @FXML
     private ComboBox id_przedszkolankiBox;
     @FXML
@@ -73,7 +74,7 @@ public class hospitacjaController {
         }
 
         try {
-            h.setTermin(Date.valueOf(dataField.getText()));
+            h.setTermin(Date.valueOf(terminDatePicker.getValue().toString()));
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

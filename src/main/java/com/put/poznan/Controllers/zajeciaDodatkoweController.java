@@ -1,7 +1,6 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.SchemaObjects.Dziecko;
 import com.put.poznan.SchemaObjects.Zajeciadodatkowe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,10 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import javax.persistence.Query;
-import javax.persistence.Table;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class zajeciaDodatkoweController {
     @FXML
     private TextField rodzajField;
     @FXML
-    private TextField dataField;
+    private DatePicker terminDatePicker;
     @FXML
     private TextField czasField;
     @FXML
@@ -77,7 +76,7 @@ public class zajeciaDodatkoweController {
         }
 
         try {
-            zd.setDataprowadzenia(Date.valueOf(dataField.getText()));
+            zd.setDataprowadzenia(Date.valueOf(terminDatePicker.getValue().toString()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

@@ -1,7 +1,6 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
-import com.put.poznan.SchemaObjects.Dziecko;
 import com.put.poznan.SchemaObjects.Zebraniezrodzicami;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import org.hibernate.type.TrueFalseType;
 
 import javax.persistence.Query;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class zebranieRodziceController {
     @FXML
     private TextField idField;
     @FXML
-    private TextField dataField;
+    private DatePicker terminDatePicker;
     @FXML
     private TextField salaField;
     @FXML
@@ -77,7 +76,7 @@ public class zebranieRodziceController {
         boolean czyDodac = true;
 
         try {
-            zr.setData(Date.valueOf(dataField.getText()));
+            zr.setData(Date.valueOf(terminDatePicker.getValue().toString()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

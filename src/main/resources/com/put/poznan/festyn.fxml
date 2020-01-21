@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.put.poznan.Controllers.festynController" prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.festynController">
     <children>
         <Label fx:id="addLabel" alignment="CENTER" layoutX="150.0" layoutY="20.0" prefHeight="57.0" prefWidth="300.0" text="Please write new data for Festyn" textAlignment="CENTER">
             <font>
@@ -13,11 +13,11 @@
         </Label>
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
-                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="idFestynu"/>
-                <TextField fx:id="terminField" layoutX="25.0" layoutY="100.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="termin (YYYY-MM-DD)"/>
-                <TextField fx:id="hasloField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="haslo"/>
-                <ComboBox fx:id="id_grupyBox" layoutX="25.0" layoutY="190.0" prefHeight="66.0" prefWidth="250.0" promptText="id grupy"/>
-                <ComboBox fx:id="id_przedszkolankiBox" layoutX="285.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id przedszkolanki"/>
+                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="idFestynu" />
+                <TextField fx:id="hasloField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="haslo" />
+                <ComboBox fx:id="id_grupyBox" layoutX="25.0" layoutY="190.0" prefHeight="66.0" prefWidth="250.0" promptText="id grupy" />
+                <ComboBox fx:id="id_przedszkolankiBox" layoutX="285.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id przedszkolanki" />
+            <DatePicker fx:id="terminDatePicker" layoutX="25.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="termin" />
             </children>
         </Pane>
         <Button fx:id="addButton" layoutX="105.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#add" prefHeight="23.0" prefWidth="100.0" text="Add" />

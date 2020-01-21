@@ -8,12 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.*;
@@ -29,7 +25,7 @@ public class dzieckoController {
     @FXML
     private TextField nazwiskoField;
     @FXML
-    private TextField dataField;
+    private DatePicker dataDatePicker;
     @FXML
     private ComboBox id_grupyBox;
     @FXML
@@ -80,7 +76,7 @@ public class dzieckoController {
         }
 
         try {
-            d.setDataurodzenia(Date.valueOf(dataField.getText()));
+            d.setDataurodzenia(Date.valueOf(dataDatePicker.getValue().toString()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -176,7 +172,7 @@ public class dzieckoController {
         rs.next();
         imieField.setText(rs.getString("imie"));
         nazwiskoField.setText(rs.getString("nazwisko"));
-        dataField.setText(String.valueOf(rs.getTime("dataurodzenia")));
+        dataDatePicker.setPromptText(String.valueOf(rs.getTime("data_urodzenia")));
         id_posilkuBox.setValue(rs.getLong("posilek_idposilku"));
         id_grupyBox.setValue(rs.getLong("grupaprzedszkolna_idgrupy"));
         pstm.close(); //TODO: CLOSE NA KONIEC!! tak jest ok
