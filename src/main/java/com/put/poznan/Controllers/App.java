@@ -41,6 +41,14 @@ public class App extends Application {
         return scene;
     }
 
+    public static void setEM(EntityManager em){
+        App.em = em;
+    }
+
+    public static void setEMF(EntityManagerFactory emf){
+        App.emf = emf;
+    }
+
     public static DataBase getDataBase(){return dataBase;}
 
     public static void setDataBase(DataBase dataBase) {
@@ -60,13 +68,6 @@ public class App extends Application {
         stage.setScene(scene); //, 500, 500));
         //scene = new Scene(loadFXML("login"));
         //stage.setScene(scene);
-
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.username", "paweu"); //system//TODO: przekaz stringi zapisz w apie?? dostac z bazy??
-        properties.put("hibernate.connection.password", "haslo"); //Oracle2019
-        //EntityManagerFactory
-        emf = Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
-        em = emf.createEntityManager();
 
         stage.show();
     }
