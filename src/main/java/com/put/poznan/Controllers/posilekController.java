@@ -24,6 +24,7 @@ public class posilekController {
         this.dataBase = dataBase;
     }
 
+    private int idx = 5;
 
     @FXML
     private TextField nazwaField;
@@ -100,6 +101,7 @@ public class posilekController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }

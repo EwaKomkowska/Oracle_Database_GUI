@@ -10,6 +10,7 @@ import java.sql.Date;
 
 @Entity
 public class Zajeciadodatkowe {
+
     private long idzajecia;
     private String rodzaj;
     private Date dataprowadzenia;

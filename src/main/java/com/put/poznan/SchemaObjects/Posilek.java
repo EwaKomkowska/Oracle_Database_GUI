@@ -11,6 +11,7 @@ import java.sql.Time;
 
 @Entity
 public class Posilek {
+
     private long idposilku;
     private String nazwa;
     private Time godzrozwozenia;

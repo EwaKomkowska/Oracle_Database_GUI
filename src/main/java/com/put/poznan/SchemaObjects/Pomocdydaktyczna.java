@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @IdClass(PomocdydaktycznaPK.class)
 public class Pomocdydaktyczna {
+
     private long idpomocy;
     private String rodzaj;
     private Long dodatkoweoplaty;

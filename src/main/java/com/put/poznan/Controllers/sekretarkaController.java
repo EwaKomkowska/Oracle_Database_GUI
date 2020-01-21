@@ -8,15 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Long.parseLong;
 
 public class sekretarkaController {
+
+
     private DataBase dataBase;
+
+    private int idx = 1;
+
     //TODO: more fields in sekretarka.fxml!!!
     @FXML
     private TextField idField;
@@ -129,9 +136,11 @@ public class sekretarkaController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }
+
 
     @FXML
     public void clear() {

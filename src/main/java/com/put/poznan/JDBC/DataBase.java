@@ -27,6 +27,7 @@ public class DataBase {
         Boolean conState = false;
         try {
             this.connection = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1521:PAWEL",login, password); //XE 1523
+            //this.connection.setAutoCommit(false); //TODO: do refresha moze
             conState = true;
         } catch (SQLException e) {
             //System.out.println(e.getErrorCode());

@@ -31,7 +31,7 @@ public class festynController {
     @FXML
     private ComboBox id_przedszkolankiBox;
 
-
+    private int idx = 8;
 
     public DataBase getDataBase() {
         return dataBase;
@@ -140,6 +140,7 @@ public class festynController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }

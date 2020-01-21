@@ -27,7 +27,7 @@ public class oplataController {
     @FXML
     private TextField przedmiotField;
 
-
+    private int idx = 7;
 
     public DataBase getDataBase() {
         return dataBase;
@@ -108,6 +108,7 @@ public class oplataController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }

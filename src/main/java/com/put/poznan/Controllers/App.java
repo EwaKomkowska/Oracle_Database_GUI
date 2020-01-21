@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.hibernate.cfg.Environment;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,6 +27,7 @@ public class App extends Application {
     private static Stage stage;
     private static DataBase dataBase;
     private static EntityManager em;
+    private static EntityManagerFactory emf;//TODO: ZOBACCZ CZY MA SENS
 
     public static EntityManager getEm() {
         return em;
@@ -60,12 +62,16 @@ public class App extends Application {
         //stage.setScene(scene);
 
         Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.username", "paweu"); //system
+        properties.put("hibernate.connection.username", "paweu"); //system//TODO: przekaz stringi zapisz w apie?? dostac z bazy??
         properties.put("hibernate.connection.password", "haslo"); //Oracle2019
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
+        //EntityManagerFactory
+        emf = Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
         em = emf.createEntityManager();
 
         stage.show();
+    }
+    public static void setProperties(){
+        em = emf.createEntityManager();
     }
 
     public static void setRoot(String fxml) throws IOException {

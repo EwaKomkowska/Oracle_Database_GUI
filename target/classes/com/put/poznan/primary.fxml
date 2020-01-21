@@ -4,365 +4,371 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<BorderPane prefHeight="353.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.MainViewController">
-   <right>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;" BorderPane.alignment="CENTER">
-        <buttons>
-          <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
-               <font>
-                  <Font name="Droid Sans" size="15.0" />
-               </font>
-            </Button>
-        </buttons>
-      </ButtonBar>
-   </right>
-   <center>
-      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-            <Tab id="przedszkolankaTab" text="Przedszkolanka">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="526.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="90.0" layoutY="256.0" prefHeight="40.0" prefWidth="300.0">
-                                <buttons>
-                                  <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove" />
-                                    <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
-                                    <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
-                                </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="przedszkolankaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idPrzedszkolankaColumn" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="imiePrzedszkolankaColumn" prefWidth="75.0" text="Imię" />
-                                    <TableColumn fx:id="nazwiskoPrzedszkolankaColumn" prefWidth="75.0" text="Nazwisko" />
-                                    <TableColumn fx:id="kwalifikacjePrzedszkolankaColumn" prefWidth="130.0" text="Kwalifikacje" />
-                                    <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
-                                    <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
-                                    <!--<TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />-->
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="przedszkolankaPlacaButton" layoutX="400.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#placa" prefHeight="26.0" prefWidth="98.0" text="Zwiększ płacę" />
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="sekretarkaTab" fx:id="sekretarkaTab" text="Sekretarka">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeSekretarka" text="Remove" />
-                                    <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" onMouseClicked="#addSekretarka" text="Add" />
-                                    <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="sekretarkaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idSekretarkaColumn" prefWidth="64.0" text="ID" />
-                                    <TableColumn fx:id="imieSekretarkaColumn" prefWidth="71.0" text="Imię" />
-                                    <TableColumn fx:id="nazwiskoSekretarkaColumn" prefWidth="108.0" text="Nazwisko" />
-                                    <TableColumn fx:id="kwalifikacjeSekretarkaColumn" minWidth="7.0" prefWidth="88.0" text="Kwalifikacje" />
-                                    <TableColumn fx:id="placaSekretarkaColumn" minWidth="0.0" prefWidth="76.0" text="Placa" />
-                                    <TableColumn fx:id="godzRozpoczeciaPracySekretarkaColumn" minWidth="0.0" prefWidth="104.0" text="Godzina rozpoczęcia pracy" />
-                                    <TableColumn fx:id="godzZakonczeniaPracySekretarkaColumn" prefWidth="101.0" text="Godzina zakończenia pracy" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="dzieckoTab" text="Dziecko">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
-                                    <Button fx:id="dzieckoAddButton" mnemonicParsing="false" onMouseClicked="#addDziecko" text="Add" />
-                                    <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" onMouseClicked="#modifyDziecko" text="Modify" />
-                                    <Button fx:id="urodzinyButton" mnemonicParsing="false" onMouseClicked="#urodziny" text="Urodziny" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="dzieckoTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idDzieckoColumn" prefWidth="74.0" text="ID" />
-                                    <TableColumn fx:id="imieDzieckoColumn" prefWidth="83.0" text="Imię" />
-                                    <TableColumn fx:id="nazwiskoDzieckoColumn" prefWidth="114.0" text="Nazwisko" />
-                                    <TableColumn fx:id="dataUrodzeniaDzieckoColumn" prefWidth="102.0" text="Data Urodzenia" />
-                                    <TableColumn fx:id="grupaPrzedszkolnaDzieckoColumn" prefWidth="144.0" text="Grupa Przedszkolna" />
-                                    <TableColumn fx:id="idPosilkuDzieckoColumn" prefWidth="82.0" text="ID posiłku" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="grupaPrzedszkolnaTab" text="Grupa Przedszkolna">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeGrupa" text="Remove" />
-                                    <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" onMouseClicked="#addGrupa" text="Add" />
-                                    <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="grupa_przedszkolnaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idGrupaPrzedszkolnaColumn" prefWidth="129.0" text="ID" />
-                                    <TableColumn fx:id="salaGrupaPrzedszkolnaColumn" prefWidth="108.0" text="Sala" />
-                                    <TableColumn fx:id="nazwaGrupaPrzedszkolnaColumn" prefWidth="92.0" text="Nazwa" />
-                                    <TableColumn fx:id="wiekDzieciGrupaPrzedszkolnaColumn" prefWidth="116.0" text="Wiek Dzieci" />
-                                    <TableColumn fx:id="idPracGrupaPrzedszkolnaColumn" prefWidth="154.0" text="ID opiekuna" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="zajeciaDodatkoweTab" text="Zajęcia Dodatkowe">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZajecia" text="Remove" />
-                                    <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" onMouseClicked="#addZajecia" text="Add" />
-                                    <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="zajecia_dodatkoweTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idZajeciaDodatkoweColumn" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="rodzajZajeciaDodatkoweColumn" prefWidth="75.0" text="Rodzaj" />
-                                    <TableColumn fx:id="dataProwadzeniaZajeciaDodatkoweColumn" prefWidth="147.0" text="Data Prowadzenia" />
-                                    <TableColumn fx:id="oplatyZajeciaDodatkoweColumn" prefWidth="85.0" text="Opłaty" />
-                                    <TableColumn fx:id="czasTygodniowoZajeciaDodatkoweColumn" prefWidth="122.0" text="Czas Tygodniowo" />
-                                    <TableColumn fx:id="dlaKogoZajeciaDodatkoweColumn" prefWidth="95.0" text="Dla Kogo" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="posilekTab" text="Posiłek">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="posilekRemoveButton" mnemonicParsing="false" onMouseClicked="#removePosilek" text="Remove" />
-                                    <Button fx:id="posilekAddButton" mnemonicParsing="false" onMouseClicked="#addPosilek" text="Add" />
-                                    <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="posilekTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idPosilekColumn" prefWidth="135.0" text="ID" />
-                                    <TableColumn fx:id="nazwaPosilekColumn" prefWidth="141.0" text="Nazwa" />
-                                    <TableColumn fx:id="godzRozwozeniaPosilekColumn" prefWidth="203.0" text="Godzina rozwożenia" />
-                                    <TableColumn fx:id="dietaPosilekColumn" prefWidth="120.0" text="Dieta" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="pomocDydaktycznaTab" text="Pomoc dydaktyczna">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePomoc" text="Remove" />
-                                    <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" onMouseClicked="#addPomoc" text="Add" />
-                                    <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="pomoc_dydaktycznaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idPomocDydatktycznaColumn" prefWidth="42.0" text="ID" />
-                                    <TableColumn fx:id="rodzajPomocDydatktycznaColumn" prefWidth="94.0" text="Rodzaj Pomocy" />
-                                    <TableColumn fx:id="dodatkoweOplatyPomocDydatktycznaColumn" prefWidth="86.0" text="Dodatkowe Opłaty" />
-                                    <TableColumn fx:id="grupaDocelowaPomocDydatktycznaColumn" minWidth="0.0" prefWidth="52.0" text="Grupa Docelowa" />
-                                    <TableColumn fx:id="osobaOdpowiedzialnaPomocDydatktycznaColumn" prefWidth="136.0" text="Osoba Odpowiedzialna" />
-                                    <TableColumn fx:id="przedszkolankaIdPomocDydatktycznaColumn" prefWidth="115.0" text="ID przedszkolanki" />
-                                    <TableColumn fx:id="grupaPrzedszkolnaIdPomocDydatktycznaColumn" prefWidth="74.0" text="ID Grupy Przedszkolnej" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="oplataTab" closable="false" text="Opłata">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="oplataRemoveButton" mnemonicParsing="false" onMouseClicked="#removeOplata" text="Remove" />
-                                    <Button fx:id="oplataAddButton" mnemonicParsing="false" onMouseClicked="#addOplata" text="Add" />
-                                    <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="oplataTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idOplataColumn" prefWidth="94.0" text="ID" />
-                                    <TableColumn fx:id="wielkoscOplataColumn" prefWidth="105.0" text="Suma" />
-                                    <TableColumn fx:id="przedmiotOplataColumn" prefWidth="202.0" text="Przedmiot Opłaty" />
-                                    <TableColumn fx:id="czestoscOplataColumn" prefWidth="198.0" text="Częstość opłaty" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="festynTab" text="Festyn">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="festynRemoveButton" mnemonicParsing="false" onMouseClicked="#removeFestyn" text="Remove" />
-                                    <Button fx:id="festynAddButton" mnemonicParsing="false" onMouseClicked="#addFestyn" text="Add" />
-                                    <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="festynTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idFestynColumn" prefWidth="64.0" text="ID" />
-                                    <TableColumn fx:id="grupaWystepujacaFestynColumn" prefWidth="130.0" text="Grupa Występująca" />
-                                    <TableColumn fx:id="osobaOdpowiedzialnaFestynColumn" prefWidth="153.0" text="Osoba Odpowiedzialna" />
-                                    <TableColumn fx:id="terminWydarzeniaFestynColumn" prefWidth="128.0" text="Termin Wydarzenia" />
-                                    <TableColumn fx:id="nazwaFestynColumn" prefWidth="124.0" text="Nazwa" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="zebranieTab" text="Zebranie z Rodzicami">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="603.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZebranie" text="Remove" />
-                                    <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" onMouseClicked="#addZebranie" text="Add" />
-                                    <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="zebranie_rodziceTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idZebranieRodziceColumn" prefWidth="62.0" text="ID" />
-                                    <TableColumn fx:id="dataZebranieRodziceColumn" prefWidth="48.0" text="Data" />
-                                    <TableColumn fx:id="grupaZebranieRodziceColumn" prefWidth="61.0" text="Grupa" />
-                                    <TableColumn fx:id="miejscaSalaZebranieRodziceColumn" prefWidth="58.0" text="Sala" />
-                                    <TableColumn fx:id="prowadzacyZebranieZebranieRodziceColumn" prefWidth="136.0" text="Prowadzący Zebranie" />
-                                    <TableColumn fx:id="czyObowiazkoweZebranieRodziceColumn" prefWidth="114.0" text="Czy Obowiązkowe" />
-                                    <TableColumn fx:id="przedszkolankaIdHospitacjiZebranieRodziceColumn" prefWidth="120.0" text="Przedszkolanka" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab id="hospitacjaTab" text="Hospitacja">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="335.0" prefWidth="597.0">
-                           <children>
-                              <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
-                                 <buttons>
-                                    <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeHospitacja" text="Remove" />
-                                    <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" onMouseClicked="#addHospitacja" text="Add" />
-                                    <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="hospitacjaTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                 <columns>
-                                    <TableColumn fx:id="idHospitacjaColumn" prefWidth="99.0" text="ID" />
-                                    <TableColumn fx:id="terminHospitacjaColumn" prefWidth="133.0" text="Termin" />
-                                    <TableColumn fx:id="ktoNadzorowanyHospitacjaColumn" prefWidth="174.0" text="Kto nadzorowany" />
-                                    <TableColumn fx:id="ktoNadzorujeHospitacjaColumn" prefWidth="193.0" text="Kto nadzoruje" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-          <!--<Tab id="etatyTab" text="Etaty">
-              <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <Pane prefHeight="335.0" prefWidth="597.0">
-                                    <children>
-                                        <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+<SplitPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.put.poznan.Controllers.MainViewController">
+   <items>
+      <SplitPane dividerPositions="0.5" prefHeight="193.0" prefWidth="684.0" style="-fx-background-color: grey;">
+         <items>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-background-color: grey;">
+               <items>
+                  <TextField fx:id="searchField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" scaleY="0.9" style="-fx-background-color: white;" />
+                  <TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab id="przedszkolankaTab" onSelectionChanged="#refreshPrzedszkolankaTableView" text="Przedszkolanka">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="526.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="91.0" layoutY="256.0" prefHeight="40.0" prefWidth="300.0">
                                             <buttons>
-                                                <Button fx:id="etatyRemoveButton" mnemonicParsing="false" text="Remove" />
-                                                <Button fx:id="etatyAddButton" mnemonicParsing="false" text="Add" />
-                                                <Button fx:id="etatyModifyButton" mnemonicParsing="false" text="Modify" />
+                                              <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove" />
+                                                <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
+                                                <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
                                             </buttons>
-                                        </ButtonBar>
-                                        <TableView fx:id="etatTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
-                                            <columns>
-                                                <TableColumn fx:id="nazwaEtatColumn" prefWidth="139.0" text="Nazwa" />
-                                                <TableColumn fx:id="placaMinEtatColumn" prefWidth="228.0" text="Placa minimalna" />
-                                                <TableColumn fx:id="placaMaxEtatColumn" prefWidth="232.0" text="Płaca maksymalna" />
-                                            </columns></TableView>
-                                    </children>
-                                </Pane>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>-->
-        </tabs>
-      </TabPane>
-   </center>
-</BorderPane>
+                                          </ButtonBar>
+                                          <TableView fx:id="przedszkolankaTableView" layoutX="25.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idPrzedszkolankaColumn" prefWidth="75.0" text="ID" />
+                                                <TableColumn fx:id="imiePrzedszkolankaColumn" prefWidth="75.0" text="Imię" />
+                                                <TableColumn fx:id="nazwiskoPrzedszkolankaColumn" prefWidth="75.0" text="Nazwisko" />
+                                                <TableColumn fx:id="kwalifikacjePrzedszkolankaColumn" prefWidth="130.0" text="Kwalifikacje" />
+                                                <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
+                                                <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
+                                                <!--<TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />-->
+                                             </columns>
+                                          </TableView>
+                                          <Button fx:id="przedszkolankaPlacaButton" layoutX="402.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#placa" prefHeight="26.0" prefWidth="98.0" text="Zwiększ płacę" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="sekretarkaTab" fx:id="sekretarkaTab" onSelectionChanged="#refreshSekretarkaTableView" text="Sekretarka">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="148.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeSekretarka" text="Remove" />
+                                                <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" onMouseClicked="#addSekretarka" text="Add" />
+                                                <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="sekretarkaTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idSekretarkaColumn" prefWidth="64.0" text="ID" />
+                                                <TableColumn fx:id="imieSekretarkaColumn" prefWidth="71.0" text="Imię" />
+                                                <TableColumn fx:id="nazwiskoSekretarkaColumn" prefWidth="108.0" text="Nazwisko" />
+                                                <TableColumn fx:id="kwalifikacjeSekretarkaColumn" minWidth="7.0" prefWidth="88.0" text="Kwalifikacje" />
+                                                <TableColumn fx:id="placaSekretarkaColumn" minWidth="0.0" prefWidth="76.0" text="Placa" />
+                                                <TableColumn fx:id="godzRozpoczeciaPracySekretarkaColumn" minWidth="0.0" prefWidth="104.0" text="Godzina rozpoczęcia pracy" />
+                                                <TableColumn fx:id="godzZakonczeniaPracySekretarkaColumn" prefWidth="101.0" text="Godzina zakończenia pracy" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="dzieckoTab" onSelectionChanged="#refreshDzieckoTableView" text="Dziecko">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="dzieckoRemoveButton" mnemonicParsing="false" onMouseClicked="#removeDziecko" text="Remove" />
+                                                <Button fx:id="dzieckoAddButton" mnemonicParsing="false" onMouseClicked="#addDziecko" text="Add" />
+                                                <Button fx:id="dzieckoModifyButton" mnemonicParsing="false" onMouseClicked="#modifyDziecko" text="Modify" />
+                                                <Button fx:id="urodzinyButton" mnemonicParsing="false" onMouseClicked="#urodziny" text="Urodziny" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="dzieckoTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idDzieckoColumn" prefWidth="74.0" text="ID" />
+                                                <TableColumn fx:id="imieDzieckoColumn" prefWidth="83.0" text="Imię" />
+                                                <TableColumn fx:id="nazwiskoDzieckoColumn" prefWidth="114.0" text="Nazwisko" />
+                                                <TableColumn fx:id="dataUrodzeniaDzieckoColumn" prefWidth="102.0" text="Data Urodzenia" />
+                                                <TableColumn fx:id="grupaPrzedszkolnaDzieckoColumn" prefWidth="144.0" text="Grupa Przedszkolna" />
+                                                <TableColumn fx:id="idPosilkuDzieckoColumn" prefWidth="82.0" text="ID posiłku" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="grupaPrzedszkolnaTab" onSelectionChanged="#refreshGrupaPrzedszkolnaTableView" text="Grupa Przedszkolna">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeGrupa" text="Remove" />
+                                                <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" onMouseClicked="#addGrupa" text="Add" />
+                                                <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="grupa_przedszkolnaTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idGrupaPrzedszkolnaColumn" prefWidth="129.0" text="ID" />
+                                                <TableColumn fx:id="salaGrupaPrzedszkolnaColumn" prefWidth="108.0" text="Sala" />
+                                                <TableColumn fx:id="nazwaGrupaPrzedszkolnaColumn" prefWidth="92.0" text="Nazwa" />
+                                                <TableColumn fx:id="wiekDzieciGrupaPrzedszkolnaColumn" prefWidth="116.0" text="Wiek Dzieci" />
+                                                <TableColumn fx:id="idPracGrupaPrzedszkolnaColumn" prefWidth="154.0" text="ID opiekuna" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="zajeciaDodatkoweTab" onSelectionChanged="#refreshZajeciaDodatkoweTableView" text="Zajęcia Dodatkowe">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZajecia" text="Remove" />
+                                                <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" onMouseClicked="#addZajecia" text="Add" />
+                                                <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="zajecia_dodatkoweTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idZajeciaDodatkoweColumn" prefWidth="75.0" text="ID" />
+                                                <TableColumn fx:id="rodzajZajeciaDodatkoweColumn" prefWidth="75.0" text="Rodzaj" />
+                                                <TableColumn fx:id="dataProwadzeniaZajeciaDodatkoweColumn" prefWidth="147.0" text="Data Prowadzenia" />
+                                                <TableColumn fx:id="oplatyZajeciaDodatkoweColumn" prefWidth="85.0" text="Opłaty" />
+                                                <TableColumn fx:id="czasTygodniowoZajeciaDodatkoweColumn" prefWidth="122.0" text="Czas Tygodniowo" />
+                                                <TableColumn fx:id="dlaKogoZajeciaDodatkoweColumn" prefWidth="95.0" text="Dla Kogo" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="posilekTab" onSelectionChanged="#refreshPosilekTableView" text="Posiłek">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="posilekRemoveButton" mnemonicParsing="false" onMouseClicked="#removePosilek" text="Remove" />
+                                                <Button fx:id="posilekAddButton" mnemonicParsing="false" onMouseClicked="#addPosilek" text="Add" />
+                                                <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="posilekTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idPosilekColumn" prefWidth="135.0" text="ID" />
+                                                <TableColumn fx:id="nazwaPosilekColumn" prefWidth="141.0" text="Nazwa" />
+                                                <TableColumn fx:id="godzRozwozeniaPosilekColumn" prefWidth="203.0" text="Godzina rozwożenia" />
+                                                <TableColumn fx:id="dietaPosilekColumn" prefWidth="120.0" text="Dieta" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="pomocDydaktycznaTab" onSelectionChanged="#refreshPomocDydaktycznaTableView" text="Pomoc dydaktyczna">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePomoc" text="Remove" />
+                                                <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" onMouseClicked="#addPomoc" text="Add" />
+                                                <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="pomoc_dydaktycznaTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idPomocDydatktycznaColumn" prefWidth="42.0" text="ID" />
+                                                <TableColumn fx:id="rodzajPomocDydatktycznaColumn" prefWidth="94.0" text="Rodzaj Pomocy" />
+                                                <TableColumn fx:id="dodatkoweOplatyPomocDydatktycznaColumn" prefWidth="86.0" text="Dodatkowe Opłaty" />
+                                                <TableColumn fx:id="grupaDocelowaPomocDydatktycznaColumn" minWidth="0.0" prefWidth="52.0" text="Grupa Docelowa" />
+                                                <TableColumn fx:id="osobaOdpowiedzialnaPomocDydatktycznaColumn" prefWidth="136.0" text="Osoba Odpowiedzialna" />
+                                                <TableColumn fx:id="przedszkolankaIdPomocDydatktycznaColumn" prefWidth="115.0" text="ID przedszkolanki" />
+                                                <TableColumn fx:id="grupaPrzedszkolnaIdPomocDydatktycznaColumn" prefWidth="74.0" text="ID Grupy Przedszkolnej" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="oplataTab" closable="false" onSelectionChanged="#refreshOplataTableView" text="Opłata">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="147.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="oplataRemoveButton" mnemonicParsing="false" onMouseClicked="#removeOplata" text="Remove" />
+                                                <Button fx:id="oplataAddButton" mnemonicParsing="false" onMouseClicked="#addOplata" text="Add" />
+                                                <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="oplataTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idOplataColumn" prefWidth="94.0" text="ID" />
+                                                <TableColumn fx:id="wielkoscOplataColumn" prefWidth="105.0" text="Suma" />
+                                                <TableColumn fx:id="przedmiotOplataColumn" prefWidth="202.0" text="Przedmiot Opłaty" />
+                                                <TableColumn fx:id="czestoscOplataColumn" prefWidth="198.0" text="Częstość opłaty" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="festynTab" onSelectionChanged="#refreshFestynTableView" text="Festyn">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="148.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="festynRemoveButton" mnemonicParsing="false" onMouseClicked="#removeFestyn" text="Remove" />
+                                                <Button fx:id="festynAddButton" mnemonicParsing="false" onMouseClicked="#addFestyn" text="Add" />
+                                                <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="festynTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idFestynColumn" prefWidth="64.0" text="ID" />
+                                                <TableColumn fx:id="grupaWystepujacaFestynColumn" prefWidth="130.0" text="Grupa Występująca" />
+                                                <TableColumn fx:id="osobaOdpowiedzialnaFestynColumn" prefWidth="153.0" text="Osoba Odpowiedzialna" />
+                                                <TableColumn fx:id="terminWydarzeniaFestynColumn" prefWidth="128.0" text="Termin Wydarzenia" />
+                                                <TableColumn fx:id="nazwaFestynColumn" prefWidth="124.0" text="Nazwa" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="zebranieTab" onSelectionChanged="#refreshZebranieRodziceTableView" text="Zebranie z Rodzicami">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="603.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="149.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZebranie" text="Remove" />
+                                                <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" onMouseClicked="#addZebranie" text="Add" />
+                                                <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="zebranie_rodziceTableView" layoutX="24.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idZebranieRodziceColumn" prefWidth="62.0" text="ID" />
+                                                <TableColumn fx:id="dataZebranieRodziceColumn" prefWidth="48.0" text="Data" />
+                                                <TableColumn fx:id="grupaZebranieRodziceColumn" prefWidth="61.0" text="Grupa" />
+                                                <TableColumn fx:id="miejscaSalaZebranieRodziceColumn" prefWidth="58.0" text="Sala" />
+                                                <TableColumn fx:id="prowadzacyZebranieZebranieRodziceColumn" prefWidth="136.0" text="Prowadzący Zebranie" />
+                                                <TableColumn fx:id="czyObowiazkoweZebranieRodziceColumn" prefWidth="114.0" text="Czy Obowiązkowe" />
+                                                <TableColumn fx:id="przedszkolankaIdHospitacjiZebranieRodziceColumn" prefWidth="120.0" text="Przedszkolanka" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="hospitacjaTab" onSelectionChanged="#refreshHospitacjaTableView" text="Hospitacja">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="335.0" prefWidth="597.0">
+                                       <children>
+                                          <ButtonBar layoutX="148.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0">
+                                             <buttons>
+                                                <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeHospitacja" text="Remove" />
+                                                <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" onMouseClicked="#addHospitacja" text="Add" />
+                                                <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
+                                             </buttons>
+                                          </ButtonBar>
+                                          <TableView fx:id="hospitacjaTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
+                                             <columns>
+                                                <TableColumn fx:id="idHospitacjaColumn" prefWidth="99.0" text="ID" />
+                                                <TableColumn fx:id="terminHospitacjaColumn" prefWidth="133.0" text="Termin" />
+                                                <TableColumn fx:id="ktoNadzorowanyHospitacjaColumn" prefWidth="174.0" text="Kto nadzorowany" />
+                                                <TableColumn fx:id="ktoNadzorujeHospitacjaColumn" prefWidth="193.0" text="Kto nadzoruje" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                      <!--<Tab id="etatyTab" text="Etaty">
+                          <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                        <children>
+                                            <Pane prefHeight="335.0" prefWidth="597.0">
+                                                <children>
+                                                    <ButtonBar layoutX="148.0" layoutY="256.0" prefHeight="40.0" prefWidth="200.0">
+                                                        <buttons>
+                                                            <Button fx:id="etatyRemoveButton" mnemonicParsing="false" text="Remove" />
+                                                            <Button fx:id="etatyAddButton" mnemonicParsing="false" text="Add" />
+                                                            <Button fx:id="etatyModifyButton" mnemonicParsing="false" text="Modify" />
+                                                        </buttons>
+                                                    </ButtonBar>
+                                                    <TableView fx:id="etatTableView" layoutX="23.0" layoutY="5.0" prefHeight="238.0" prefWidth="600.0">
+                                                        <columns>
+                                                            <TableColumn fx:id="nazwaEtatColumn" prefWidth="139.0" text="Nazwa" />
+                                                            <TableColumn fx:id="placaMinEtatColumn" prefWidth="228.0" text="Placa minimalna" />
+                                                            <TableColumn fx:id="placaMaxEtatColumn" prefWidth="232.0" text="Płaca maksymalna" />
+                                                        </columns></TableView>
+                                                </children>
+                                            </Pane>
+                                        </children>
+                                    </AnchorPane>
+                                </content>
+                            </Tab>-->
+                    </tabs>
+                  </TabPane>
+               </items>
+            </SplitPane>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #bbbbbb;">
+              <buttons>
+                <Button fx:id="logoutButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#logOut" text="Log out" textAlignment="CENTER" translateX="-5.0" translateY="-150.0">
+                     <font>
+                        <Font name="Droid Sans" size="15.0" />
+                     </font>
+                  </Button>
+              </buttons>
+            </ButtonBar>
+         </items>
+      </SplitPane>
+   </items>
+</SplitPane>

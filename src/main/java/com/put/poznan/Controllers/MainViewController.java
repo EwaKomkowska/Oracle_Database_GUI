@@ -1,6 +1,7 @@
 package com.put.poznan.Controllers;
 
 import java.io.IOException;
+import java.nio.file.attribute.FileTime;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,19 @@ import java.util.Optional;
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.*;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableViewSkinBase;
+import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -28,11 +34,18 @@ public class MainViewController {
 
     public MainViewController(){    }
 
+    @FXML
+    private TabPane mainTabPane;
+    private int tabIndex = 0;
+
+    @FXML
+    private TextField searchField;
+
     //============PRZEDSZKOLANKA--------------------------------\\
     @FXML
-    private Button przedszkolankaAddButton;
+    private Button przedszkolankaAddButton; //FIXME:!
     @FXML
-    private Button przedszkolankaRemoveButton;
+    private Button przedszkolankaRemoveButton; //FIXME:!
     @FXML
     private TableView<Przedszkolanka> przedszkolankaTableView;
     @FXML
@@ -269,6 +282,7 @@ public class MainViewController {
         //============DzieckoColumns--------------------------------\\
         idDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("iddziecka"));
         imieDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("imie"));
+        //imieDzieckoColumn.setCellValueFactory(  cellData -> cellData.getValue().getImie());
         nazwiskoDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("nazwisko"));
         dataUrodzeniaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Date>("dataurodzenia"));
         grupaPrzedszkolnaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("grupaprzedszkolnaIdgrupy"));
@@ -348,6 +362,403 @@ public class MainViewController {
         przedszkolankaIdHospitacjiZebranieRodziceColumn.setCellValueFactory(new PropertyValueFactory<Zebraniezrodzicami, Number>("przedszkolankaIdhospitacji"));
 
         wyswietl();
+
+        FilteredList<Dziecko> dzieckoFilteredList = new FilteredList<>(dzieci, b -> true);
+        FilteredList<Festyn> festynFilteredList = new FilteredList<>(festyny, b-> true );
+        FilteredList<Przedszkolanka> przedszkolankaFilteredList = new FilteredList<>(przedszkolanki, b-> true );
+        FilteredList<Sekretarka> sekretarkaFilteredList = new FilteredList<>(sekretarki, b-> true );
+        FilteredList<Grupaprzedszkolna> grupaprzedszkolnaFilteredList = new FilteredList<>(grupyPrzedszkolne, b-> true );
+        FilteredList<Zajeciadodatkowe> zajeciadodatkoweFilteredList = new FilteredList<>(zajeciaDodatkowe, b-> true );
+        FilteredList<Posilek> posilekFilteredList = new FilteredList<>(posilki, b-> true );
+        FilteredList<Pomocdydaktyczna> pomocdydaktycznaFilteredList = new FilteredList<>(pomoceDydaktyczne, b-> true );
+        FilteredList<Oplata> oplataFilteredList = new FilteredList<>(oplaty, b-> true );
+        FilteredList<Hospitacja> hospitacjaFilteredList = new FilteredList<>(hospitacje, b-> true );
+        FilteredList<Zebraniezrodzicami> zebraniezrodzicamiFilteredList = new FilteredList<>(zebraniaZRodzicami, b-> true );
+
+        searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+
+            dzieckoFilteredList.setPredicate( dziecko -> {
+
+                //TO SPRAWIA ZE NIE FILTRUJE LISTY JAK JEST NA INNEJ ZAKLADCE NIZ TA ODPOWIEDNIA!
+                if (this.getCurrentTabIndex() != 2){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if ( String.valueOf(dziecko.getIddziecka()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                else if ( String.valueOf(dziecko.getGrupaprzedszkolnaIdgrupy()).toLowerCase().contains(lowerCaseFilter) ) {
+                    return true;
+                }
+                else if (  String.valueOf(dziecko.getPosilekIdposilku()).toLowerCase().contains(lowerCaseFilter) ) {
+                    return true;
+                }
+                else if (  String.valueOf(dziecko.getImie()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                else if (  String.valueOf(dziecko.getNazwisko()).toLowerCase().contains(lowerCaseFilter) ) {
+                    return true;
+                }
+                else if ( String.valueOf(dziecko.getDataurodzenia()).contains(lowerCaseFilter)  ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } );
+
+            przedszkolankaFilteredList.setPredicate( przedszkolanka -> {
+
+                //TO SPRAWIA ZE NIE FILTRUJE LISTY JAK JEST NA INNEJ ZAKLADCE NIZ TA ODPOWIEDNIA!
+                if (this.getCurrentTabIndex() != 0){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(przedszkolanka.getIdprac()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(przedszkolanka.getImie()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(przedszkolanka.getPlaca()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(przedszkolanka.getKwalifikacje()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if ( String.valueOf(przedszkolanka.getNazwagrupy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(przedszkolanka.getNazwisko()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            } );
+
+
+            sekretarkaFilteredList.setPredicate( sekretarka -> {
+
+                if (this.getCurrentTabIndex() != 1){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(sekretarka.getIdprac()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(sekretarka.getImie()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(sekretarka.getPlaca()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (sekretarka.getKwalifikacje().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if ( String.valueOf(sekretarka.getGodzrozpoczeciapracy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (String.valueOf(sekretarka.getGodzzakonczeniapracy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                else if (  String.valueOf(sekretarka.getNazwisko()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+
+
+            grupaprzedszkolnaFilteredList.setPredicate( grupaprzedszkolna -> {
+
+                if (this.getCurrentTabIndex() != 3){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(grupaprzedszkolna.getIdgrupy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(grupaprzedszkolna.getSala()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(grupaprzedszkolna.getWiekdzieci()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(grupaprzedszkolna.getNazwa()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if ( String.valueOf(grupaprzedszkolna.getIdprac()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+
+            festynFilteredList.setPredicate( festyn -> {
+
+                if (this.getCurrentTabIndex() != 8){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(festyn.getIdfestynu()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(festyn.getGrupawystepujaca()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(festyn.getOsobaodpowiedzialna()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(festyn.getTerminwydarzena()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (  String.valueOf(festyn.getHaslo()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            zebraniezrodzicamiFilteredList.setPredicate( zebraniezrodzicami -> {
+
+                if (this.getCurrentTabIndex() != 9){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(zebraniezrodzicami.getIdzebrania()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zebraniezrodzicami.getData()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zebraniezrodzicami.getGrupa()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zebraniezrodzicami.getMiejsca()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if ( String.valueOf(zebraniezrodzicami.getProwadzacyzebranie()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zebraniezrodzicami.getPrzedszkolankaIdhospitacji()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                else if (  String.valueOf(zebraniezrodzicami.getCzyobowiazkowe()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            hospitacjaFilteredList.setPredicate( hospitacja -> {
+
+                if (this.getCurrentTabIndex() != 10){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(hospitacja.getIdhospitacji()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(hospitacja.getTermin()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(hospitacja.getKtonadzoruje()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(hospitacja.getKtonadzorowany()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+
+            oplataFilteredList.setPredicate( oplata -> {
+
+                if (this.getCurrentTabIndex() != 7){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(oplata.getIdoplaty()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(oplata.getWielkosc()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(oplata.getCzestosc()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(oplata.getPrzedmiotoplaty()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+
+            pomocdydaktycznaFilteredList.setPredicate( pomocdydaktyczna -> {
+
+                if (this.getCurrentTabIndex() != 6){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(pomocdydaktyczna.getIdpomocy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(pomocdydaktyczna.getDodatkoweoplaty()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(pomocdydaktyczna.getGrupadocelowa()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (pomocdydaktyczna.getRodzaj().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if ( String.valueOf(pomocdydaktyczna.getOsobaodpowiedzialna()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (String.valueOf(pomocdydaktyczna.getPrzedszkolankaIdprac()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                else if ( String.valueOf(pomocdydaktyczna.getGrupaprzedszkolnaIdgrupy()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            zajeciadodatkoweFilteredList.setPredicate( zajeciadodatkowe -> {
+
+                if (this.getCurrentTabIndex() != 4){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(zajeciadodatkowe.getIdzajecia()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(zajeciadodatkowe.getRodzaj()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zajeciadodatkowe.getDataprowadzenia()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(zajeciadodatkowe.getOplaty()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (String.valueOf(zajeciadodatkowe.getCzastygodniowo()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                else if ( String.valueOf(zajeciadodatkowe.getDlakogo()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+
+            posilekFilteredList.setPredicate( posilek -> {
+
+                if (this.getCurrentTabIndex() != 5){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(posilek.getIdposilku()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(posilek.getDieta()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(posilek.getGodzrozwozenia()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(posilek.getNazwa()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+        //oplata i posilek sie psuja zebranie z rodzicami tez
+
+
+        }));
+
+//FIXME: INDEXY WSZYSTKIE PRZEJZYJ BO NIE ZMIENIALES W PREDYKATACH
+
+        SortedList<Dziecko> dzieckoSortedList = new SortedList<>(dzieckoFilteredList);
+        dzieckoSortedList.comparatorProperty().bind(dzieckoTableView.comparatorProperty());
+        dzieckoTableView.setItems(dzieckoSortedList);
+
+        SortedList<Przedszkolanka> przedszkolankaSortedList = new SortedList<>(przedszkolankaFilteredList);
+        przedszkolankaSortedList.comparatorProperty().bind(przedszkolankaTableView.comparatorProperty());
+        przedszkolankaTableView.setItems(przedszkolankaSortedList);
+
+        SortedList<Sekretarka> sekretarkaSortedList = new SortedList<>(sekretarkaFilteredList);
+        sekretarkaSortedList.comparatorProperty().bind(sekretarkaTableView.comparatorProperty());
+        sekretarkaTableView.setItems(sekretarkaSortedList);
+
+        SortedList<Grupaprzedszkolna> grupaprzedszkolnaSortedList = new SortedList<>(grupaprzedszkolnaFilteredList);
+        grupaprzedszkolnaSortedList.comparatorProperty().bind(grupa_przedszkolnaTableView.comparatorProperty());
+        grupa_przedszkolnaTableView.setItems(grupaprzedszkolnaSortedList);
+
+        SortedList<Festyn> festynSortedList = new SortedList<>(festynFilteredList);
+        festynSortedList.comparatorProperty().bind(festynTableView.comparatorProperty());
+        festynTableView.setItems(festynSortedList);
+
+        SortedList<Zebraniezrodzicami> zebraniezrodzicamiSortedList = new SortedList<>(zebraniezrodzicamiFilteredList);
+        zebraniezrodzicamiSortedList.comparatorProperty().bind(zebranie_rodziceTableView.comparatorProperty());
+        zebranie_rodziceTableView.setItems(zebraniezrodzicamiSortedList);
+
+        SortedList<Hospitacja> hospitacjaSortedList = new SortedList<>(hospitacjaFilteredList);
+        hospitacjaSortedList.comparatorProperty().bind(hospitacjaTableView.comparatorProperty());
+        hospitacjaTableView.setItems(hospitacjaSortedList);
+
+        SortedList<Oplata> oplataSortedList = new SortedList<>(oplataFilteredList);
+        oplataSortedList.comparatorProperty().bind(oplataTableView.comparatorProperty());
+        oplataTableView.setItems(oplataSortedList);
+
+        SortedList<Pomocdydaktyczna> pomocdydaktycznaSortedList = new SortedList<>(pomocdydaktycznaFilteredList);
+        pomocdydaktycznaSortedList.comparatorProperty().bind(pomoc_dydaktycznaTableView.comparatorProperty());
+        pomoc_dydaktycznaTableView.setItems(pomocdydaktycznaSortedList);
+
+        SortedList<Zajeciadodatkowe> zajeciadodatkoweSortedList = new SortedList<>(zajeciadodatkoweFilteredList);
+        zajeciadodatkoweSortedList.comparatorProperty().bind(zajecia_dodatkoweTableView.comparatorProperty());
+        zajecia_dodatkoweTableView.setItems(zajeciadodatkoweSortedList);
+
+        SortedList<Posilek> posilekSortedList = new SortedList<>(posilekFilteredList);
+        posilekSortedList.comparatorProperty().bind(posilekTableView.comparatorProperty());
+        posilekTableView.setItems(posilekSortedList);
+
+
+
+
+
     }
 
 
@@ -851,7 +1262,6 @@ public class MainViewController {
         alert.setContentText("Poprawnie zaktualizowano 1 obiekt");      //wywoluje sie przy modify i add
         alert.showAndWait();
 
-
         //przejście do menu głównego
         FXMLLoader loader = App.getFXMLLoader("primary");
         Parent root = loader.load();
@@ -860,4 +1270,83 @@ public class MainViewController {
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }
+
+
+    @FXML
+    private void refreshDzieckoTableView(){
+      App.setProperties();
+      this.searchField.clear();
+      this.dzieckoTableView.refresh();
+
+    }
+
+    @FXML
+    private void refreshFestynTableView(){
+        App.setProperties();
+        this.festynTableView.refresh();
+    }
+
+    @FXML
+    private void refreshGrupaPrzedszkolnaTableView(){
+        App.setProperties();
+        this.grupa_przedszkolnaTableView.refresh();
+    }
+
+    @FXML
+    private void refreshHospitacjaTableView(){
+        App.setProperties();
+        this.hospitacjaTableView.refresh();
+    }
+
+    @FXML
+    private void refreshOplataTableView(){
+        App.setProperties();
+        this.oplataTableView.refresh();
+    }
+
+    @FXML
+    private void refreshPomocDydaktycznaTableView(){
+        App.setProperties();
+        this.pomoc_dydaktycznaTableView.refresh();
+    }
+
+    @FXML
+    private void refreshPosilekTableView(){
+        App.setProperties();
+        this.posilekTableView.refresh();
+    }
+
+    @FXML
+    private void refreshPrzedszkolankaTableView(){
+        App.setProperties();
+        this.przedszkolankaTableView.refresh();
+    }
+
+    @FXML
+    private void refreshSekretarkaTableView(){
+        App.setProperties();
+        this.sekretarkaTableView.refresh();
+    }
+
+    @FXML
+    private void refreshZajeciaDodatkoweTableView(){
+        App.setProperties();
+        this.zajecia_dodatkoweTableView.refresh();
+    }
+
+    @FXML
+    private void refreshZebranieRodziceTableView(){
+        App.setProperties();
+        this.zebranie_rodziceTableView.refresh();
+    }
+
+    public int getCurrentTabIndex(){
+        return mainTabPane.getSelectionModel().getSelectedIndex();
+    }
+
+    public void setCurrentTab(int index){
+        App.setProperties();
+        mainTabPane.getSelectionModel().select(index);
+    }
+
 }

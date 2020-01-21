@@ -25,6 +25,8 @@
             <property name="hibernate.connection.username" value=""/>
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+            <!--   <property name="org.hibernate.flushMode" value="ALWAYS" />  auto flush FIXME: -->
+           <!-- <property name="hibernate.connection.autocommit" value="true"/>      test do updatowania modify  -->
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

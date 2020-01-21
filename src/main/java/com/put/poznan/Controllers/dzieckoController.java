@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.*;
@@ -38,6 +39,7 @@ public class dzieckoController {
     @FXML
     private Button modifyButton;
 
+    private int idx = 2;
 
     public DataBase getDataBase() {
         return dataBase;
@@ -46,6 +48,7 @@ public class dzieckoController {
     public void setDataBase(DataBase dataBase) {
         this.dataBase = dataBase;
     }
+
 
     @FXML
     public void initialize() throws SQLException {
@@ -133,10 +136,13 @@ public class dzieckoController {
                 stmt.setLong(6, d.getPosilekIdposilku());
 
                 stmt.executeQuery();
+                stmt.close(); //TODO: DODAC DO RESZTY CLOSE!
 
                 MainViewController.add(this.dataBase);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
                 pstm.executeQuery();
+                pstm.close();
+
             }
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -153,13 +159,14 @@ public class dzieckoController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }
 
 
     @FXML
-    public void modify(long id) throws SQLException {
+    public void modify(long id) throws SQLException, IOException {
         idField.setText(String.valueOf(id));
         addButton.setVisible(false);
         modifyButton.setVisible(true);
@@ -172,6 +179,7 @@ public class dzieckoController {
         dataField.setText(String.valueOf(rs.getTime("dataurodzenia")));
         id_posilkuBox.setValue(rs.getLong("posilek_idposilku"));
         id_grupyBox.setValue(rs.getLong("grupaprzedszkolna_idgrupy"));
+        pstm.close(); //TODO: CLOSE NA KONIEC!! tak jest ok
     }
 
     @FXML
@@ -180,8 +188,8 @@ public class dzieckoController {
         boolean czyDodac = dodawanie(d);
         try {
             if (czyDodac) {
-                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE DZIECKO SET imie = ?, nazwisko = ?, dataurodzenia = ?, grupaprzedszkolna_idgrupy = ?, posilek_idposilku = ? WHERE IDDZIECKA = ?");
 
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE DZIECKO SET imie = ?, nazwisko = ?, dataurodzenia = ?, grupaprzedszkolna_idgrupy = ?, posilek_idposilku = ? WHERE IDDZIECKA = ?");
                 stmt.setString(1, d.getImie());
                 stmt.setString(2, d.getNazwisko());
                 stmt.setDate(3, d.getDataurodzenia());
@@ -189,7 +197,8 @@ public class dzieckoController {
                 stmt.setLong(5, d.getPosilekIdposilku());
                 stmt.setLong(6, d.getIddziecka());
                 stmt.executeUpdate();
-                //TODO: NIE WYSWIETLA SIE AKTUALIZACJA CHOCIAZ W BAZIE ISTNIEJE POPRAWNIE
+
+                stmt.close();
 
                 MainViewController.add(this.dataBase);
             }

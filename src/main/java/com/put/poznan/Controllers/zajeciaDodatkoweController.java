@@ -20,8 +20,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class zajeciaDodatkoweController {
+
     private DataBase dataBase;
 
+    private int idx = 4;
 
     @FXML
     private TextField idField;
@@ -152,6 +154,7 @@ public class zajeciaDodatkoweController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }
