@@ -120,15 +120,7 @@ public class LoginController {
         try {
             conState = dataBase.startConnection(this.login, this.password);
         }catch (Exception e) {
-        //System.out.println("it worked");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error connecting to the database.\nWrong login or password.\nTry again.", ButtonType.OK);
-            alert.showAndWait();
-            this.resetFormula();
-            if (alert.getResult() == ButtonType.OK) {
-                //do stuff
-                //this
-                //"**********";
-            }
+            //System.out.println(e.printStackTrace());
         }
         if (conState) {
            // App.getStage().setScene(new Scene(App.loadFXML("primary")) );
@@ -173,6 +165,15 @@ public class LoginController {
             pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
             pstm.executeQuery();
             //TODO: przekaz referencje na baze danych
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error connecting to the database.\nWrong login or password.\nTry again.", ButtonType.OK);
+            alert.showAndWait();
+            this.resetFormula();
+            if (alert.getResult() == ButtonType.OK) {
+                //do stuff
+                //this
+                //"**********";
+            }
         }
         //try to connect if fail pop a window that says try again wrong shit and reset
     }
