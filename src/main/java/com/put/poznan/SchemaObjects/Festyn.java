@@ -63,7 +63,9 @@ public class Festyn {
     }
 
     public void setHaslo(String nazwaHaslo) {
-        if (haslo.length() <= 25)
+        if (haslo == null)
+            this.haslo = nazwaHaslo;
+        else if (haslo.length() <= 25)
             this.haslo = nazwaHaslo;
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

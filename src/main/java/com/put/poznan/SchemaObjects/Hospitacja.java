@@ -1,5 +1,7 @@
 package com.put.poznan.SchemaObjects;
 
+import javafx.scene.control.Alert;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +42,18 @@ public class Hospitacja {
     }
 
     public void setKtonadzorowany(Long ktonadzorowany) {
-        this.ktonadzorowany = ktonadzorowany;
+        if (ktonadzorowany == null)
+            this.ktonadzorowany = ktonadzorowany;
+        else if (ktonadzorowany.equals(ktonadzoruje)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie mozna hospitować samego siebie!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.ktonadzorowany = ktonadzorowany;
+        }
     }
 
     @Basic
@@ -50,11 +63,18 @@ public class Hospitacja {
     }
 
     public void setKtonadzoruje(Long ktonadzoruje) {
-       //TODO: nie mozna nadzorowac samego siebie!!!
-        /* if (ktonadzoruje != this.getKtonadzorowany())
+        if (ktonadzoruje == null)
             this.ktonadzoruje = ktonadzoruje;
-        else throw new IllegalArgumentException("Nie mozna nadzorowac samego siebie");*/
-        this.ktonadzoruje = ktonadzoruje;
+        else if (this.ktonadzorowany.equals(ktonadzoruje)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie mozna hospitować samego siebie!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.ktonadzoruje = ktonadzoruje;
+        }
     }
 
     @Override

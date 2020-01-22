@@ -16,6 +16,7 @@ public class Przedszkolanka {
     protected String nazwisko;
     protected String kwalifikacje;
     protected Long placa;
+    private  Long hospitacja;
     private Alert alert;
 
 
@@ -104,6 +105,16 @@ public class Przedszkolanka {
 
     public void setNazwagrupy(Long nazwagrupy) {
         this.nazwagrupy = nazwagrupy;
+    }
+
+    @Basic
+    @Column(name = "HOS_IDHOS")
+    public Long getHospitacja() {
+        return hospitacja;
+    }
+
+    public void setHospitacja(Long hospitacja) {
+        this.hospitacja = hospitacja;
     }
 
     @Override

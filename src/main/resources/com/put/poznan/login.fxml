@@ -29,6 +29,6 @@
          </children>
       </Pane>
       <Button fx:id="passwordButton" layoutX="22.0" layoutY="229.0" mnemonicParsing="false" onMousePressed="#showPassword" onMouseReleased="#hidePassword" prefHeight="23.0" prefWidth="106.0" text="Show password" />
-      <Button fx:id="loginButton" layoutX="214.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#startConnection" prefHeight="25.0" prefWidth="94.0" text="Log In" />
+      <Button fx:id="loginButton" layoutX="214.0" layoutY="229.0" mnemonicParsing="false" onAction="#onEnterStartConnection" onMouseClicked="#startConnection" prefHeight="25.0" prefWidth="94.0" text="Log In" />
    </children>
 </AnchorPane>

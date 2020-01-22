@@ -66,7 +66,9 @@ public class Oplata {
     }
 
     public void setCzestosc(String czestosc) {
-        if (czestosc.length() <= 25)
+        if (czestosc == null)
+            this.czestosc = czestosc;
+        else if (czestosc.length() <= 25)
             this.czestosc = czestosc;
         else {
             alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");

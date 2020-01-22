@@ -66,7 +66,9 @@ public class Posilek {
     }
 
     public void setDieta(String dieta) {
-        if (dieta.length() <= 20)
+        if (dieta == null)
+            this.dieta = dieta;
+        else if (dieta.length() <= 20)
             this.dieta = dieta;
         else {
             alert.setContentText("Dieta nie może być dłuższa niż 20 znaków!");

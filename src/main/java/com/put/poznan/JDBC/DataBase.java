@@ -1,6 +1,13 @@
 package com.put.poznan.JDBC;
 
+import com.put.poznan.Controllers.App;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBase {
 
@@ -27,6 +34,15 @@ public class DataBase {
         Boolean conState = false;
         try {
             this.connection = DriverManager.getConnection( "jdbc:oracle:thin:@localhost:1523:XE",login, password); //XE
+            //this.connection.setAutoCommit(false); //TODO: do refresha moze
+            Map<String, String> properties = new HashMap<String, String>();
+            properties.put("hibernate.connection.username", login); //system//TODO: przekaz stringi zapisz w apie?? dostac z bazy??
+            properties.put("hibernate.connection.password", password); //Oracle2019
+            //EntityManagerFactory
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
+            EntityManager em = emf.createEntityManager();
+            App.setEMF(emf);
+            App.setEM(em);
             conState = true;
         } catch (SQLException e) {
             //System.out.println(e.getErrorCode());

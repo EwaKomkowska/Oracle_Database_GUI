@@ -8,14 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class dzieckoController {
@@ -28,7 +26,7 @@ public class dzieckoController {
     @FXML
     private TextField nazwiskoField;
     @FXML
-    private TextField dataField;
+    private DatePicker dataDatePicker;
     @FXML
     private ComboBox id_grupyBox;
     @FXML
@@ -38,6 +36,7 @@ public class dzieckoController {
     @FXML
     private Button modifyButton;
 
+    private int idx = 2;
 
     public DataBase getDataBase() {
         return dataBase;
@@ -46,6 +45,7 @@ public class dzieckoController {
     public void setDataBase(DataBase dataBase) {
         this.dataBase = dataBase;
     }
+
 
     @FXML
     public void initialize() throws SQLException {
@@ -77,11 +77,11 @@ public class dzieckoController {
         }
 
         try {
-            d.setDataurodzenia(Date.valueOf(dataField.getText()));
+            d.setDataurodzenia(Date.valueOf(dataDatePicker.getValue().toString()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie YYYY-MM-DD");
+            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie DD.MM.RRRR");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -133,10 +133,13 @@ public class dzieckoController {
                 stmt.setLong(6, d.getPosilekIdposilku());
 
                 stmt.executeQuery();
+                stmt.close();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
                 pstm.executeQuery();
+                pstm.close();
+
             }
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -153,13 +156,14 @@ public class dzieckoController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
     }
 
 
     @FXML
-    public void modify(long id) throws SQLException {
+    public void modify(long id) throws SQLException, IOException {
         idField.setText(String.valueOf(id));
         addButton.setVisible(false);
         modifyButton.setVisible(true);
@@ -169,9 +173,10 @@ public class dzieckoController {
         rs.next();
         imieField.setText(rs.getString("imie"));
         nazwiskoField.setText(rs.getString("nazwisko"));
-        dataField.setText(String.valueOf(rs.getTime("dataurodzenia")));
+        dataDatePicker.setValue(LocalDate.parse(String.valueOf(rs.getDate("dataurodzenia"))));
         id_posilkuBox.setValue(rs.getLong("posilek_idposilku"));
         id_grupyBox.setValue(rs.getLong("grupaprzedszkolna_idgrupy"));
+        pstm.close();
     }
 
     @FXML
@@ -180,8 +185,8 @@ public class dzieckoController {
         boolean czyDodac = dodawanie(d);
         try {
             if (czyDodac) {
-                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE DZIECKO SET imie = ?, nazwisko = ?, dataurodzenia = ?, grupaprzedszkolna_idgrupy = ?, posilek_idposilku = ? WHERE IDDZIECKA = ?");
 
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE DZIECKO SET imie = ?, nazwisko = ?, dataurodzenia = ?, grupaprzedszkolna_idgrupy = ?, posilek_idposilku = ? WHERE IDDZIECKA = ?");
                 stmt.setString(1, d.getImie());
                 stmt.setString(2, d.getNazwisko());
                 stmt.setDate(3, d.getDataurodzenia());
@@ -189,18 +194,14 @@ public class dzieckoController {
                 stmt.setLong(5, d.getPosilekIdposilku());
                 stmt.setLong(6, d.getIddziecka());
                 stmt.executeUpdate();
-                //TODO: NIE WYSWIETLA SIE AKTUALIZACJA CHOCIAZ W BAZIE ISTNIEJE POPRAWNIE
 
-                MainViewController.add(this.dataBase);
+                stmt.close();
+
+                MainViewController.add(this.dataBase, idx);
             }
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    public void clear() {
-        //TODO: czy da sie jakos wyczyscic wcisniety tylko
     }
 }
 

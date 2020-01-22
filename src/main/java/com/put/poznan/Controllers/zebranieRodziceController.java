@@ -9,24 +9,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import org.hibernate.type.TrueFalseType;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
+import org.hibernate.boot.model.relational.Database;
 
 import javax.persistence.Query;
+import javax.persistence.SqlResultSetMapping;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class zebranieRodziceController {
+
     private DataBase dataBase;
 
+    private int idx = 9;
 
     @FXML
     private TextField idField;
     @FXML
-    private TextField dataField;
+    private DatePicker terminDatePicker;
     @FXML
     private TextField salaField;
     @FXML
@@ -35,6 +38,10 @@ public class zebranieRodziceController {
     private ComboBox id_grupyBox;
     @FXML
     private ComboBox id_przedszkolankiBox;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button modifyButton;
 
 
     public DataBase getDataBase() {
@@ -67,19 +74,18 @@ public class zebranieRodziceController {
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));
         idField.setDisable(true);
+        modifyButton.setVisible(false);
     }
 
-    @FXML
-    public void add() {
-        Zebraniezrodzicami zr = new Zebraniezrodzicami();
+    private boolean dodawanie(Zebraniezrodzicami zr) {
         boolean czyDodac = true;
 
         try {
-            zr.setData(Date.valueOf(dataField.getText()));
+            zr.setData(Date.valueOf(terminDatePicker.getValue().toString()));
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę zebrania - sprawdź, czy jest w formacie YYYY-MM-DD");
+            alert.setContentText("Podałeś błędną datę zebrania - sprawdź, czy jest w formacie DD.MM.RRRR");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -135,6 +141,23 @@ public class zebranieRodziceController {
         }
 
         try {
+            PreparedStatement stm = DataBase.getConnection().prepareStatement("SELECT HOS_IDHOS from PRZEDSZKOLANKA where IDPRAC = ?");
+            stm.setLong(1, zr.getProwadzacyzebranie());
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            zr.setPrzedszkolankaIdhospitacji(rs.getLong("hos_idhos"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            czyDodac = false;
+        }
+        return czyDodac;
+    }
+
+    @FXML
+    public void add()  {
+        Zebraniezrodzicami zr = new Zebraniezrodzicami();
+        boolean czyDodac = dodawanie(zr);
+        try {
             if (czyDodac) {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into ZEBRANIEZRODZICAMI(idzebrania, data, grupa, miejsca, prowadzacyzebranie, czyobowiazkowe, PRZEDSZKOLANKA_IDHOSPITACJI) values (?, ?, ?, ?, ?, ?, ?)");
                 stmt.setLong(1, zr.getIdzebrania());
@@ -143,14 +166,58 @@ public class zebranieRodziceController {
                 stmt.setLong(4, zr.getMiejsca());
                 stmt.setLong(5, zr.getProwadzacyzebranie());
                 stmt.setString(6, zr.getCzyobowiazkowe());
-                stmt.setInt(7, 1);
-                //TODO: nie mozna wartosci null do przedszkolanka_idhospitacji NAPRAWIC
+                stmt.setLong(7, zr.getPrzedszkolankaIdhospitacji());
 
                 stmt.executeQuery();
+                stmt.close();
 
-                MainViewController.add(this.dataBase);
+                MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
                 pstm.executeQuery();
+                pstm.close();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void modify(long id) throws SQLException, IOException {
+        idField.setText(String.valueOf(id));
+        addButton.setVisible(false);
+        modifyButton.setVisible(true);
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT * from ZEBRANIEZRODZICAMI where IDZEBRANIA = ?");
+        pstm.setLong(1, id);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        terminDatePicker.setValue(LocalDate.parse(String.valueOf(rs.getDate("data"))));
+        id_grupyBox.setValue(rs.getLong("grupa"));
+        salaField.setText(String.valueOf(rs.getLong("miejsca")));
+        id_przedszkolankiBox.setValue(rs.getLong("prowadzacyzebranie"));
+        obowiazkoweBox.setValue(rs.getString("czyobowiazkowe"));
+        pstm.close();
+    }
+
+    @FXML
+    private void update() {
+        Zebraniezrodzicami zr = new Zebraniezrodzicami();
+        boolean czyDodac = dodawanie(zr);
+        try {
+            if (czyDodac) {
+
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE ZEBRANIEZRODZICAMI SET DATA = ?, GRUPA = ?, MIEJSCA = ?, PROWADZACYZEBRANIE = ?, CZYOBOWIAZKOWE = ?, PRZEDSZKOLANKA_IDHOSPITACJI =? WHERE IDZEBRANIA = ?");
+                stmt.setLong(7, zr.getIdzebrania());
+                stmt.setDate(1, zr.getData());
+                stmt.setLong(2, zr.getGrupa());
+                stmt.setLong(3, zr.getMiejsca());
+                stmt.setLong(4, zr.getProwadzacyzebranie());
+                stmt.setString(5, zr.getCzyobowiazkowe());
+                stmt.setLong(6, zr.getPrzedszkolankaIdhospitacji());
+                stmt.executeUpdate();
+
+                stmt.close();
+
+                MainViewController.add(this.dataBase, idx);
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -164,12 +231,8 @@ public class zebranieRodziceController {
         Parent root = loader.load();
         MainViewController c = loader.getController();
         c.setDataBase(this.dataBase);
+        c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
-    }
-
-    @FXML
-    public void clear() {
-        //TODO: czy da sie jakos wyczyscic wcisniety tylko
     }
 }

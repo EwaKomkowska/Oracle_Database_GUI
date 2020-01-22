@@ -6,13 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.hibernate.cfg.Environment;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * JavaFX App
@@ -24,6 +27,7 @@ public class App extends Application {
     private static Stage stage;
     private static DataBase dataBase;
     private static EntityManager em;
+    private static EntityManagerFactory emf;//TODO: ZOBACCZ CZY MA SENS
 
     public static EntityManager getEm() {
         return em;
@@ -35,6 +39,14 @@ public class App extends Application {
 
     public static Scene getScene(){
         return scene;
+    }
+
+    public static void setEM(EntityManager em){
+        App.em = em;
+    }
+
+    public static void setEMF(EntityManagerFactory emf){
+        App.emf = emf;
     }
 
     public static DataBase getDataBase(){return dataBase;}
@@ -57,13 +69,10 @@ public class App extends Application {
         //scene = new Scene(loadFXML("login"));
         //stage.setScene(scene);
 
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.username", "system");
-        properties.put("hibernate.connection.password", "Oracle2019");
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("NewPersistenceUnit", properties);
-        em = emf.createEntityManager();
-
         stage.show();
+    }
+    public static void setProperties(){
+        em = emf.createEntityManager();
     }
 
     public static void setRoot(String fxml) throws IOException {
