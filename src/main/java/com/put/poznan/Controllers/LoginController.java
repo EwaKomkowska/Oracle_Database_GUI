@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import org.hibernate.Session;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -131,39 +132,8 @@ public class LoginController {
             Scene scene = new Scene(root);
             App.getStage().setScene(scene); //, 500, 500));
 
-            //inicjalizacje ID:
-            PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
-            pstm.executeQuery();
 
-            pstm = DataBase.getConnection().prepareStatement("SELECT ZAJDOD_SEQ.nextval FROM dual");
-            pstm.executeQuery();
 
-            pstm = DataBase.getConnection().prepareStatement("SELECT SEKRETARKA_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT POSILEK_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT POMOCDYD_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT HOSPITACJA_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT FESTYN_SEQ.nextval FROM dual");
-            pstm.executeQuery();
-
-            pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
-            pstm.executeQuery();
             //TODO: przekaz referencje na baze danych
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error connecting to the database.\nWrong login or password.\nTry again.", ButtonType.OK);

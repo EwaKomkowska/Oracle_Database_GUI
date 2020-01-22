@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class dzieckoController {
@@ -172,7 +173,8 @@ public class dzieckoController {
         rs.next();
         imieField.setText(rs.getString("imie"));
         nazwiskoField.setText(rs.getString("nazwisko"));
-        dataDatePicker.setPromptText(String.valueOf(rs.getTime("data_urodzenia")));
+        dataDatePicker.setValue(LocalDate.parse(String.valueOf(rs.getDate("dataurodzenia"))));
+        //dataDatePicker.setPromptText(String.valueOf(rs.getTime("data_urodzenia")));
         id_posilkuBox.setValue(rs.getLong("posilek_idposilku"));
         id_grupyBox.setValue(rs.getLong("grupaprzedszkolna_idgrupy"));
         pstm.close(); //TODO: CLOSE NA KONIEC!! tak jest ok

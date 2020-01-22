@@ -23,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.TableViewSkinBase;
 import net.bytebuddy.build.HashCodeAndEqualsPlugin;
+import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -263,7 +264,7 @@ public class MainViewController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
 
         //przedszkolankaTableView.getColumns().addAll(idColumn, imieColumn, nazwiskoColumn, kwalifikacjeColumn, placaColumn, idGrupyColumn, idHospitacjiColumn);
 
@@ -762,8 +763,53 @@ public class MainViewController {
     }
 
 
-    public void wyswietl() {
+    public void wyswietl() throws SQLException {
         //TODO: czy tego nie wrzucic w osobna funkcje zeby aktualizowac ladnie czy listenery wystarcza???
+
+
+        PreparedStatement comparisonAlterSessionStatement = DataBase.getConnection().prepareStatement("ALTER SESSION SET CURRENT_SCHEMA = PAWEU");
+        comparisonAlterSessionStatement.execute();
+        //Session session = em.unwrap(Session.class);
+        //session.setProperty("CURRENT_SCHEMA", "PAWEU");
+
+
+        //inicjalizacje ID:
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT ZEBRANIE_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT ZAJDOD_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT SEKRETARKA_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT PRZEDSZKOLANKA_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT POSILEK_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT POMOCDYD_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT HOSPITACJA_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT GRUPA_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT FESTYN_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+        pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
+        pstm.executeQuery();
+
+
+
+
         dzieci = FXCollections.observableList(new ArrayList<>());
         Query query=em.createQuery("SELECT p FROM Dziecko p");
         dzieci.addAll(query.getResultList());
@@ -1120,7 +1166,7 @@ public class MainViewController {
     }
 
 
-    private void remove(String statement, long parameter) {
+    private void remove(String statement, long parameter) throws SQLException {
         PreparedStatement stmt;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
