@@ -102,7 +102,10 @@ public class Sekretarka {
     }
 
     public void setGodzrozpoczeciapracy(Time godzrozpoczeciapracy) {
-        if (this.godzzakonczeniapracy == null || this.godzzakonczeniapracy.after(godzrozpoczeciapracy))
+        if(godzrozpoczeciapracy == null){
+            this.godzrozpoczeciapracy = null;
+        }
+        else if (this.godzzakonczeniapracy == null || this.godzzakonczeniapracy.after(godzrozpoczeciapracy))
             this.godzrozpoczeciapracy = godzrozpoczeciapracy;
         else {
             alert.setContentText("Godz rozpoczęcia musi być wcześniejsza od zakończenia pracy!");
@@ -118,7 +121,10 @@ public class Sekretarka {
     }
 
     public void setGodzzakonczeniapracy(Time godzzakonczeniapracy) {
-        if (this.godzrozpoczeciapracy == null || godzzakonczeniapracy.after(this.godzrozpoczeciapracy))
+        if(godzzakonczeniapracy == null){
+            this.godzzakonczeniapracy = null;
+        }
+        else if (this.godzrozpoczeciapracy == null || godzzakonczeniapracy.after(this.godzrozpoczeciapracy))
             this.godzzakonczeniapracy = godzzakonczeniapracy;
         else {
             alert.setContentText("Godz rozpoczęcia musi być wcześniejsza od zakończenia pracy!");

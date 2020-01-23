@@ -89,7 +89,11 @@ public class sekretarkaController {
         }
 
         try {
-            s.setGodzrozpoczeciapracy(Time.valueOf(godzRozField.getText()));
+            if (godzRozField.getText().isEmpty()){
+                s.setGodzrozpoczeciapracy(null);
+            } else {
+                s.setGodzrozpoczeciapracy(Time.valueOf(godzRozField.getText()));
+            }
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -99,7 +103,11 @@ public class sekretarkaController {
         }
 
         try {
-            s.setGodzzakonczeniapracy(Time.valueOf(godzZakField.getText()));
+            if (godzRozField.getText().isEmpty()){
+                s.setGodzzakonczeniapracy(null);
+            } else {
+                s.setGodzzakonczeniapracy(Time.valueOf(godzRozField.getText()));
+            }
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
