@@ -162,7 +162,7 @@ public class oplataController {
                 stmt.setLong(1, o.getWielkosc());
                 stmt.setString(2, o.getPrzedmiotoplaty());
                 stmt.setString(3, o.getCzestosc());
-                stmt.setLong(4, 1);
+                stmt.setLong(4, o.getIdzajecia());
                 //TODO: cos nie do konca tu z iloscia dziwnych polaczen - idzajeciaDodatkowe nie zczytywane
                 stmt.executeUpdate();
                 stmt.close();
