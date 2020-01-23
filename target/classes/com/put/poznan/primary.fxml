@@ -23,7 +23,7 @@
                                             <buttons>
                                               <Button fx:id="przedszkolankaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePrzedszkolanka" text="Remove" />
                                                 <Button fx:id="przedszkolankaAddButton" mnemonicParsing="false" onMouseClicked="#addPrzedszkolanka" text="Add" />
-                                                <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="przedszkolankaModifyButton" mnemonicParsing="false" onMouseClicked="#modifyPrzedszkolanka" text="Modify" />
                                             </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="przedszkolankaTableView" layoutX="25.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -34,7 +34,7 @@
                                                 <TableColumn fx:id="kwalifikacjePrzedszkolankaColumn" prefWidth="130.0" text="Kwalifikacje" />
                                                 <TableColumn fx:id="placaPrzedszkolankaColumn" prefWidth="95.0" text="Płaca" />
                                                 <TableColumn fx:id="idGrupyPrzedszkolankaColumn" prefWidth="69.0" text="ID grupy" />
-                                                <!--<TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />-->
+                                                <TableColumn fx:id="idHospitacjiPrzedszkolankaColumn" prefWidth="79.0" text="ID hospitacji" />
                                              </columns>
                                           </TableView>
                                           <Button fx:id="przedszkolankaPlacaButton" layoutX="402.0" layoutY="263.0" mnemonicParsing="false" onMouseClicked="#placa" prefHeight="26.0" prefWidth="98.0" text="Zwiększ płacę" />
@@ -54,7 +54,7 @@
                                              <buttons>
                                                 <Button fx:id="sekretarkaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeSekretarka" text="Remove" />
                                                 <Button fx:id="sekretarkaAddButton" mnemonicParsing="false" onMouseClicked="#addSekretarka" text="Add" />
-                                                <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="sekretarkaModifyButton" mnemonicParsing="false" onMouseClicked="#modifySekretarka" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="sekretarkaTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -114,7 +114,7 @@
                                              <buttons>
                                                 <Button fx:id="grupa_przedszkolnaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeGrupa" text="Remove" />
                                                 <Button fx:id="grupa_przedszkolnaAddButton" mnemonicParsing="false" onMouseClicked="#addGrupa" text="Add" />
-                                                <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="grupa_przedszkolnaModifyButton" mnemonicParsing="false" onMouseClicked="#modifyGrupa" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="grupa_przedszkolnaTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -142,7 +142,7 @@
                                              <buttons>
                                                 <Button fx:id="zajecia_dodatkoweRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZajecia" text="Remove" />
                                                 <Button fx:id="zajecia_dodatkoweAddButton" mnemonicParsing="false" onMouseClicked="#addZajecia" text="Add" />
-                                                <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="zajecia_dodatkoweModifyButton" mnemonicParsing="false" onMouseClicked="#modifyZajecia" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="zajecia_dodatkoweTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -171,7 +171,7 @@
                                              <buttons>
                                                 <Button fx:id="posilekRemoveButton" mnemonicParsing="false" onMouseClicked="#removePosilek" text="Remove" />
                                                 <Button fx:id="posilekAddButton" mnemonicParsing="false" onMouseClicked="#addPosilek" text="Add" />
-                                                <Button fx:id="posilekModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="posilekModifyButton" mnemonicParsing="false" onMouseClicked="#modifyPosilek" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="posilekTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -198,7 +198,7 @@
                                              <buttons>
                                                 <Button fx:id="pomoc_dydaktycznaRemoveButton" mnemonicParsing="false" onMouseClicked="#removePomoc" text="Remove" />
                                                 <Button fx:id="pomoc_dydaktycznaAddButton" mnemonicParsing="false" onMouseClicked="#addPomoc" text="Add" />
-                                                <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="pomoc_dydaktycznaModifyButton" mnemonicParsing="false" onMouseClicked="#modifyPomoc" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="pomoc_dydaktycznaTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -228,7 +228,7 @@
                                              <buttons>
                                                 <Button fx:id="oplataRemoveButton" mnemonicParsing="false" onMouseClicked="#removeOplata" text="Remove" />
                                                 <Button fx:id="oplataAddButton" mnemonicParsing="false" onMouseClicked="#addOplata" text="Add" />
-                                                <Button fx:id="oplataModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="oplataModifyButton" mnemonicParsing="false" onMouseClicked="#modifyOplata" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="oplataTableView" layoutX="22.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -255,7 +255,7 @@
                                              <buttons>
                                                 <Button fx:id="festynRemoveButton" mnemonicParsing="false" onMouseClicked="#removeFestyn" text="Remove" />
                                                 <Button fx:id="festynAddButton" mnemonicParsing="false" onMouseClicked="#addFestyn" text="Add" />
-                                                <Button fx:id="festynModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="festynModifyButton" mnemonicParsing="false" onMouseClicked="#modifyFestyn" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="festynTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -283,7 +283,7 @@
                                              <buttons>
                                                 <Button fx:id="zebranie_rodziceRemoveButton" mnemonicParsing="false" onMouseClicked="#removeZebranie" text="Remove" />
                                                 <Button fx:id="zebranie_rodziceAddButton" mnemonicParsing="false" onMouseClicked="#addZebranie" text="Add" />
-                                                <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="zebranie_rodziceModifyButton" mnemonicParsing="false" onMouseClicked="#modifyZebranie" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="zebranie_rodziceTableView" layoutX="24.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
@@ -313,7 +313,7 @@
                                              <buttons>
                                                 <Button fx:id="hospitacjaRemoveButton" mnemonicParsing="false" onMouseClicked="#removeHospitacja" text="Remove" />
                                                 <Button fx:id="hospitacjaAddButton" mnemonicParsing="false" onMouseClicked="#addHospitacja" text="Add" />
-                                                <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" text="Modify" />
+                                                <Button fx:id="hospitacjaModifyButton" mnemonicParsing="false" onMouseClicked="#modifyHospitacja" text="Modify" />
                                              </buttons>
                                           </ButtonBar>
                                           <TableView fx:id="hospitacjaTableView" layoutX="23.0" layoutY="14.0" prefHeight="238.0" prefWidth="600.0">
