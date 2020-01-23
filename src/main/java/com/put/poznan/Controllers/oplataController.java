@@ -3,18 +3,23 @@ package com.put.poznan.Controllers;
 import com.put.poznan.JDBC.DataBase;
 import com.put.poznan.SchemaObjects.Dziecko;
 import com.put.poznan.SchemaObjects.Oplata;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class oplataController {
     private DataBase dataBase;
@@ -32,6 +37,8 @@ public class oplataController {
     private Button addButton;
     @FXML
     private Button modifyButton;
+    @FXML
+    private ComboBox id_zajeciaBox;
 
     private int idx = 7;
 
@@ -45,6 +52,11 @@ public class oplataController {
 
     @FXML
     public void initialize() throws SQLException {
+        ObservableList<Long> listaZajec = FXCollections.observableList(new ArrayList<>());
+        Query query=App.getEm().createQuery("SELECT DISTINCT z.idzajecia FROM Zajeciadodatkowe z");
+        listaZajec.addAll(query.getResultList());
+        id_zajeciaBox.setItems(listaZajec);
+
         PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT OPLATA_SEQ.currval FROM dual");
         ResultSet rs = pstm.executeQuery();
         rs.next();
@@ -83,6 +95,17 @@ public class oplataController {
             czyDodac = false;
         }
 
+        if (id_zajeciaBox.getSelectionModel().getSelectedIndex() == -1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś numeru zajec");
+            alert.showAndWait();
+            czyDodac = false;
+        } else {
+            o.setIdzajecia((Long) id_zajeciaBox.getValue());
+        }
+
+
         return czyDodac;
     }
 
@@ -99,7 +122,7 @@ public class oplataController {
                 stmt.setLong(2, o.getWielkosc());
                 stmt.setString(3, o.getPrzedmiotoplaty());
                 stmt.setString(4, o.getCzestosc());
-                stmt.setLong(5, 1);
+                stmt.setLong(5, o.getIdzajecia());
                 //TODO: cos nie do konca tu z iloscia dziwnych polaczen - idzajeciaDodatkowe nie zczytywane
                 stmt.executeQuery();
 
