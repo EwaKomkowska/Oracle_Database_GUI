@@ -78,7 +78,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Dziecko, String> nazwiskoDzieckoColumn;
     @FXML
-    private TableColumn<Dziecko, Date> dataUrodzeniaDzieckoColumn; //TODO: Time
+    private TableColumn<Dziecko, Date> dataUrodzeniaDzieckoColumn;
     @FXML
     private TableColumn<Dziecko, Number> grupaPrzedszkolnaDzieckoColumn;
     @FXML
@@ -230,7 +230,7 @@ public class MainViewController {
     @FXML
     private TableColumn<Zajeciadodatkowe, String> rodzajZajeciaDodatkoweColumn;
     @FXML
-    private TableColumn<Zajeciadodatkowe, Time> dataProwadzeniaZajeciaDodatkoweColumn; //TODO: date???
+    private TableColumn<Zajeciadodatkowe, Date> dataProwadzeniaZajeciaDodatkoweColumn;
     @FXML
     private TableColumn<Zajeciadodatkowe, Number> oplatyZajeciaDodatkoweColumn;
     @FXML
@@ -275,15 +275,13 @@ public class MainViewController {
         kwalifikacjePrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, String>("kwalifikacje"));
         placaPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("placa"));
         idGrupyPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("nazwagrupy"));
-        //FIXME: NIE MA ID TEGO
-        // idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("idHospitacji"));
+        idHospitacjiPrzedszkolankaColumn.setCellValueFactory(new PropertyValueFactory<Przedszkolanka, Number>("hospitacja"));
         przedszkolankaTableView.setEditable(false);             //modyfikacja tylko przy przycisku
 
 
         //============DzieckoColumns--------------------------------\\
         idDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("iddziecka"));
         imieDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("imie"));
-        //imieDzieckoColumn.setCellValueFactory(  cellData -> cellData.getValue().getImie());
         nazwiskoDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, String>("nazwisko"));
         dataUrodzeniaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Date>("dataurodzenia"));
         grupaPrzedszkolnaDzieckoColumn.setCellValueFactory(new PropertyValueFactory<Dziecko, Number>("grupaprzedszkolnaIdgrupy"));
@@ -306,12 +304,12 @@ public class MainViewController {
         idFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("idfestynu"));
         grupaWystepujacaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("grupawystepujaca"));
         osobaOdpowiedzialnaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Number>("osobaodpowiedzialna"));
-        terminWydarzeniaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Date>("terminwydarzena")); //TODO: date czy time
+        terminWydarzeniaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, Date>("terminwydarzena"));
         nazwaFestynColumn.setCellValueFactory(new PropertyValueFactory<Festyn, String>("Haslo"));
 
         //============HospitacjaColumns--------------------------------\\
         idHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("idhospitacji"));
-        terminHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Date>("termin")); //TODO: date czy time
+        terminHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Date>("termin"));
         ktoNadzorowanyHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("ktonadzorowany"));
         ktoNadzorujeHospitacjaColumn.setCellValueFactory(new PropertyValueFactory<Hospitacja, Number>("ktonadzoruje"));
 
@@ -348,7 +346,7 @@ public class MainViewController {
         //============ZajeciaDodatkoweColumns--------------------------------\\
         idZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("idzajecia"));
         rodzajZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, String>("rodzaj"));
-        dataProwadzeniaZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Time>("dataprowadzenia"));
+        dataProwadzeniaZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Date>("dataprowadzenia"));
         oplatyZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("oplaty"));
         czasTygodniowoZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("czastygodniowo"));
         dlaKogoZajeciaDodatkoweColumn.setCellValueFactory(new PropertyValueFactory<Zajeciadodatkowe, Number>("dlakogo"));
@@ -678,6 +676,90 @@ public class MainViewController {
                     return false;
                 }
             });
+
+
+            posilekFilteredList.setPredicate( posilek -> {
+
+                if (this.getCurrentTabIndex() != 5){
+                    return true;
+                }
+
+                if(newValue == null || newValue.isEmpty() ){
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if( String.valueOf(posilek.getIdposilku()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(posilek.getDieta()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if ( String.valueOf(posilek.getGodzrozwozenia()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else if (  String.valueOf(posilek.getNazwa()).toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+        //oplata i posilek sie psuja zebranie z rodzicami tez
+
+
+        }));
+
+//FIXME: INDEXY WSZYSTKIE PRZEJZYJ BO NIE ZMIENIALES W PREDYKATACH
+
+        SortedList<Dziecko> dzieckoSortedList = new SortedList<>(dzieckoFilteredList);
+        dzieckoSortedList.comparatorProperty().bind(dzieckoTableView.comparatorProperty());
+        dzieckoTableView.setItems(dzieckoSortedList);
+
+        SortedList<Przedszkolanka> przedszkolankaSortedList = new SortedList<>(przedszkolankaFilteredList);
+        przedszkolankaSortedList.comparatorProperty().bind(przedszkolankaTableView.comparatorProperty());
+        przedszkolankaTableView.setItems(przedszkolankaSortedList);
+
+        SortedList<Sekretarka> sekretarkaSortedList = new SortedList<>(sekretarkaFilteredList);
+        sekretarkaSortedList.comparatorProperty().bind(sekretarkaTableView.comparatorProperty());
+        sekretarkaTableView.setItems(sekretarkaSortedList);
+
+        SortedList<Grupaprzedszkolna> grupaprzedszkolnaSortedList = new SortedList<>(grupaprzedszkolnaFilteredList);
+        grupaprzedszkolnaSortedList.comparatorProperty().bind(grupa_przedszkolnaTableView.comparatorProperty());
+        grupa_przedszkolnaTableView.setItems(grupaprzedszkolnaSortedList);
+
+        SortedList<Festyn> festynSortedList = new SortedList<>(festynFilteredList);
+        festynSortedList.comparatorProperty().bind(festynTableView.comparatorProperty());
+        festynTableView.setItems(festynSortedList);
+
+        SortedList<Zebraniezrodzicami> zebraniezrodzicamiSortedList = new SortedList<>(zebraniezrodzicamiFilteredList);
+        zebraniezrodzicamiSortedList.comparatorProperty().bind(zebranie_rodziceTableView.comparatorProperty());
+        zebranie_rodziceTableView.setItems(zebraniezrodzicamiSortedList);
+
+        SortedList<Hospitacja> hospitacjaSortedList = new SortedList<>(hospitacjaFilteredList);
+        hospitacjaSortedList.comparatorProperty().bind(hospitacjaTableView.comparatorProperty());
+        hospitacjaTableView.setItems(hospitacjaSortedList);
+
+        SortedList<Oplata> oplataSortedList = new SortedList<>(oplataFilteredList);
+        oplataSortedList.comparatorProperty().bind(oplataTableView.comparatorProperty());
+        oplataTableView.setItems(oplataSortedList);
+
+        SortedList<Pomocdydaktyczna> pomocdydaktycznaSortedList = new SortedList<>(pomocdydaktycznaFilteredList);
+        pomocdydaktycznaSortedList.comparatorProperty().bind(pomoc_dydaktycznaTableView.comparatorProperty());
+        pomoc_dydaktycznaTableView.setItems(pomocdydaktycznaSortedList);
+
+        SortedList<Zajeciadodatkowe> zajeciadodatkoweSortedList = new SortedList<>(zajeciadodatkoweFilteredList);
+        zajeciadodatkoweSortedList.comparatorProperty().bind(zajecia_dodatkoweTableView.comparatorProperty());
+        zajecia_dodatkoweTableView.setItems(zajeciadodatkoweSortedList);
+
+        SortedList<Posilek> posilekSortedList = new SortedList<>(posilekFilteredList);
+        posilekSortedList.comparatorProperty().bind(posilekTableView.comparatorProperty());
+        posilekTableView.setItems(posilekSortedList);
+
+
+
+
+
+    }
+
 
 
             posilekFilteredList.setPredicate( posilek -> {
@@ -1216,7 +1298,7 @@ public class MainViewController {
     @FXML
     private void logOut() throws IOException {
         this.dataBase.closeConnection();
-        //Platform.exit(); //TODO: zamiast tego idz do login formularza od nowa
+        //Platform.exit();
         //App.getStage().setScene(new Scene(App.loadFXML("login")) );
         FXMLLoader loader = App.getFXMLLoader("login");
         Parent root = loader.load();
@@ -1262,8 +1344,7 @@ public class MainViewController {
        Alert alert = new Alert(Alert.AlertType.ERROR);
        alert.setHeaderText(null);
        try {
-           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja,
-           // nie działa wylogowanie, tylko zamknięcie i ponowne otwarcie z wczytaniem bazy
+           //TODO: to samo co w update, czyli zmiany są, ale się nie wyswietlaja
            long id = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
            CallableStatement stmt = DataBase.getConnection().prepareCall("{call zwiekszPlace(?)}");
            stmt.setLong(1, id);
@@ -1272,6 +1353,14 @@ public class MainViewController {
            alert.setAlertType(Alert.AlertType.INFORMATION);
            alert.setContentText("Zwiększono placę przedszkolance o id: " + id);
            alert.showAndWait();
+
+           FXMLLoader loader = App.getFXMLLoader("primary");
+           Parent root = loader.load();
+           MainViewController c = loader.getController();
+           c.setDataBase(dataBase);
+           c.setCurrentTab(0);
+           Scene scene = new Scene(root);
+           App.getStage().setScene(scene);
        } catch (Exception e) {
            alert.setContentText("Nie wybrałeś przedszkolanki, której chcesz zwiększyć płacę");
            alert.showAndWait();
@@ -1297,6 +1386,226 @@ public class MainViewController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Nie wybrałeś dziecka do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyFestyn() {
+        try {
+            Long id = festynTableView.getSelectionModel().getSelectedItem().getIdfestynu();
+
+            FXMLLoader loader = App.getFXMLLoader("festyn");
+            Parent root = loader.load();
+            festynController fc = loader.getController();
+            fc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            fc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś festynu do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyGrupa() {
+        try {
+            Long id = grupa_przedszkolnaTableView.getSelectionModel().getSelectedItem().getIdgrupy();
+
+            FXMLLoader loader = App.getFXMLLoader("grupa");
+            Parent root = loader.load();
+            grupaPrzedszkolnaController gc = loader.getController();
+            gc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            gc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś grupy do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyHospitacja() {
+        try {
+            Long id = hospitacjaTableView.getSelectionModel().getSelectedItem().getIdhospitacji();
+
+            FXMLLoader loader = App.getFXMLLoader("hospitacja");
+            Parent root = loader.load();
+            hospitacjaController hc = loader.getController();
+            hc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            hc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś hospitacji do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyOplata() {
+        try {
+            Long id = oplataTableView.getSelectionModel().getSelectedItem().getIdoplaty();
+
+            FXMLLoader loader = App.getFXMLLoader("oplata");
+            Parent root = loader.load();
+            oplataController oc = loader.getController();
+            oc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            oc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś opłaty do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyPomoc() {
+        try {
+            Long id = pomoc_dydaktycznaTableView.getSelectionModel().getSelectedItem().getIdpomocy();
+
+            FXMLLoader loader = App.getFXMLLoader("pomoc");
+            Parent root = loader.load();
+            pomocDydaktycznaController pc = loader.getController();
+            pc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            pc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś pomocy dydaktycznej do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyPosilek() {
+        try {
+            Long id = posilekTableView.getSelectionModel().getSelectedItem().getIdposilku();
+
+            FXMLLoader loader = App.getFXMLLoader("posilek");
+            Parent root = loader.load();
+            posilekController pc = loader.getController();
+            pc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            pc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś posiłku do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyPrzedszkolanka() {
+        try {
+            Long id = przedszkolankaTableView.getSelectionModel().getSelectedItem().getIdprac();
+
+            FXMLLoader loader = App.getFXMLLoader("przedszkolanka");
+            Parent root = loader.load();
+            PrzedszkolankaController pc = loader.getController();
+            pc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            pc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś przedszkolanki do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifySekretarka() {
+        try {
+            Long id = sekretarkaTableView.getSelectionModel().getSelectedItem().getIdprac();
+
+            FXMLLoader loader = App.getFXMLLoader("sekretarka");
+            Parent root = loader.load();
+            sekretarkaController sc = loader.getController();
+            sc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            sc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś sekretarki do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyZajecia() {
+        try {
+            Long id = zajecia_dodatkoweTableView.getSelectionModel().getSelectedItem().getIdzajecia();
+
+            FXMLLoader loader = App.getFXMLLoader("zajecia");
+            Parent root = loader.load();
+            zajeciaDodatkoweController zc = loader.getController();
+            zc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            zc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś zajęć do modyfikacji");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void modifyZebranie() {
+        try {
+            Long id = zebranie_rodziceTableView.getSelectionModel().getSelectedItem().getIdzebrania();
+
+            FXMLLoader loader = App.getFXMLLoader("zebranie");
+            Parent root = loader.load();
+            zebranieRodziceController zc = loader.getController();
+            zc.setDataBase(this.dataBase);
+            Scene scene = new Scene(root);
+            App.getStage().setScene(scene);
+
+            zc.modify(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Nie wybrałeś zebrnia do modyfikacji");
             alert.showAndWait();
         }
     }

@@ -11,7 +11,6 @@ import java.sql.Time;
 
 @Entity
 public class Posilek {
-
     private long idposilku;
     private String nazwa;
     private Time godzrozwozenia;
@@ -67,16 +66,14 @@ public class Posilek {
     }
 
     public void setDieta(String dieta) {
-        if(dieta == null){
-             this.dieta = null;}
-        else{
-            if (dieta.length() <= 20)
-                this.dieta = dieta;
-            else {
-                alert.setContentText("Dieta nie może być dłuższa niż 20 znaków!");
-                alert.showAndWait();
-                throw new IllegalArgumentException();
-            }
+        if (dieta == null)
+            this.dieta = dieta;
+        else if (dieta.length() <= 20)
+            this.dieta = dieta;
+        else {
+            alert.setContentText("Dieta nie może być dłuższa niż 20 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
         }
     }
 

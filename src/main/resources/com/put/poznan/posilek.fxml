@@ -13,13 +13,14 @@
         </Label>
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
-                <TextField fx:id="nazwaField" layoutX="25.0" layoutY="100.0" onMouseClicked="#clearNazwa" prefHeight="66.0" prefWidth="200.0" text="nazwa"/>
-                <TextField fx:id="godzField" layoutX="235.0" layoutY="10.0" onMouseClicked="#clearGodz" prefHeight="66.0" prefWidth="200.0" text="godzina rozwożenia (HH:MM:SS)"/>
-                <TextField fx:id="dietaField" layoutX="235.0" layoutY="100.0" onMouseClicked="#clearDieta" prefHeight="66.0" prefWidth="200.0" text="dieta"/>
-                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clearId" prefHeight="66.0" prefWidth="200.0" text="idPosilku"/>
+                <TextField fx:id="nazwaField" layoutX="25.0" layoutY="100.0" prefHeight="66.0" prefWidth="200.0" promptText="nazwa"/>
+                <TextField fx:id="godzField" layoutX="235.0" layoutY="10.0" prefHeight="66.0" prefWidth="200.0" promptText="godzina rozwożenia (HH:MM:SS)"/>
+                <TextField fx:id="dietaField" layoutX="235.0" layoutY="100.0" prefHeight="66.0" prefWidth="200.0" promptText="dieta"/>
+                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" prefHeight="66.0" prefWidth="200.0" promptText="idPosilku"/>
             </children>
         </Pane>
-        <Button fx:id="addButton" layoutX="85.0" layoutY="250.0" mnemonicParsing="false" onMousePressed="#add" prefHeight="23.0" prefWidth="100.0" text="Add" />
+        <Button fx:id="addButton" layoutX="105.0" layoutY="250.0" mnemonicParsing="false" onMousePressed="#add" prefHeight="23.0" prefWidth="100.0" text="Add" />
+        <Button fx:id="modifyButton" layoutX="105.0" layoutY="250.0" mnemonicParsing="false" onMousePressed="#update" prefHeight="23.0" prefWidth="100.0" text="Modify" />
         <Button fx:id="cancelButton" layoutX="295.0" layoutY="250.0" mnemonicParsing="false" onMousePressed="#cancel" prefHeight="23.0" prefWidth="100.0" text="Cancel" />
     </children>
 

@@ -1,18 +1,18 @@
 package com.put.poznan.Controllers;
 
 import com.put.poznan.JDBC.DataBase;
+import com.put.poznan.SchemaObjects.Dziecko;
 import com.put.poznan.SchemaObjects.Przedszkolanka;
 import com.put.poznan.SchemaObjects.Sekretarka;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.SplittableRandom;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Long.parseLong;
@@ -39,6 +39,10 @@ public class sekretarkaController {
     private TextField kwalifikacjeField;
     @FXML
     private TextField placaField;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button modifyButton;
 
 
     public DataBase getDataBase() {
@@ -57,13 +61,11 @@ public class sekretarkaController {
         rs.next();
         idField.setText(String.valueOf(rs.getLong(1)));
         idField.setDisable(true);
+        modifyButton.setVisible(false);
     }
 
-    @FXML
-    public void add() {
-        Sekretarka s = new Sekretarka();
+    private boolean dodawanie(Sekretarka s) {
         boolean czyDodac = true;
-
         try {
             s.setIdprac(Integer.parseInt(idField.getText()));
         } catch (Exception e) {
@@ -115,7 +117,13 @@ public class sekretarkaController {
             alert.showAndWait();
             czyDodac = false;
         }
+    return czyDodac;
+    }
 
+    @FXML
+    public void add() {
+        Sekretarka s = new Sekretarka();
+        boolean czyDodac = dodawanie(s);
         try {
             if (czyDodac) {
                 PreparedStatement stmt = DataBase.getConnection().prepareStatement("insert into SEKRETARKA(idprac, godzrozpoczeciapracy, godzzakonczeniapracy, imie, nazwisko, kwalifikacje, placa) values (?, ?, ?, ?, ?, ?, ?)");
@@ -137,6 +145,50 @@ public class sekretarkaController {
         }
     }
 
+    @FXML
+    public void modify(long id) throws SQLException, IOException {
+        idField.setText(String.valueOf(id));
+        addButton.setVisible(false);
+        modifyButton.setVisible(true);
+        PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT * from SEKRETARKA where IDPRAC = ?");
+        pstm.setLong(1, id);
+        ResultSet rs = pstm.executeQuery();
+        rs.next();
+        imieField.setText(rs.getString("imie"));
+        nazwiskoField.setText(rs.getString("nazwisko"));
+        godzRozField.setText(String.valueOf(rs.getTime("godzrozpoczeciapracy")));
+        godzZakField.setText(String.valueOf(rs.getTime("godzzakonczeniapracy")));
+        kwalifikacjeField.setText(rs.getString("kwalifikacje"));
+        placaField.setText(String.valueOf(rs.getLong("placa")));
+        pstm.close();
+    }
+
+    @FXML
+    private void update() {
+        Sekretarka s = new Sekretarka();
+        boolean czyDodac = dodawanie(s);
+        try {
+            if (czyDodac) {
+                PreparedStatement stmt = DataBase.getConnection().prepareStatement("UPDATE SEKRETARKA SET GODZROZPOCZECIAPRACY = ?, GODZZAKONCZENIAPRACY = ?, IMIE = ?, NAZWISKO = ?, KWALIFIKACJE = ?, PLACA = ? WHERE IDPRAC = ?");
+                stmt.setLong(7, s.getIdprac());
+                stmt.setTime(1, s.getGodzrozpoczeciapracy());
+                stmt.setTime(2, s.getGodzzakonczeniapracy());
+                stmt.setString(3, s.getImie());
+                stmt.setString(4, s.getNazwisko());
+                stmt.setString(5, s.getKwalifikacje());
+                stmt.setLong(6, s.getPlaca());
+
+                stmt.executeUpdate();
+                stmt.executeUpdate();
+                stmt.close();
+
+                MainViewController.add(this.dataBase, idx);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     public void cancel() throws IOException {
@@ -147,11 +199,5 @@ public class sekretarkaController {
         c.setCurrentTab(this.idx);
         Scene scene = new Scene(root);
         App.getStage().setScene(scene);
-    }
-
-
-    @FXML
-    public void clear() {
-        //TODO: czy da sie jakos wyczyscic wcisniety tylko
     }
 }

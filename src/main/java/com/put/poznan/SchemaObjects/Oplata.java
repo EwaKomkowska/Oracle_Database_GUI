@@ -13,6 +13,7 @@ public class Oplata {
     private Long wielkosc;
     private String przedmiotoplaty;
     private String czestosc;
+    private Long idzajecia;
     private Alert alert;
 
 
@@ -38,7 +39,9 @@ public class Oplata {
     }
 
     public void setWielkosc(Long wielkosc) {
-        if (wielkosc >= 0)
+        if (wielkosc == null)
+            this.wielkosc = wielkosc;
+        else if (wielkosc >= 0)
             this.wielkosc = wielkosc;
         else throw new IllegalArgumentException("Opłata musi być większa od 0");
     }
@@ -50,7 +53,9 @@ public class Oplata {
     }
 
     public void setPrzedmiotoplaty(String przedmiotoplaty) {
-        if (przedmiotoplaty.length() <= 100)
+        if (przedmiotoplaty == null)
+            this.przedmiotoplaty = przedmiotoplaty;
+        else if (przedmiotoplaty.length() <= 100)
             this.przedmiotoplaty = przedmiotoplaty;
         else {
             alert.setContentText("Przedmiot opłaty nie może mieć więcej niż 100 znaków!");
@@ -66,18 +71,26 @@ public class Oplata {
     }
 
     public void setCzestosc(String czestosc) {
-        if (czestosc == null){
-            this.czestosc = null;
-        }
+        if (czestosc == null)
+            this.czestosc = czestosc;
+        else if (czestosc.length() <= 25)
+            this.czestosc = czestosc;
         else {
-            if (czestosc.length() <= 25)
-                this.czestosc = czestosc;
-            else {
-                alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");
-                alert.showAndWait();
-                throw new IllegalArgumentException();
-            }
+            alert.setContentText("Częstość nie może być dłuższe niż 25 znaków!");
+            alert.showAndWait();
+            throw new IllegalArgumentException();
         }
+    }
+
+
+    @Basic
+    @Column(name = "ZAJECIADODATKOWE_IDZAJECIA")
+    public Long getIdzajecia() {
+        return idzajecia;
+    }
+
+    public void setIdzajecia(Long idzajecia) {
+        this.idzajecia = idzajecia;
     }
 
     @Override

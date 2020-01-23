@@ -81,7 +81,7 @@ public class dzieckoController {
         }catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie YYYY-MM-DD");
+            alert.setContentText("Podałeś błędną datę urodzenia - sprawdź, czy jest w formacie DD.MM.RRRR");
             alert.showAndWait();
             czyDodac = false;
         }
@@ -133,7 +133,7 @@ public class dzieckoController {
                 stmt.setLong(6, d.getPosilekIdposilku());
 
                 stmt.executeQuery();
-                stmt.close(); //TODO: DODAC DO RESZTY CLOSE!
+                stmt.close();
 
                 MainViewController.add(this.dataBase, idx);
                 PreparedStatement pstm = DataBase.getConnection().prepareStatement("SELECT DZIECKO_SEQ.nextval FROM dual");
@@ -174,10 +174,9 @@ public class dzieckoController {
         imieField.setText(rs.getString("imie"));
         nazwiskoField.setText(rs.getString("nazwisko"));
         dataDatePicker.setValue(LocalDate.parse(String.valueOf(rs.getDate("dataurodzenia"))));
-        //dataDatePicker.setPromptText(String.valueOf(rs.getTime("data_urodzenia")));
         id_posilkuBox.setValue(rs.getLong("posilek_idposilku"));
         id_grupyBox.setValue(rs.getLong("grupaprzedszkolna_idgrupy"));
-        pstm.close(); //TODO: CLOSE NA KONIEC!! tak jest ok
+        pstm.close();
     }
 
     @FXML
@@ -203,11 +202,6 @@ public class dzieckoController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    public void clear() {
-        //TODO: czy da sie jakos wyczyscic wcisniety tylko
     }
 }
 

@@ -13,14 +13,15 @@
         </Label>
         <Pane layoutX="14.0" layoutY="68.0" prefHeight="161.0" prefWidth="330.0">
             <children>
-                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="idPomocy"/>
-                <TextField fx:id="rodzajField" layoutX="285.0" layoutY="10.0" onMouseClicked="#clear" prefHeight="66.0" prefWidth="250.0" text="rodzaj"/>
+                <TextField fx:id="idField" layoutX="25.0" layoutY="10.0" prefHeight="66.0" prefWidth="250.0" promptText="idPomocy"/>
+                <TextField fx:id="rodzajField" layoutX="285.0" layoutY="10.0" prefHeight="66.0" prefWidth="250.0" promptText="rodzaj"/>
                 <ComboBox fx:id="id_grupyBox" layoutX="25.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id grupy"/>
                 <ComboBox fx:id="id_oplatyBox" layoutX="285.0" layoutY="100.0" prefHeight="66.0" prefWidth="250.0" promptText="id oplaty"/>
                 <ComboBox fx:id="id_przedszkolankiBox" layoutX="25.0" layoutY="190.0" prefHeight="66.0" prefWidth="250.0" promptText="id przedszkolanki"/>
             </children>
         </Pane>
         <Button fx:id="addButton" layoutX="105.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#add" prefHeight="23.0" prefWidth="100.0" text="Add" />
+        <Button fx:id="modifyButton" layoutX="105.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#update" prefHeight="23.0" prefWidth="100.0" text="Modify" />
         <Button fx:id="cancelButton" layoutX="375.0" layoutY="350.0" mnemonicParsing="false" onMousePressed="#cancel" prefHeight="23.0" prefWidth="100.0" text="Cancel" />
     </children>
 
